@@ -22,13 +22,14 @@ public class MovementController : MonoBehaviour
 
 	private void MovePlayer()
 	{
-		float moveX = Input.GetAxis("Horizontal");
-		float moveY = Input.GetAxis("Vertical");
-
 		if (Input.GetKeyDown(KeyCode.Space))
 		{
 			_rigidbody.AddForce(new Vector2(0, _jumpforce), ForceMode2D.Impulse);
 		}
+		
+		float moveX = Input.GetAxis("Horizontal");
+		float moveY = Input.GetAxis("Vertical");
+
 		//_rigidbody2D.velocity = new Vector2(moveX * _movespeed, moveY * _movespeed);
 		_rigidbody.velocity = new Vector2(moveX * _movespeed, _rigidbody.velocity.y);
 	}
