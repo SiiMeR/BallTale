@@ -22,6 +22,7 @@ public class Controller2D : RayCastController
 		
 	}
 
+
 	public void Move(Vector3 velocity)
 	{
 		UpdateRaycastOrigins();
@@ -36,7 +37,6 @@ public class Controller2D : RayCastController
 			VerticalCollisions(ref velocity);
 		}
 
-		
 		transform.Translate(velocity);
 	}
 
@@ -45,41 +45,52 @@ public class Controller2D : RayCastController
 		float directionX = Mathf.Sign(velocity.x);
 		float rayLength = Mathf.Abs(velocity.x) + SKINWIDTH;
 
-		Vector2 rayOrigin = (directionX == -1) ? rayCastOrigins.left : rayCastOrigins.right;
-		//	rayOrigin += velocity.x;
-		RaycastHit2D hit = Physics2D.Raycast(rayOrigin, Vector2.right * directionX, rayLength, collisionMask);
-
+		Vector2 rayOrigin = rayCastOrigins.center;
+		RaycastHit2D hit = Physics2D.CircleCast(rayOrigin, 0.5f, Vector2.right * directionX, rayLength, collisionMask);
+		
 		if (hit)
 		{
 			velocity.x = (hit.distance - SKINWIDTH) * directionX;
-			rayLength = hit.distance;
-
 			collisions.left = directionX == -1;
 			collisions.right = directionX == 1;
 		}
 		
-		Debug.DrawRay(rayCastOrigins.left , Vector2.right * -2, Color.red);
+		
+		
+		Debug.DrawRay(rayOrigin , Vector2.right * directionX * 2, collisions.left || collisions.right ? Color.blue: Color.red);
 	}
-	
-	
+
+	private void OnTriggerEnter2D(Collider2D other)
+	{
+		print(other.transform.position);
+	}
+
+
+
 	void VerticalCollisions(ref Vector3 velocity)
 	{
 		float directionY = Mathf.Sign(velocity.y);
 		float rayLength = Mathf.Abs(velocity.y) + SKINWIDTH;
 
-		Vector2 rayOrigin = (directionY == -1) ? rayCastOrigins.bottom : rayCastOrigins.top;
-	//	rayOrigin += velocity.x;
-		RaycastHit2D hit = Physics2D.Raycast(rayOrigin, Vector2.up * directionY, rayLength, collisionMask);
-
+		Vector2 rayOrigin = rayCastOrigins.center;
+		
+		RaycastHit2D hit = Physics2D.CircleCast(rayOrigin, 0.5f,Vector2.up * directionY, rayLength, collisionMask);
 		if (hit)
 		{
+			Vector2 reflect = Vector2.Reflect(velocity,hit.normal);
+			
+			
+			//velocity.y += reflect.y * 3;
+			Debug.DrawRay(velocity, reflect, Color.magenta);
+
 			velocity.y = (hit.distance - SKINWIDTH) * directionY;
-			rayLength = hit.distance;
 			
 			collisions.below = directionY == -1;
 			collisions.above = directionY == 1;
 		}
 		
-		Debug.DrawRay(rayCastOrigins.bottom , Vector2.up * -2, Color.red);
+		
+		
+		Debug.DrawRay(rayOrigin , Vector2.up * 2 * directionY, collisions.above || collisions.below ? Color.blue: Color.red);
 	}
 }

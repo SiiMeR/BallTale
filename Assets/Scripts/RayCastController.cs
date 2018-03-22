@@ -8,10 +8,6 @@ public class RayCastController : MonoBehaviour {
 	
 	public const float SKINWIDTH = .015f;
 
-	
-	[HideInInspector] public int horizontalRayCount = 2;
-	[HideInInspector] public int verticalRayCount = 2;
-	
 	[HideInInspector] public LayerMask collisionMask;
 	[HideInInspector] public Collider2D collider;
 	
@@ -21,7 +17,7 @@ public class RayCastController : MonoBehaviour {
 	
 	public struct RaycastOrigins
 	{
-		public Vector2 top, left, right, bottom;
+		public Vector2 top, left, right, bottom, center;
 	}	
 	
 	
@@ -32,12 +28,6 @@ public class RayCastController : MonoBehaviour {
 		
 	}
 
-	public virtual void Start()
-	{
-		CalculateRaySpacing();
-	}
-	
-
 	public void UpdateRaycastOrigins()
 	{
 		Bounds bounds = collider.bounds;
@@ -47,15 +37,8 @@ public class RayCastController : MonoBehaviour {
 		rayCastOrigins.right = new Vector2(bounds.max.x, bounds.center.y);
 		rayCastOrigins.top = new Vector2(bounds.center.x, bounds.max.y);
 		rayCastOrigins.bottom = new Vector2(bounds.center.x, bounds.min.y);
+		rayCastOrigins.center = bounds.center;
 	}
 
-	public void CalculateRaySpacing()
-	{
-		Bounds bounds = collider.bounds;
-		bounds.Expand(SKINWIDTH * -2);
 
-		horizontalRayCount = Mathf.Clamp(horizontalRayCount, 2, int.MaxValue);
-		verticalRayCount   = Mathf.Clamp(verticalRayCount, 2, int.MaxValue);
-
-	}
 }

@@ -39,6 +39,7 @@ public class PlayerController : MonoBehaviour
 	{
 		if (controller.collisions.above || controller.collisions.below)
 		{
+			
 			velocity.y = 0;
 		}
 		Vector2 input = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
@@ -60,8 +61,6 @@ public class PlayerController : MonoBehaviour
 		float targetVelocityX = input.x * moveSpeed;
 
 		velocity.x = Mathf.SmoothDamp(velocity.x, targetVelocityX, ref velocityXSmoothing, (controller.collisions.below) ? accelerationTimeGrounded : accelerationTimeAirborne);
-		
-	
 		
 		velocity.y += gravity * Time.deltaTime;
 		controller.Move(velocity * Time.deltaTime);
