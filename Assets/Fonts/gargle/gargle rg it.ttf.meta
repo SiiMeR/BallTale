@@ -1,0 +1,32 @@
+fileFormatVersion: 2
+guid: a63d5c6d035ebbc45bd33710b6e0a0b9
+timeCreated: 1521795414
+licenseType: Free
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: Gargle
+  fontNames:
+  - Gargle
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: 517f1652ea7025843a46cee437fb6117, type: 3}
+  - {fileID: 12800000, guid: 9f770524b183b0f46b11b9e623f069cf, type: 3}
+  - {fileID: 12800000, guid: 6d398fa67d73e5440a286943bd0afe9f, type: 3}
+  - {fileID: 12800000, guid: 39328d08d97ab3943a5494ed2a2be6f0, type: 3}
+  - {fileID: 12800000, guid: 89a715c9e428ebd4ba90935d671b9dd0, type: 3}
+  - {fileID: 12800000, guid: a61d333da85068145a904345bee2be32, type: 3}
+  - {fileID: 12800000, guid: 50576ede046f40d40b27fa7a1530d68f, type: 3}
+  - {fileID: 12800000, guid: 4d40438fc6ace6a48b9fa177a67f3cfb, type: 3}
+  - {fileID: 12800000, guid: 678dcaff06e0b2c42bbfaeb08b9760dc, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

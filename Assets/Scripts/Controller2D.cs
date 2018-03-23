@@ -60,12 +60,6 @@ public class Controller2D : RayCastController
 		Debug.DrawRay(rayOrigin , Vector2.right * directionX * 2, collisions.left || collisions.right ? Color.blue: Color.red);
 	}
 
-	private void OnTriggerEnter2D(Collider2D other)
-	{
-		print(other.transform.position);
-	}
-
-
 
 	void VerticalCollisions(ref Vector3 velocity)
 	{
@@ -81,7 +75,6 @@ public class Controller2D : RayCastController
 			
 			
 			//velocity.y += reflect.y * 3;
-			Debug.DrawRay(velocity, reflect, Color.magenta);
 
 			velocity.y = (hit.distance - SKINWIDTH) * directionY;
 			

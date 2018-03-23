@@ -14,42 +14,105 @@ public class PlayerController : MonoBehaviour
 	[SerializeField] private float accelerationTimeAirborne = .2f;
 	[SerializeField] private float accelerationTimeGrounded = .1f;
 	
+	[SerializeField] private float maxBoostTime = 2.0f;
+
+	[SerializeField] private float boostForce = 20f;
+
+	[SerializeField] private GameObject boostArrow;
+	
 	private float gravity;
 	
 	private float maxJumpVelocity;
 	private float minJumpVelocity;
-	
 	private float velocityXSmoothing;
+
+	private float currentBoostTime = 0f;
 	
 	private Vector3 velocity;
 	private Controller2D controller;
+
+	private bool canBoost = true;
 	
 	// Use this for initialization
 	void Start ()
 	{
+		if (boostArrow)
+		{
+			boostArrow.SetActive(false);
+		}
+
+		
 		controller = GetComponent<Controller2D>();
 
 		gravity = -(2 * maxJumpHeight) / Mathf.Pow(timeToJumpApex, 2);
 		maxJumpVelocity = Mathf.Abs(gravity * timeToJumpApex);
 		minJumpVelocity = Mathf.Sqrt(2 * Mathf.Abs(gravity) * minJumpHeight);
 	}
-	
+
+
 	// Update is called once per frame
 	void Update ()
 	{
+		
+		updateMovement();
+
+	}
+
+	private void updateMovement()
+	{
+		
 		if (controller.collisions.above || controller.collisions.below)
 		{
-			
 			velocity.y = 0;
 		}
+
+		if (controller.collisions.below)
+		{
+			canBoost = true;
+		}
+		
 		Vector2 input = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
 
-		if (Input.GetKeyDown(KeyCode.Space) && controller.collisions.below)
+		Debug.DrawRay(transform.position, new Vector3(input.x, input.y, 0f).normalized, Color.yellow);
+		
+		
+		if (Input.GetKey(KeyCode.Z) && !controller.collisions.below && canBoost)
+		{
+			if (currentBoostTime > maxBoostTime)
+			{
+				boostArrow.SetActive(false);
+				canBoost = false;
+				currentBoostTime = 0.0f;
+				return;
+			}
+			
+			boostArrow.SetActive(true);
+	
+			float angle = Mathf.Atan2(input.y, input.x) * Mathf.Rad2Deg;
+			
+			Quaternion q = Quaternion.AngleAxis(angle, Vector3.forward);
+
+			boostArrow.transform.rotation = Quaternion.Slerp(boostArrow.transform.rotation, q, 10 * Time.deltaTime);
+
+			currentBoostTime += Time.deltaTime;
+			
+			return;
+		}
+
+		if (Input.GetKeyUp(KeyCode.Z) && !controller.collisions.below && canBoost)
+		{
+			velocity = input * boostForce ; //* ((0.5f * currentBoostTime) + 0.5f);
+			currentBoostTime = 0.0f;
+			canBoost = false;
+			boostArrow.SetActive(false);
+		}
+		
+		if (Input.GetKeyDown(KeyCode.UpArrow) && controller.collisions.below)
 		{
 			velocity.y = maxJumpVelocity;
 		}
 
-		if (Input.GetKeyUp(KeyCode.Space))
+		if (Input.GetKeyUp(KeyCode.UpArrow))
 		{
 			if (velocity.y > minJumpVelocity)
 			{
