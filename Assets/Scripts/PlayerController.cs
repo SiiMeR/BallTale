@@ -30,7 +30,8 @@ public class PlayerController : MonoBehaviour
 	
 	private Vector3 velocity;
 	private Controller2D controller;
-
+	private Animator arrowAnimator;
+	
 	private bool canBoost = true;
 	
 	// Use this for initialization
@@ -41,6 +42,7 @@ public class PlayerController : MonoBehaviour
 			boostArrow.SetActive(false);
 		}
 
+		arrowAnimator = GetComponentInChildren<Animator>();
 		
 		controller = GetComponent<Controller2D>();
 
@@ -74,7 +76,17 @@ public class PlayerController : MonoBehaviour
 		Vector2 input = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
 
 		Debug.DrawRay(transform.position, new Vector3(input.x, input.y, 0f).normalized, Color.yellow);
-		
+
+
+		if (Input.GetKeyDown(KeyCode.Z) && !controller.collisions.below && canBoost)
+		{
+
+			boostArrow.SetActive(true);
+			
+			GetComponentInChildren<Animator>().speed = 1.0f / maxBoostTime;
+			GetComponentInChildren<Animator>().SetTrigger("Boost");
+			
+		}
 		
 		if (Input.GetKey(KeyCode.Z) && !controller.collisions.below && canBoost)
 		{
@@ -86,14 +98,14 @@ public class PlayerController : MonoBehaviour
 				return;
 			}
 			
-			boostArrow.SetActive(true);
-	
 			float angle = Mathf.Atan2(input.y, input.x) * Mathf.Rad2Deg;
 			
 			Quaternion q = Quaternion.AngleAxis(angle, Vector3.forward);
 
 			boostArrow.transform.rotation = Quaternion.Slerp(boostArrow.transform.rotation, q, 10 * Time.deltaTime);
 
+
+			
 			currentBoostTime += Time.deltaTime;
 			
 			return;

@@ -41,7 +41,7 @@ public class Sign : MonoBehaviour
 	public void FlipDialogue()
 	{
 		
-		Time.timeScale = dialoguePanel.activeInHierarchy ? 1.0f : 0.0f;
+		//Time.timeScale = dialoguePanel.activeInHierarchy ? 1.0f : 0.0f; use this if you want pausing on sign open.
 		dialoguePanel.SetActive(!dialoguePanel.activeInHierarchy);
 	}
 	
