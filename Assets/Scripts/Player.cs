@@ -3,8 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(Controller2D))]
-public class PlayerController : MonoBehaviour
+[RequireComponent(typeof(CircleController2D))]
+public class Player : MonoBehaviour
 {
 	[SerializeField] private float minJumpHeight = 1f;
 	[SerializeField] private float maxJumpHeight = 4f;
@@ -29,7 +29,7 @@ public class PlayerController : MonoBehaviour
 	private float currentBoostTime = 0f;
 	
 	private Vector3 velocity;
-	private Controller2D controller;
+	private CircleController2D controller;
 	private Animator arrowAnimator;
 	
 	private bool canBoost = true;
@@ -44,7 +44,7 @@ public class PlayerController : MonoBehaviour
 
 		arrowAnimator = GetComponentInChildren<Animator>();
 		
-		controller = GetComponent<Controller2D>();
+		controller = GetComponent<CircleController2D>();
 
 		gravity = -(2 * maxJumpHeight) / Mathf.Pow(timeToJumpApex, 2);
 		maxJumpVelocity = Mathf.Abs(gravity * timeToJumpApex);

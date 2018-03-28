@@ -6,7 +6,7 @@ public class CameraFollow : MonoBehaviour
 {
 
 
-	public Controller2D target;
+	public CircleController2D target;
 
 	public Vector2 focusAreaSize;
 

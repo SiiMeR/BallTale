@@ -17,4 +17,19 @@ public class PlatformController : RayCastController {
 		transform.Translate(velocity);
 
 	}
+
+	public override void HorizontalCollisions(ref Vector3 velocity)
+	{
+		throw new System.NotImplementedException();
+	}
+
+	public override void VerticalCollisions(ref Vector3 velocity)
+	{
+		throw new System.NotImplementedException();
+	}
+
+	public override void UpdateRaycastOrigins()
+	{
+		throw new System.NotImplementedException();
+	}
 }
