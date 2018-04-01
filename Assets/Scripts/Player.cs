@@ -1,11 +1,19 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using System.Runtime.InteropServices;
 using UnityEngine;
+using UnityEngine.Events;
 
 [RequireComponent(typeof(CircleController2D))]
 public class Player : MonoBehaviour
 {
+
+	[SerializeField] private int maxHealth = 10;
+	[SerializeField] private float secondsInvincibility = 1.5f;
+	
+	
 	[SerializeField] private float minJumpHeight = 1f;
 	[SerializeField] private float maxJumpHeight = 4f;
 	
@@ -15,62 +23,135 @@ public class Player : MonoBehaviour
 	[SerializeField] private float accelerationTimeGrounded = .1f;
 	
 	[SerializeField] private float maxBoostTime = 2.0f;
-
 	[SerializeField] private float boostForce = 20f;
-
 	[SerializeField] private GameObject boostArrow;
-	
-	private float gravity;
-	
-	private float maxJumpVelocity;
-	private float minJumpVelocity;
-	private float velocityXSmoothing;
 
-	private float currentBoostTime = 0f;
 	
-	private Vector3 velocity;
-	private CircleController2D controller;
-	private Animator arrowAnimator;
+	private float _maxJumpVelocity;
+	private float _minJumpVelocity;
+	private float _velocityXSmoothing;
+
+	private float _currentBoostTime = 0f;
 	
-	private bool canBoost = true;
+	private Vector3 _velocity;
+	private CircleController2D _controller;
+
+	private Animator _animator;
+	private Animator _arrowAnimator;
 	
+	private bool _canBoost = true;
+
+	private int _currentHealth;
+	
+	public int CurrentHealth
+	{
+		get
+		{
+			return _currentHealth;
+		}
+		set
+		{
+			if ((_currentHealth - value) < 1)
+			{
+				Die();
+			}
+			else
+			{
+				_currentHealth = value;
+				
+			}
+		}
+	}
+
+	private void Die()
+	{
+		print("You died, but there is no implementation for death yet!");
+	}
+
+
 	// Use this for initialization
 	void Start ()
 	{
+		_currentHealth = maxHealth;
+
+		_animator = GetComponent<Animator>();
+		
 		if (boostArrow)
 		{
 			boostArrow.SetActive(false);
 		}
 
-		arrowAnimator = GetComponentInChildren<Animator>();
-		
-		controller = GetComponent<CircleController2D>();
+		_arrowAnimator = boostArrow.GetComponent<Animator>();
+		_controller = GetComponent<CircleController2D>();
 
-		gravity = -(2 * maxJumpHeight) / Mathf.Pow(timeToJumpApex, 2);
-		maxJumpVelocity = Mathf.Abs(gravity * timeToJumpApex);
-		minJumpVelocity = Mathf.Sqrt(2 * Mathf.Abs(gravity) * minJumpHeight);
+		float gravity = -(2 * maxJumpHeight) / Mathf.Pow(timeToJumpApex, 2);
+	
+		Physics2D.gravity = new Vector3(gravity, 0,0);
+		_maxJumpVelocity = Mathf.Abs(gravity * timeToJumpApex);
+		_minJumpVelocity = Mathf.Sqrt(2 * Mathf.Abs(gravity) * minJumpHeight);
 	}
 
 
 	// Update is called once per frame
 	void Update ()
 	{
-		
-		updateMovement();
-
+		UpdateMovement();
+	
 	}
 
-	private void updateMovement()
+
+	
+	private void OnTriggerStay2D(Collider2D other)
+	{	
+
+		if (other.gameObject.CompareTag("Enemy"))
+		{
+			var enemy = other.gameObject.GetComponent<BasicEnemy>();
+			
+
+			if (!_animator.GetBool("Damaged"))
+			{			
+				StartCoroutine(PlayerDamaged(enemy.Damage));
+				CurrentHealth -= enemy.Damage;
+				Debug.Log(string.Format("Took a hit from {0}, {1} health left. ",
+					other.gameObject.name,
+					_currentHealth));
+			}
+
+
+		}
+	}
+	
+	
+
+	IEnumerator PlayerDamaged(int damage)
 	{
 		
-		if (controller.collisions.above || controller.collisions.below)
+		_animator.SetBool("Damaged", true);
+		
+		
+		var timer = secondsInvincibility; // TODO : sync this with animation TODONE : I GUESS IT IT :)
+		while (timer > .0f)
 		{
-			velocity.y = 0;
+			timer -= Time.deltaTime;
+			yield return null;
+		}
+		
+		_animator.SetBool("Damaged", false);
+		
+	}	
+
+	private void UpdateMovement()
+	{
+		
+		if (_controller.collisions.above || _controller.collisions.below)
+		{
+			_velocity.y = 0;
 		}
 
-		if (controller.collisions.below)
+		if (_controller.collisions.below)
 		{
-			canBoost = true;
+			_canBoost = true;
 		}
 		
 		Vector2 input = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
@@ -78,23 +159,23 @@ public class Player : MonoBehaviour
 		Debug.DrawRay(transform.position, new Vector3(input.x, input.y, 0f).normalized, Color.yellow);
 
 
-		if (Input.GetKeyDown(KeyCode.Z) && !controller.collisions.below && canBoost)
+		if (Input.GetKeyDown(KeyCode.Z) && !_controller.collisions.below && _canBoost)
 		{
 
 			boostArrow.SetActive(true);
 			
-			GetComponentInChildren<Animator>().speed = 1.0f / maxBoostTime;
-			GetComponentInChildren<Animator>().SetTrigger("Boost");
+			_arrowAnimator.speed = 1.0f / maxBoostTime;
+			_arrowAnimator.SetTrigger("Boost");
 			
 		}
 		
-		if (Input.GetKey(KeyCode.Z) && !controller.collisions.below && canBoost)
+		if (Input.GetKey(KeyCode.Z) && !_controller.collisions.below && _canBoost)
 		{
-			if (currentBoostTime > maxBoostTime)
+			if (_currentBoostTime > maxBoostTime)
 			{
 				boostArrow.SetActive(false);
-				canBoost = false;
-				currentBoostTime = 0.0f;
+				_canBoost = false;
+				_currentBoostTime = 0.0f;
 				return;
 			}
 			
@@ -106,38 +187,38 @@ public class Player : MonoBehaviour
 
 
 			
-			currentBoostTime += Time.deltaTime;
+			_currentBoostTime += Time.deltaTime;
 			
 			return;
 		}
 
-		if (Input.GetKeyUp(KeyCode.Z) && !controller.collisions.below && canBoost)
+		if (Input.GetKeyUp(KeyCode.Z) && !_controller.collisions.below && _canBoost)
 		{
-			velocity = input * boostForce ; //* ((0.5f * currentBoostTime) + 0.5f);
-			currentBoostTime = 0.0f;
-			canBoost = false;
+			_velocity = input * boostForce ; //* ((0.5f * currentBoostTime) + 0.5f);
+			_currentBoostTime = 0.0f;
+			_canBoost = false;
 			boostArrow.SetActive(false);
 		}
 		
-		if (Input.GetKeyDown(KeyCode.UpArrow) && controller.collisions.below)
+		if (Input.GetKeyDown(KeyCode.UpArrow) && _controller.collisions.below)
 		{
-			velocity.y = maxJumpVelocity;
+			_velocity.y = _maxJumpVelocity;
 		}
 
 		if (Input.GetKeyUp(KeyCode.UpArrow))
 		{
-			if (velocity.y > minJumpVelocity)
+			if (_velocity.y > _minJumpVelocity)
 			{
-				velocity.y = minJumpVelocity;
+				_velocity.y = _minJumpVelocity;
 			}
 			
 		}
 
 		float targetVelocityX = input.x * moveSpeed;
 
-		velocity.x = Mathf.SmoothDamp(velocity.x, targetVelocityX, ref velocityXSmoothing, (controller.collisions.below) ? accelerationTimeGrounded : accelerationTimeAirborne);
+		_velocity.x = Mathf.SmoothDamp(_velocity.x, targetVelocityX, ref _velocityXSmoothing, (_controller.collisions.below) ? accelerationTimeGrounded : accelerationTimeAirborne);
 		
-		velocity.y += gravity * Time.deltaTime;
-		controller.Move(velocity * Time.deltaTime);
+		_velocity.y += Physics2D.gravity.x * Time.deltaTime;
+		_controller.Move(_velocity * Time.deltaTime);
 	}
 }
