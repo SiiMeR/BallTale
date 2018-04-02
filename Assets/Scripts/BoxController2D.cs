@@ -52,6 +52,7 @@ public class BoxController2D : RayCastController
 			VerticalCollisions(ref velocity);
 		}
 		
+	
 		transform.Translate(velocity);
 	}
 

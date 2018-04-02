@@ -53,17 +53,18 @@ public class BasicEnemy : MonoBehaviour
 		if (_controller.collisions.left || _controller.collisions.right)
 		{
 			moveSpeed = -moveSpeed;
-			
 			GetComponent<SpriteRenderer>().flipX = Mathf.Sign(moveSpeed) == 1;
 		}
-		_velocity.x = moveSpeed;
 		
+		_velocity.x = moveSpeed;
+
 		if (useGravity)
 		{
 			_velocity.y += Physics2D.gravity.x * Time.deltaTime;
 		}
 		
-		_controller.Move(_velocity * Time.deltaTime);
+		
+		_controller.Move(_velocity* Time.deltaTime);
 	}
 
 
