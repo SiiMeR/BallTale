@@ -21,13 +21,12 @@ public class EnemyPathEditor : Editor {
 		
 		Transform enemyTransform = enemy.transform;
 
-
 		Quaternion enemyRotation = Tools.pivotRotation == PivotRotation.Local ?
 			enemyTransform.rotation : Quaternion.identity;
 		
-		Vector3 p0 = enemy.PathStartPos;
-		Vector3 p1 = enemy.transform.position;
-		Vector3 p2 = enemy.PathEndPos;
+		Vector3 p0 = enemy.PathFirstPos;
+		Vector3 p1 = enemyTransform.position;
+		Vector3 p2 = enemy.PathLastPos;
 
 		Handles.color = Color.cyan;
 		
@@ -36,20 +35,31 @@ public class EnemyPathEditor : Editor {
 
 
 		EditorGUI.BeginChangeCheck();
-		p0 = Handles.DoPositionHandle(p0, enemyRotation);
+		p0 = Handles.PositionHandle(p0, enemyRotation);
 		if (EditorGUI.EndChangeCheck())
 		{
 			Undo.RecordObject(enemy, "Move Path Point");
 			EditorUtility.SetDirty(enemy);
-			enemy.PathStartPos = p0;
+			enemy.PathFirstPos = p0;
 		}
-		EditorGUI.BeginChangeCheck();
-		p2 = Handles.DoPositionHandle(p2, enemyRotation);
+		
+	/*	EditorGUI.BeginChangeCheck();
+		p1 = Handles.PositionHandle(p1, enemyRotation);
 		if (EditorGUI.EndChangeCheck())
 		{
 			Undo.RecordObject(enemy, "Move Path Point");
 			EditorUtility.SetDirty(enemy);
-			enemy.PathEndPos = p2;
+			enemy.PathMiddlePos = p1;
+		}*/
+		
+		
+		EditorGUI.BeginChangeCheck();
+		p2 = Handles.PositionHandle(p2, enemyRotation);
+		if (EditorGUI.EndChangeCheck())
+		{
+			Undo.RecordObject(enemy, "Move Path Point");
+			EditorUtility.SetDirty(enemy);
+			enemy.PathLastPos = p2;
 		}
 		
 	}
