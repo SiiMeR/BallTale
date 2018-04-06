@@ -5,6 +5,7 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 
 [RequireComponent(typeof(CircleController2D))]
 public class Player : MonoBehaviour
@@ -25,7 +26,9 @@ public class Player : MonoBehaviour
 	[SerializeField] private float maxBoostTime = 2.0f;
 	[SerializeField] private float boostForce = 20f;
 	[SerializeField] private GameObject boostArrow;
+	[SerializeField] private GameObject deathScreen;
 
+	[SerializeField] private int currency = 100;
 	
 	private float _maxJumpVelocity;
 	private float _minJumpVelocity;
@@ -42,6 +45,12 @@ public class Player : MonoBehaviour
 	private bool _canBoost = true;
 
 	private int _currentHealth;
+
+	public int Currency
+	{
+		get { return currency; }
+		set { currency = value; }
+	}
 	
 	public int CurrentHealth
 	{
@@ -51,9 +60,9 @@ public class Player : MonoBehaviour
 		}
 		set
 		{
-			if ((_currentHealth - value) < 1)
+			if (value < 1) // dead
 			{
-				Die();
+				StartCoroutine(Death());
 			}
 			else
 			{
@@ -63,6 +72,15 @@ public class Player : MonoBehaviour
 		}
 	}
 
+	IEnumerator Death()
+	{		
+		deathScreen.SetActive(true);
+		
+		yield return new WaitUntil((() => Input.GetKeyDown(KeyCode.Return)));
+		
+		deathScreen.SetActive(false);
+		SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+	}
 	private void Die()
 	{
 		print("You died, but there is no implementation for death yet!");
@@ -72,6 +90,9 @@ public class Player : MonoBehaviour
 	// Use this for initialization
 	void Start ()
 	{
+		
+		deathScreen.SetActive(false);
+		
 		_currentHealth = maxHealth;
 
 		_animator = GetComponent<Animator>();
@@ -100,7 +121,22 @@ public class Player : MonoBehaviour
 	}
 
 
-	
+	private void OnTriggerEnter2D(Collider2D other)
+	{
+		if (other.gameObject.CompareTag("Killcollider") && !_animator.GetBool("Damaged"))
+		{
+
+			var enemy = other.transform.parent.gameObject;
+
+			Currency += enemy.GetComponent<BasicEnemy>().CurrencyOnKill;
+			Destroy(enemy);
+
+			_velocity.y += 35;
+		}
+		
+		
+	}
+
 	private void OnTriggerStay2D(Collider2D other)
 	{	
 
@@ -111,7 +147,7 @@ public class Player : MonoBehaviour
 
 			if (!_animator.GetBool("Damaged"))
 			{			
-				StartCoroutine(PlayerDamaged(enemy.Damage));
+				StartCoroutine(PlayerDamaged());
 				CurrentHealth -= enemy.Damage;
 				Debug.Log(string.Format("Took a hit from {0}, {1} health left. ",
 					other.gameObject.name,
@@ -120,11 +156,27 @@ public class Player : MonoBehaviour
 
 
 		}
+		else if (other.gameObject.CompareTag("Trap"))
+		{
+			var trap = other.gameObject.GetComponent<Trap>();
+			
+			if (!_animator.GetBool("Damaged"))
+			{			
+				StartCoroutine(PlayerDamaged());
+				CurrentHealth -= trap.Damage;
+				Debug.Log(string.Format("Took a hit from {0}, {1} health left. ",
+					other.gameObject.name,
+					_currentHealth));
+			}
+			
+		}
+
+		
 	}
 	
 	
 
-	IEnumerator PlayerDamaged(int damage)
+	IEnumerator PlayerDamaged()
 	{
 		
 		_animator.SetBool("Damaged", true);

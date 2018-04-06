@@ -101,6 +101,7 @@ public class BoxController2D : RayCastController
 
 				collisions.above = directionY == -1;
 				collisions.below = directionY == 1;
+				
 			}
 			
 			Debug.DrawRay(rayOrigin, Vector2.up * directionY * rayLength, Color.red);

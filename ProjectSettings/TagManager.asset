@@ -6,6 +6,9 @@ TagManager:
   tags:
   - Sign
   - Enemy
+  - Trap
+  - Killcollider
+  - Deathscreen
   layers:
   - Default
   - TransparentFX

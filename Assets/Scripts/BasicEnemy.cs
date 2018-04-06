@@ -3,16 +3,16 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 
-[RequireComponent(typeof(BoxController2D))]
-[ExecuteInEditMode]
+[RequireComponent(typeof(BoxController2D))]	
 public class BasicEnemy : MonoBehaviour
 {
 
+	[SerializeField] private int currencyOnKill = 10;
 	[SerializeField] private int damage = 5;
 	[SerializeField] private float moveSpeed = 10;
 	[SerializeField] private bool useGravity = true;
 
-
+	
 	[SerializeField] private Vector3 _pathFirstPos;
 	[SerializeField] private Vector3 _pathMiddlePos;
 	[SerializeField] private Vector3 _pathLastPos;
@@ -22,6 +22,13 @@ public class BasicEnemy : MonoBehaviour
 	
 	public int Damage { get; set; }
 
+
+	public int CurrencyOnKill
+	{
+		get { return currencyOnKill; }
+		set { currencyOnKill = value; }
+	}
+	
 	public Vector3 PathMiddlePos
 	{
 		get
@@ -65,12 +72,15 @@ public class BasicEnemy : MonoBehaviour
 	private BoxController2D _controller;
 	private Vector3 _velocity;
 	
-	[SerializeField] private Vector3 _movetarget;
-	[SerializeField] private Vector3 _lastmovetarget;
+	private Vector3 _movetarget;
+	private Vector3 _lastmovetarget;
+	private bool _justTurnedAround;
 
 	// Use this for initialization
 	void Start ()
 	{
+
+		PathMiddlePos = transform.position;
 		_movetarget = PathFirstPos;
 		_lastmovetarget = PathMiddlePos;
 		
@@ -122,10 +132,12 @@ public class BasicEnemy : MonoBehaviour
 	private void UpdateMovement()
 	{
 		var moveDirection = Mathf.Sign(moveSpeed);
-		GetComponent<SpriteRenderer>().flipX = moveDirection == 1; // moving right
+		
 
 		if (!_moveVertical)
 		{
+			GetComponent<SpriteRenderer>().flipX = moveDirection == 1; // moving right
+			
 			if (_controller.collisions.left || _controller.collisions.right)
 			{
 				moveSpeed = -moveSpeed;
@@ -145,14 +157,20 @@ public class BasicEnemy : MonoBehaviour
 				moveSpeed = -moveSpeed;
 			}
 			
+			if (_controller.collisions.left || _controller.collisions.right)
+			{
+				moveSpeed = -moveSpeed;
+			}
+			
+			
 			_velocity.y = moveSpeed;
 		}
 		
 		
-		if (Vector3.Distance(transform.position, PathMiddlePos) > _unitsToMove && _unitsToMove > 0)
+		if (Vector3.Distance(transform.position, PathMiddlePos) > _unitsToMove && _unitsToMove > 0 && !_justTurnedAround)
 		{
 			moveSpeed = -moveSpeed;
-			
+			StartCoroutine(TurnAround());
 		}
 
 	//	var movingDirection = (_movetarget - transform.position).normalized;
@@ -165,6 +183,24 @@ public class BasicEnemy : MonoBehaviour
 		}
 		
 		_controller.Move(_velocity* Time.deltaTime);
+	}
+
+	IEnumerator TurnAround()
+	{
+		var timer = 1.0f;
+		while (timer > .0f)
+		{
+			_justTurnedAround = true;
+			timer -= Time.deltaTime;
+			yield return null;
+		}
+
+
+		_justTurnedAround = false;
+
+
+
+
 	}
 
 
