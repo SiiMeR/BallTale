@@ -168,7 +168,7 @@ public class BasicEnemy : MonoBehaviour
 		
 		
 		if (Vector3.Distance(transform.position, PathMiddlePos) > _unitsToMove && _unitsToMove > 0 && !_justTurnedAround)
-		{
+		{	
 			moveSpeed = -moveSpeed;
 			StartCoroutine(TurnAround());
 		}

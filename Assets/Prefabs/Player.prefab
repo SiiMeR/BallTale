@@ -24,6 +24,7 @@ GameObject:
   - component: {fileID: 114505464928479366}
   - component: {fileID: 212293388885712598}
   - component: {fileID: 50256793027027020}
+  - component: {fileID: 95305150416264936}
   m_Layer: 8
   m_Name: Player
   m_TagString: Player
@@ -40,6 +41,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4271778345930728}
   - component: {fileID: 212358518237572436}
+  - component: {fileID: 95826676937881564}
   m_Layer: 8
   m_Name: Arrow
   m_TagString: Untagged
@@ -99,7 +101,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1184720796421192}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -5.78, y: -3.16, z: 0.01953125}
+  m_LocalPosition: {x: -5.7, y: -3.26, z: 0.01953125}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4273856877792936}
@@ -116,7 +118,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.18771628, g: 0.19478087, b: 0.20588237, a: 0}
+  m_BackGroundColor: {r: 0.4741025, g: 0.64631915, b: 0.8161765, a: 0}
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0
@@ -185,6 +187,40 @@ AudioListener:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1406313546581158}
   m_Enabled: 1
+--- !u!95 &95305150416264936
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1184720796421192}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 7b9b93d583442a244a931464c4879c6c, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+--- !u!95 &95826676937881564
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1231417571871360}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 94f5e575adfcb484bbe6205f5eb4ee12, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
 --- !u!114 &114505464928479366
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -228,6 +264,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d18e6d489c632d94c99da05f48afbc52, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxHealth: 100
+  secondsInvincibility: 1
+  shotSpeed: 10
   minJumpHeight: 1
   maxJumpHeight: 4
   moveSpeed: 10
@@ -237,6 +276,10 @@ MonoBehaviour:
   maxBoostTime: 2
   boostForce: 20
   boostArrow: {fileID: 1231417571871360}
+  deathScreen: {fileID: 0}
+  shootParticle: {fileID: 1191552461824492, guid: 4fdf3def032d30147afcc40f0202dc28,
+    type: 2}
+  currency: 0
 --- !u!124 &124280488885427720
 Behaviour:
   m_ObjectHideFlags: 1
@@ -323,7 +366,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 7ee94a7c24db9ef4fa6be58dadf4a489, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.766}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.928}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0

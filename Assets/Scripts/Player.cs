@@ -13,7 +13,8 @@ public class Player : MonoBehaviour
 
 	[SerializeField] private int maxHealth = 10;
 	[SerializeField] private float secondsInvincibility = 1.5f;
-	
+
+	[SerializeField] private float shotSpeed;
 	
 	[SerializeField] private float minJumpHeight = 1f;
 	[SerializeField] private float maxJumpHeight = 4f;
@@ -27,6 +28,7 @@ public class Player : MonoBehaviour
 	[SerializeField] private float boostForce = 20f;
 	[SerializeField] private GameObject boostArrow;
 	[SerializeField] private GameObject deathScreen;
+	[SerializeField] private GameObject shootParticle;
 
 	[SerializeField] private int currency = 100;
 	
@@ -117,7 +119,18 @@ public class Player : MonoBehaviour
 	void Update ()
 	{
 		UpdateMovement();
-	
+
+		if (Input.GetKeyDown(KeyCode.C))
+		{
+			var moveDirection = Mathf.Sign(_velocity.x);
+
+			var particle = Instantiate(shootParticle, transform.position, Quaternion.identity);
+
+			Shot shot = particle.GetComponent<Shot>();
+
+			shot.Speed = shotSpeed;
+			shot.Direction = moveDirection;
+		}
 	}
 
 
