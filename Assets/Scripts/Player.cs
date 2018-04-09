@@ -14,6 +14,8 @@ public class Player : MonoBehaviour
 	[SerializeField] private int maxHealth = 10;
 	[SerializeField] private float secondsInvincibility = 1.5f;
 
+	[SerializeField] private int killBounceEnergy = 15;
+	
 	[SerializeField] private float shotSpeed;
 	
 	[SerializeField] private float minJumpHeight = 1f;
@@ -144,7 +146,8 @@ public class Player : MonoBehaviour
 			Currency += enemy.GetComponent<BasicEnemy>().CurrencyOnKill;
 			Destroy(enemy);
 
-			_velocity.y += 35;
+			_velocity.y = 0;
+			_velocity.y += killBounceEnergy;
 		}
 		
 		

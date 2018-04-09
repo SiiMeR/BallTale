@@ -266,7 +266,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 100
   secondsInvincibility: 1
-  shotSpeed: 10
+  killBounceEnergy: 20
+  shotSpeed: 20
   minJumpHeight: 1
   maxJumpHeight: 4
   moveSpeed: 10
