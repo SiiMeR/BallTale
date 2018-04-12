@@ -38039,6 +38039,16 @@ Prefab:
       propertyPath: deathScreen
       value: 
       objectReference: {fileID: 1085026207}
+    - target: {fileID: 114822414754692254, guid: 7333fc2108db98b4094d16889aec8418,
+        type: 2}
+      propertyPath: maxShotRange
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 114822414754692254, guid: 7333fc2108db98b4094d16889aec8418,
+        type: 2}
+      propertyPath: shotSpeed
+      value: 25
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 7333fc2108db98b4094d16889aec8418, type: 2}
   m_IsPrefabParent: 0

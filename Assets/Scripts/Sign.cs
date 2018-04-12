@@ -48,23 +48,25 @@ public class Sign : MonoBehaviour
 	
 	private void OnTriggerEnter2D(Collider2D other)
 	{
-		if (other.gameObject.tag == "Player")
+		
+		if (other.gameObject.CompareTag("Player"))
 		{
 			notice.SetActive(true);
+			isCollidingwPlayer = true;
 		}
 
-		isCollidingwPlayer = true;
 	}
 
 
 
 	private void OnTriggerExit2D(Collider2D other)
 	{
-		if (other.gameObject.tag == "Player")
+		if (other.gameObject.CompareTag("Player"))
 		{
 			notice.SetActive(false);
 			dialoguePanel.SetActive(false);
+			isCollidingwPlayer = false;
 		}
-		isCollidingwPlayer = false;
+		
 	}
 }

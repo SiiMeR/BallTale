@@ -17,12 +17,14 @@ public class Player : MonoBehaviour
 	[SerializeField] private int killBounceEnergy = 15;
 	
 	[SerializeField] private float shotSpeed;
+	[SerializeField] private float maxShotRange;
 	
 	[SerializeField] private float minJumpHeight = 1f;
 	[SerializeField] private float maxJumpHeight = 4f;
+	[SerializeField] private float timeToJumpApex = .4f;
 	
 	[SerializeField] private float moveSpeed = 10;
-	[SerializeField] private float timeToJumpApex = .4f;
+	
 	[SerializeField] private float accelerationTimeAirborne = .2f;
 	[SerializeField] private float accelerationTimeGrounded = .1f;
 	
@@ -33,6 +35,8 @@ public class Player : MonoBehaviour
 	[SerializeField] private GameObject shootParticle;
 
 	[SerializeField] private int currency = 100;
+
+	private float _lastFacingDirection;
 	
 	private float _maxJumpVelocity;
 	private float _minJumpVelocity;
@@ -82,12 +86,9 @@ public class Player : MonoBehaviour
 		
 		yield return new WaitUntil((() => Input.GetKeyDown(KeyCode.Return)));
 		
-		deathScreen.SetActive(false);
 		SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-	}
-	private void Die()
-	{
-		print("You died, but there is no implementation for death yet!");
+		
+		deathScreen.SetActive(false);
 	}
 
 
@@ -124,14 +125,21 @@ public class Player : MonoBehaviour
 
 		if (Input.GetKeyDown(KeyCode.C))
 		{
-			var moveDirection = Mathf.Sign(_velocity.x);
-
+			
 			var particle = Instantiate(shootParticle, transform.position, Quaternion.identity);
 			
-			Shot shot = particle.GetComponent<Shot>();
+			var shot = particle.GetComponent<Shot>();
 
-			shot.Speed = shotSpeed;
-			shot.Direction = moveDirection;
+			shot.Movespeed = shotSpeed;
+			shot.Direction = _lastFacingDirection;
+			shot.MaxRange = maxShotRange;
+		}
+
+		
+		if (Math.Abs(_velocity.x) > .01f)
+		{
+			_lastFacingDirection = Mathf.Sign(_velocity.x);
+	
 		}
 	}
 
@@ -192,7 +200,7 @@ public class Player : MonoBehaviour
 	
 	
 
-	IEnumerator PlayerDamaged()
+	public IEnumerator PlayerDamaged()
 	{
 		
 		_animator.SetBool("Damaged", true);

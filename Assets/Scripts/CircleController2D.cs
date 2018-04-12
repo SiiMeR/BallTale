@@ -37,11 +37,11 @@ public class CircleController2D : RayCastController
 		UpdateRaycastOrigins();
 		collisions.Reset();
 
-		if (velocity.x != 0)
+		if (Math.Abs(velocity.x) > Single.Epsilon)
 		{
 			HorizontalCollisions(ref velocity);
 		}
-		if (velocity.y != 0)
+		if (Math.Abs(velocity.y) > Single.Epsilon)
 		{
 			VerticalCollisions(ref velocity);
 		}

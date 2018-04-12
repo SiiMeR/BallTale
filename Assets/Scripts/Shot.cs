@@ -9,37 +9,49 @@ public class Shot : MonoBehaviour
 
 	[SerializeField] private LayerMask KillMask;
 	
-	private float direction;
-
 	private CircleController2D _controller;
 	
+	public float MaxRange { get; set; }
 	
-
+	private float _direction;
 	public float Direction
 	{
-		get { return direction; }
+		get { return _direction; }
 		set
 		{
 			gameObject.GetComponent<SpriteRenderer>().flipX = value == -1;
 			
-			direction = value;
+			_direction = value;
 		}
 	}
 
-	public float Speed { get; set;}
+	public float Movespeed { get; set;}
 
-	public Vector2 Velocity { get; set; }
+	public Vector2 CurrentVelocity { get; set; }
+
+
 	
-
+	private float _distanceCovered;
+	
 	// Use this for initialization
 	void Start ()
 	{
 		_controller = GetComponent<CircleController2D>();
-		Velocity = new Vector2(direction, 0) * Speed;
+		CurrentVelocity = new Vector2(_direction, 0) * Movespeed;
+		_distanceCovered = 0;
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	void Update ()
+	{
+
+
+		if (_distanceCovered > MaxRange)
+		{
+			Destroy(gameObject);
+		}
+		
+		_distanceCovered += Time.deltaTime * Movespeed;
 		Move();
 	}
 
@@ -55,13 +67,12 @@ public class Shot : MonoBehaviour
 			Destroy(gameObject);
 		}
 		
-		_controller.Move(Velocity * Time.deltaTime);
+		_controller.Move(CurrentVelocity * Time.deltaTime);
 	}
 
 
 	private void OnTriggerEnter2D(Collider2D other)
 	{
-		print(other.gameObject.tag);
 		// TODO, CHECK IF IT IS A THING THAT GIVES MONEY OR NOT
 		if (_controller.IsInLayerMask(other.gameObject.layer, KillMask))
 		{
@@ -80,4 +91,10 @@ public class Shot : MonoBehaviour
 		}
 	}
 
+	public Shot(float direction, float maxRange, float movespeed)
+	{
+		this._direction = direction;
+		MaxRange = maxRange;
+		Movespeed = movespeed;
+	}
 }
