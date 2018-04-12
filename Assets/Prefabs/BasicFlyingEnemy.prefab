@@ -20,7 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4670337787089084}
   - component: {fileID: 61115812626882148}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: killcollider
   m_TagString: Killcollider
   m_Icon: {fileID: 0}
@@ -40,7 +40,7 @@ GameObject:
   - component: {fileID: 114848818918879390}
   - component: {fileID: 114309150039754992}
   - component: {fileID: 95554651409832300}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: BasicFlyingEnemy
   m_TagString: Enemy
   m_Icon: {fileID: 0}

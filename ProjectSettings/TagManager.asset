@@ -9,6 +9,7 @@ TagManager:
   - Trap
   - Killcollider
   - Deathscreen
+  - TilemapCol
   layers:
   - Default
   - TransparentFX
@@ -21,7 +22,7 @@ TagManager:
   - Player
   - Collision
   - Enemy
-  - 
+  - Shot
   - 
   - 
   - 

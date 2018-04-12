@@ -127,7 +127,7 @@ public class Player : MonoBehaviour
 			var moveDirection = Mathf.Sign(_velocity.x);
 
 			var particle = Instantiate(shootParticle, transform.position, Quaternion.identity);
-
+			
 			Shot shot = particle.GetComponent<Shot>();
 
 			shot.Speed = shotSpeed;

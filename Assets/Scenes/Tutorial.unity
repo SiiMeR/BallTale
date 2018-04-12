@@ -5964,7 +5964,7 @@ GameObject:
   - component: {fileID: 542171725}
   m_Layer: 9
   m_Name: main
-  m_TagString: Untagged
+  m_TagString: TilemapCol
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6028,7 +6028,7 @@ TilemapRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 50
+  m_SortingOrder: 1500
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_MaxChunkCount: 16
   m_MaxFrameAge: 16
@@ -37771,48 +37771,6 @@ Transform:
   m_PrefabParentObject: {fileID: 4418736205045970, guid: 1dc546dfa03820a4a9f0ebb76d783996,
     type: 2}
   m_PrefabInternal: {fileID: 640157158}
---- !u!1001 &1828217549
-Prefab:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 4351173648124962, guid: 4fdf3def032d30147afcc40f0202dc28, type: 2}
-      propertyPath: m_LocalPosition.x
-      value: 8.55
-      objectReference: {fileID: 0}
-    - target: {fileID: 4351173648124962, guid: 4fdf3def032d30147afcc40f0202dc28, type: 2}
-      propertyPath: m_LocalPosition.y
-      value: 8.5589285
-      objectReference: {fileID: 0}
-    - target: {fileID: 4351173648124962, guid: 4fdf3def032d30147afcc40f0202dc28, type: 2}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4351173648124962, guid: 4fdf3def032d30147afcc40f0202dc28, type: 2}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4351173648124962, guid: 4fdf3def032d30147afcc40f0202dc28, type: 2}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4351173648124962, guid: 4fdf3def032d30147afcc40f0202dc28, type: 2}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4351173648124962, guid: 4fdf3def032d30147afcc40f0202dc28, type: 2}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4351173648124962, guid: 4fdf3def032d30147afcc40f0202dc28, type: 2}
-      propertyPath: m_RootOrder
-      value: 10
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_ParentPrefab: {fileID: 100100000, guid: 4fdf3def032d30147afcc40f0202dc28, type: 2}
-  m_IsPrefabParent: 0
 --- !u!1 &1855738671
 GameObject:
   m_ObjectHideFlags: 0

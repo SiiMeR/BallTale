@@ -55,7 +55,10 @@ public class CircleController2D : RayCastController
 		float rayLength = Mathf.Abs(velocity.x) + SKINWIDTH;
 
 		Vector2 rayOrigin = rayCastOrigins.center;
-		RaycastHit2D hit = Physics2D.CircleCast(rayOrigin, 0.5f, Vector2.right * directionX, rayLength, collisionMask);
+		
+		float radius = Vector2.Distance(rayCastOrigins.center, rayCastOrigins.right);
+		
+		RaycastHit2D hit = Physics2D.CircleCast(rayOrigin, radius, Vector2.right * directionX, rayLength, collisionMask);
 		
 		if (hit)
 		{
@@ -75,8 +78,10 @@ public class CircleController2D : RayCastController
 		float rayLength = Mathf.Abs(velocity.y) + SKINWIDTH;
 
 		Vector2 rayOrigin = rayCastOrigins.center;
+
+		float radius = Vector2.Distance(rayCastOrigins.center, rayCastOrigins.bottom);
 		
-		RaycastHit2D hit = Physics2D.CircleCast(rayOrigin, 0.5f,Vector2.up * directionY, rayLength, collisionMask);
+		RaycastHit2D hit = Physics2D.CircleCast(rayOrigin, radius,Vector2.up * directionY, rayLength, collisionMask);
 		if (hit)
 		{
 			//Vector2 reflect = Vector2.Reflect(velocity,hit.normal);
