@@ -17,6 +17,7 @@ public class Player : MonoBehaviour
 	[SerializeField] private int killBounceEnergy = 15;
 	
 	[SerializeField] private float shotSpeed;
+	[SerializeField] private float shotCoolDown = 1.0f;
 	[SerializeField] private float maxShotRange;
 	
 	[SerializeField] private float minJumpHeight = 1f;
@@ -51,8 +52,9 @@ public class Player : MonoBehaviour
 	private Animator _arrowAnimator;
 	
 	private bool _canBoost = true;
-
+	
 	private int _currentHealth;
+	private double _shotCoolDownTimer;
 
 	public int Currency
 	{
@@ -123,7 +125,7 @@ public class Player : MonoBehaviour
 	{
 		UpdateMovement();
 
-		if (Input.GetKeyDown(KeyCode.C))
+		if (Input.GetKeyDown(KeyCode.C) && shotCoolDown < _shotCoolDownTimer)
 		{
 			
 			var particle = Instantiate(shootParticle, transform.position, Quaternion.identity);
@@ -133,6 +135,8 @@ public class Player : MonoBehaviour
 			shot.Movespeed = shotSpeed;
 			shot.Direction = _lastFacingDirection;
 			shot.MaxRange = maxShotRange;
+
+			_shotCoolDownTimer = 0;
 		}
 
 		
@@ -141,6 +145,8 @@ public class Player : MonoBehaviour
 			_lastFacingDirection = Mathf.Sign(_velocity.x);
 	
 		}
+		
+		_shotCoolDownTimer += Time.deltaTime;
 	}
 
 

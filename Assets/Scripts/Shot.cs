@@ -76,7 +76,7 @@ public class Shot : MonoBehaviour
 		// TODO, CHECK IF IT IS A THING THAT GIVES MONEY OR NOT
 		if (_controller.IsInLayerMask(other.gameObject.layer, KillMask))
 		{
-			
+			print("collided with " + other.gameObject.name);
 			GameObject.FindGameObjectWithTag("Player").GetComponent<Player>().Currency +=
 				other.gameObject.GetComponent<BasicEnemy>().CurrencyOnKill;
 			Destroy(other.gameObject);

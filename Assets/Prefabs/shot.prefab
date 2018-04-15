@@ -39,8 +39,8 @@ GameObject:
   - component: {fileID: 212089533281906080}
   - component: {fileID: 114011074807967604}
   - component: {fileID: 70678284532606634}
-  - component: {fileID: 114041498186207868}
   - component: {fileID: 50083992076215384}
+  - component: {fileID: 114041498186207868}
   m_Layer: 11
   m_Name: shot
   m_TagString: Untagged
@@ -137,7 +137,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   collisionMask:
     serializedVersion: 2
-    m_Bits: 4294964936
+    m_Bits: 4294963912
   collider: {fileID: 0}
 --- !u!198 &198716854000180334
 ParticleSystem:
@@ -3587,7 +3587,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 900
   m_Sprite: {fileID: 21300000, guid: 53f1999f7c6b7664fad458e2296de78e, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0

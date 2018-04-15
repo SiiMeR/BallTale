@@ -39,7 +39,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4231437794634756}
   - component: {fileID: 61490116770594366}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: killcollider
   m_TagString: Killcollider
   m_Icon: {fileID: 0}
