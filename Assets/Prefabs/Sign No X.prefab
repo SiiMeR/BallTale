@@ -546,13 +546,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 011f291d48c96194ea58f36dc3df2182, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  notice: {fileID: 1006951434633228}
-  dialoguePanel: {fileID: 1853980729087382}
-  titleText: {fileID: 114372498713253768}
-  paragraphText: {fileID: 114070281113699060}
-  Title: Jumping
-  Text: Press the up arrow key to jump up. Holding jump for longer allows you to jump
-    even higher.
+  _notice: {fileID: 1006951434633228}
+  _panel: {fileID: 1550799488672216}
+  _pauseOnInteract: 0
+  _titleText: {fileID: 114372498713253768}
+  _paragraphText: {fileID: 114070281113699060}
+  _title: 
+  _text: 
 --- !u!114 &114702166250110858
 MonoBehaviour:
   m_ObjectHideFlags: 1

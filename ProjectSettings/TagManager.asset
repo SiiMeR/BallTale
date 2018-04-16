@@ -10,6 +10,7 @@ TagManager:
   - Killcollider
   - Deathscreen
   - TilemapCol
+  - Shop
   layers:
   - Default
   - TransparentFX

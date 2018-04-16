@@ -4,69 +4,29 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class Sign : MonoBehaviour
+public class Sign : Interactable
 {
 
-	
-	[SerializeField] private GameObject notice;
-	[SerializeField] private GameObject dialoguePanel;
-
-	[SerializeField] private TMP_Text titleText;
-	[SerializeField] private TMP_Text paragraphText;
+	[SerializeField] private TMP_Text _titleText;
+	[SerializeField] private TMP_Text _paragraphText;
 	
 	
-	[SerializeField] [TextArea] private string Title;
-	[SerializeField] [TextArea] private string Text;
+	[SerializeField] [TextArea] private string _title;
+	[SerializeField] [TextArea] private string _text;
 
 
-	private bool isCollidingwPlayer;
-	
 	// Use this for initialization
-	void Start () {
-		notice.SetActive(false);	
-		dialoguePanel.SetActive(false);
-
-		titleText.SetText(Title);
-		paragraphText.SetText(Text);
+	protected override void Start ()
+	{
+		base.Start();
+		
+		_titleText.SetText(_title);
+		_paragraphText.SetText(_text);
 	}
 	
 	// Update is called once per frame	
-	void Update () {
-		if (Input.GetKeyDown(KeyCode.X) && isCollidingwPlayer)
-		{
-			FlipDialogue();
-		}
+	protected override void Update () {
+		base.Update();
 	}
 
-	public void FlipDialogue()
-	{
-		
-		//Time.timeScale = dialoguePanel.activeInHierarchy ? 1.0f : 0.0f; use this if you want pausing on sign open.
-		dialoguePanel.SetActive(!dialoguePanel.activeInHierarchy);
-	}
-	
-	
-	private void OnTriggerEnter2D(Collider2D other)
-	{
-		
-		if (other.gameObject.CompareTag("Player"))
-		{
-			notice.SetActive(true);
-			isCollidingwPlayer = true;
-		}
-
-	}
-
-
-
-	private void OnTriggerExit2D(Collider2D other)
-	{
-		if (other.gameObject.CompareTag("Player"))
-		{
-			notice.SetActive(false);
-			dialoguePanel.SetActive(false);
-			isCollidingwPlayer = false;
-		}
-		
-	}
 }
