@@ -32,7 +32,7 @@ public abstract class Interactable : MonoBehaviour
 		if (_pauseOnInteract)
 		{
 			Time.timeScale = _panel.activeInHierarchy ? 1.0f : 0.0f; 
-			// use this if you want pausing on sign open.
+			// use this if you want pausing on open.
 		}
 		_panel.SetActive(!_panel.activeInHierarchy);
 	}

@@ -11,7 +11,7 @@ using UnityEngine.SceneManagement;
 public class Player : MonoBehaviour
 {
 
-	[SerializeField] private int maxHealth = 10;
+	[SerializeField] private int maxHealth = 100;
 	[SerializeField] private float secondsInvincibility = 1.5f;
 
 	[SerializeField] private int killBounceEnergy = 15;
@@ -77,10 +77,16 @@ public class Player : MonoBehaviour
 			else
 			{
 				_currentHealth = value;
-				
 			}
 		}
 	}
+
+	public int MaxHealth
+	{
+		get { return maxHealth; }
+		set { maxHealth = value; }
+	}
+
 
 	IEnumerator Death()
 	{		

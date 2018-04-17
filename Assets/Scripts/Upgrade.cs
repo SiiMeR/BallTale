@@ -4,14 +4,25 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 
-public class Upgrade 
+public abstract class Upgrade : MonoBehaviour
 {
 
-	public string Price { get; set; }
+	public int Price { get; set; }
 	public string Name { get; set; }
-	public Image Image { get; set; }
+	//public Image Image { get; set; }
 
-	public UnityEvent OnAqcuire;
+	public UnityEvent OnAquire;
+	
+	private void Start()
+	{
+		if (OnAquire == null)
+		{
+			OnAquire = new UnityEvent();
+		}
+	}
 
-
+	private void Update()
+	{
+		
+	}
 }
