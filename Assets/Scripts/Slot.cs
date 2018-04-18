@@ -7,8 +7,9 @@ using UnityEngine.UI;
 public class Slot : MonoBehaviour
 {
 	[SerializeField] private TMP_Text _priceText;
-	[SerializeField] private Image _itemImage; 
-	
+	[SerializeField] private Image _itemImage;
+
+	public GameObject Upgrade;
 	
 	// Use this for initialization
 	void Start () {
@@ -20,9 +21,10 @@ public class Slot : MonoBehaviour
 		
 	}
 
-	public void SetSlotValues(Sprite image, int price)
+	public void SetSlotValues(GameObject upgrade)
 	{
-		_priceText.text = price.ToString();
-		_itemImage.sprite = image;
+		Upgrade = upgrade;
+		_priceText.text = upgrade.GetComponent<HealthUpgrade>().Price.ToString();
+		_itemImage.sprite = upgrade.GetComponent<SpriteRenderer>().sprite;
 	}
 }
