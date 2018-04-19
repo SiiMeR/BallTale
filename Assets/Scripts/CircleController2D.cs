@@ -2,19 +2,28 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Experimental.UIElements;
 
 public class CircleController2D : RayCastController
 {
+
+	public float EdgePushStrength = 0.01f;
+	
 	public CollisionInfo collisions;
 	
 	public struct CollisionInfo
 	{
 		public bool above, below, left, right;
 
+		public bool[] edgecheck;
+		
 		public void Reset()
 		{
 			above = below = left = right = false;
+			edgecheck = new bool[3];
 		}
+
+		
 	}
 	
 	public RaycastOrigins rayCastOrigins;
@@ -51,6 +60,7 @@ public class CircleController2D : RayCastController
 			Debug.LogWarning("Velocity of " + gameObject.name + " is NaN, will not translate");
 			return;
 		}
+		
 		transform.Translate(velocity);
 	}
 	
@@ -98,9 +108,98 @@ public class CircleController2D : RayCastController
 			collisions.below = directionY == -1;
 			collisions.above = directionY == 1;
 		}
-		
-		Debug.DrawRay(rayOrigin , Vector2.up * 2 * directionY, collisions.above || collisions.below ? Color.blue: Color.red);
+
+		for (int i = 0; i < 3; i++)
+		{
+			Bounds b = collider.bounds;
+			b.Expand(SKINWIDTH * -2);
+
+			float spacing = b.size.x / (3 - 1);
+
+			Vector2 rayOg = new Vector2();
+			float rayl = rayLength;
+			if (i == 0)
+			{
+				rayOg = new Vector2(b.min.x, b.center.y);
+				rayl += radius;
+			}
+			else if (i == 1)
+			{
+				rayOg = new Vector2(b.center.x,b.min.y);
+			
+			}
+			else if (i == 2)
+			{
+				rayOg = new Vector2(b.max.x, b.center.y);
+				rayl += radius;
+			}
+								
+
+			RaycastHit2D edgehit = Physics2D.Raycast(
+				rayOg,
+				Vector2.up * directionY,
+				rayl,
+				collisionMask);
+
+			if (edgehit)
+			{
+				collisions.edgecheck[i] = true;
+				
+				Debug.DrawRay(rayOg ,
+					Vector2.down * rayl, Color.yellow);
+			}
+
+		}
+
+		EdgeMove(ref velocity);
+
+			Debug.DrawRay(rayOrigin , Vector2.up * 2 * directionY, collisions.above || collisions.below ? Color.blue: Color.red);
+
 	}
+
+	int bToInt(bool b)
+	{
+		return b ? 1 : 0;
+	}
+
+	void EdgeMove(ref Vector3 velocity)
+	{
+		int leftCollision = bToInt(collisions.edgecheck[0]);
+		int middleCollision = bToInt(collisions.edgecheck[1]);
+		int rightCollision = bToInt(collisions.edgecheck[2]);
+
+		int sum = leftCollision * 1 + middleCollision * 2 + rightCollision * 4;
+
+		switch (sum)
+		{
+				// left other cases in in case I to use them to add functionality in future
+				case 1: // l 
+					velocity.x += EdgePushStrength;
+					break;
+			
+				case 2: // m
+					break;
+				
+				case 3: // l + m
+					break;
+				
+				case 4: // r
+					velocity.x -= EdgePushStrength;
+					break;
+						
+				case 5: // l + r : shouldnt happen?
+					break;
+				
+				case 6: // m + r
+					break;
+				
+				case 7: // l + m + r
+					break;
+						
+				
+		}
+	}
+	
 
 	public override void UpdateRaycastOrigins()
 	{
