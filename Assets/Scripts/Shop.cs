@@ -1,45 +1,57 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 
 public class Shop : Interactable
 {
+	public float FrameMoveTime = 1.0f;
+	
 	[SerializeField] private List<Upgrade> _itemsOnSale;
-	[SerializeField] private List<GameObject> _slots;
 	[SerializeField] private GameObject _selectionFrame;
-
-
+	
+	private List<Slot> _slots;
+	private Queue<Upgrade> _saleQueue; // holds items that are not yet on sale
 	private int _currentSelectionSlot;
 	
 	// Use this for initialization
 	protected  override void Start () {
 		base.Start();
 		
+		_saleQueue = new Queue<Upgrade>();
+		_slots = GetComponentsInChildren<Slot>(true).ToList();
 
-//		_itemsOnSale.Add(new Upgrade());
-//		titleText.SetText(Title);
-	//	paragraphText.SetText(Text);
+		Upgrade healthUpgrade = UpgradeBuilder.Instance.GetHealthUpgrade(10, 10);
+		Upgrade healthUpgrade2 = UpgradeBuilder.Instance.GetHealthUpgrade(10, 15);
+		Upgrade healthUpgrade3 = UpgradeBuilder.Instance.GetHealthUpgrade(50, 500);
+		Upgrade healthUpgrade4 = UpgradeBuilder.Instance.GetHealthUpgrade(100, 1000);
+		
+		_saleQueue.Enqueue(healthUpgrade);
+		_saleQueue.Enqueue(healthUpgrade2);
+		_saleQueue.Enqueue(healthUpgrade3);
+		_saleQueue.Enqueue(healthUpgrade4);
+		
+		foreach (var slot in _slots)
+		{
+			if (_saleQueue.Count < 1)
+			{
+				break;
+			}
+			slot.Upgrade = _saleQueue.Dequeue();
+		}
+	}
 
+	
+	private void AddItemToSlot(Upgrade item)
+	{
+		var freeSlots = _slots.FirstOrDefault(slot => slot.IsEmpty());
 
-		GameObject healthUpgrade = UpgradeBuilder.Instance.GetHealthUpgrade(10, 100);
-		
-		_slots[0].GetComponent<Slot>().SetSlotValues(
-			healthUpgrade
-			);
-
-		GameObject healthUpgrade2 = UpgradeBuilder.Instance.GetHealthUpgrade(10, 150);
-		
-		_slots[1].GetComponent<Slot>().SetSlotValues(
-			healthUpgrade2
-			);
-		
-		GameObject healthUpgrade3 = UpgradeBuilder.Instance.GetHealthUpgrade(50, 150);
-		
-		_slots[2].GetComponent<Slot>().SetSlotValues(
-			healthUpgrade3
-		);
+		if (freeSlots != null)
+		{
+			freeSlots.Upgrade = item;
+		}
 	}
 	
 	// Update is called once per frame	
@@ -51,35 +63,69 @@ public class Shop : Interactable
 		{
 			if (Input.GetKeyDown(KeyCode.LeftArrow))
 			{
-				_currentSelectionSlot = (int) Mathf.Repeat(++_currentSelectionSlot, _slots.Count);
-
+				StartCoroutine(MoveFrame(true));
+				
 			} 
 			else if (Input.GetKeyDown(KeyCode.RightArrow))
 			{
-				_currentSelectionSlot = (int) Mathf.Repeat(--_currentSelectionSlot, _slots.Count);
+				StartCoroutine(MoveFrame(false));
+				
 			}
-		
-			_selectionFrame.transform.position = _slots[_currentSelectionSlot].transform.position;
+			
+			
+			//_selectionFrame.transform.position = _slots[_currentSelectionSlot].transform.position;
 
-			if (Input.GetKeyDown(KeyCode.C))
+			if (Input.GetKeyDown(KeyCode.C) && !_slots[_currentSelectionSlot].IsEmpty())
 			{
-				_slots[_currentSelectionSlot]
-					.GetComponent<Slot>()
-					.Upgrade
-					.GetComponent<HealthUpgrade>()
-					.OnAquire
-					.Invoke();
-				
-				
-				
-				
-				//Destroy(_slots[_currentSelectionSlot]);
+				var slot = _slots[_currentSelectionSlot];
+			
+				if (slot.Upgrade.Price <= FindObjectOfType<Player>().Currency)
+				{
+					slot
+						.Upgrade
+						.GetComponent<HealthUpgrade>()
+						.OnAquire
+						.Invoke();
+
+					slot.Upgrade = null;
+				}
+
+				FillSlotWithNewItem(slot);
 			}
 		}
 
-		print(_currentSelectionSlot);
+
 	}
 
-	
+	IEnumerator MoveFrame(bool moveLeft)
+	{
+		float elapsedTime = 0;
+
+		Vector3 startPos = _slots[_currentSelectionSlot].transform.position;
+
+		_currentSelectionSlot = moveLeft
+			? (int) Mathf.Repeat(++_currentSelectionSlot, _slots.Count)
+			: (int) Mathf.Repeat(--_currentSelectionSlot, _slots.Count);
+		
+		Vector3 endPos = _slots[_currentSelectionSlot].transform.position;
+		
+		while ((elapsedTime += Time.unscaledDeltaTime) < FrameMoveTime)
+		{
+			
+			_selectionFrame.transform.position = Vector3.Lerp(startPos, endPos, elapsedTime / FrameMoveTime);
+			
+			yield return null;
+		}
+		
+		
+	}
+
+	private void FillSlotWithNewItem(Slot slot)
+	{
+		if (_saleQueue.Count != 0)
+		{
+			slot.Upgrade = _saleQueue.Dequeue();
+		}
+	}
 }
 

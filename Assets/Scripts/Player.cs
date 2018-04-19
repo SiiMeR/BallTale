@@ -129,11 +129,27 @@ public class Player : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
 	{
-		UpdateMovement();
 
+		if (Time.timeScale > 0.01f)
+		{
+			UpdateMovement();
+			CheckShooting();
+
+			if (Math.Abs(_velocity.x) > .01f)
+			{
+				_lastFacingDirection = Mathf.Sign(_velocity.x);
+	
+			}
+		
+
+		}
+
+	}
+
+	private void CheckShooting()
+	{
 		if (Input.GetKeyDown(KeyCode.C) && shotCoolDown < _shotCoolDownTimer)
 		{
-			
 			var particle = Instantiate(shootParticle, transform.position, Quaternion.identity);
 			
 			var shot = particle.GetComponent<Shot>();
@@ -143,16 +159,13 @@ public class Player : MonoBehaviour
 			shot.MaxRange = maxShotRange;
 
 			_shotCoolDownTimer = 0;
-		}
-
-		
-		if (Math.Abs(_velocity.x) > .01f)
-		{
-			_lastFacingDirection = Mathf.Sign(_velocity.x);
-	
+			
 		}
 		
 		_shotCoolDownTimer += Time.deltaTime;
+
+
+
 	}
 
 

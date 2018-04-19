@@ -18,7 +18,7 @@ public class UI : MonoBehaviour
 	
 	// Update is called once per frame
 	void Update () {
-		health.SetText("Health : " + player.CurrentHealth);
+		health.SetText("Health : " + player.CurrentHealth + " / " + player.MaxHealth);
 		currency.SetText("Currency : " + player.Currency);
 	}
 }

@@ -46,8 +46,14 @@ public class CircleController2D : RayCastController
 			VerticalCollisions(ref velocity);
 		}
 
+		if (float.IsNaN(velocity.x) || float.IsNaN(velocity.y) || float.IsNaN(velocity.z))
+		{
+			Debug.LogWarning("Velocity of " + gameObject.name + " is NaN, will not translate");
+			return;
+		}
 		transform.Translate(velocity);
 	}
+	
 
 	public override void HorizontalCollisions(ref Vector3 velocity)
 	{

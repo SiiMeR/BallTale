@@ -18,20 +18,19 @@ public class UpgradeBuilder : Singleton<UpgradeBuilder> {
 	void Update () {
 		
 	}
-
-	public GameObject GetHealthUpgrade(int health, int price)
+	
+	public Upgrade GetHealthUpgrade(int health, int price)
 	{
-		GameObject healthUpgrade = Instantiate(_healthPrefab);
+		GameObject huGo = Instantiate(_healthPrefab);
 
-		healthUpgrade.GetComponent<HealthUpgrade>().HealthBonus = health;
-		healthUpgrade.GetComponent<HealthUpgrade>().Price = price;
+		HealthUpgrade healthUpgrade = huGo.GetComponent<HealthUpgrade>();
+		
+		healthUpgrade.HealthBonus = health;
+		healthUpgrade.Price = price;
+		healthUpgrade.Sprite = huGo.GetComponent<SpriteRenderer>().sprite;
 
+		huGo.GetComponent<SpriteRenderer>().enabled = false;
 		return healthUpgrade;
 	}
 
-/*	GameObject GetUpgrade(string name, int price)
-	{
-		
-	}
-	*/
 }

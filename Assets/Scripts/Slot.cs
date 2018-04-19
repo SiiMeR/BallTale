@@ -9,7 +9,45 @@ public class Slot : MonoBehaviour
 	[SerializeField] private TMP_Text _priceText;
 	[SerializeField] private Image _itemImage;
 
-	public GameObject Upgrade;
+
+	private Upgrade _upgrade;
+	
+	public Upgrade Upgrade
+	{
+		get
+		{
+			return _upgrade;
+		}
+		set
+		{
+			_upgrade = value;
+
+			if (value != null)
+			{
+				_priceText.text = value.Price.ToString();
+				_itemImage.sprite = value.GetComponent<SpriteRenderer>().sprite;
+				
+				var color = _itemImage.color;
+				color.a = 1;
+				_itemImage.color = color;
+			}
+			else
+			{
+				_priceText.text = null;
+				_itemImage.sprite = null;
+
+				var color = _itemImage.color;
+				color.a = 0;
+				_itemImage.color = color;
+			}
+
+		}
+	}
+
+	public bool IsEmpty()
+	{
+		return Upgrade == null;
+	}
 	
 	// Use this for initialization
 	void Start () {
@@ -19,12 +57,5 @@ public class Slot : MonoBehaviour
 	// Update is called once per frame
 	void Update () {
 		
-	}
-
-	public void SetSlotValues(GameObject upgrade)
-	{
-		Upgrade = upgrade;
-		_priceText.text = upgrade.GetComponent<HealthUpgrade>().Price.ToString();
-		_itemImage.sprite = upgrade.GetComponent<SpriteRenderer>().sprite;
 	}
 }

@@ -19,7 +19,8 @@ public class HealthUpgrade : Upgrade
 
 	void AddHealth()
 	{
-		// todo max health
-		GameObject.FindGameObjectWithTag("Player").GetComponent<Player>().CurrentHealth += HealthBonus;
+		var player = FindObjectOfType<Player>().GetComponent<Player>();
+		player.MaxHealth += HealthBonus;
+		player.Currency -= Price;
 	}
 }

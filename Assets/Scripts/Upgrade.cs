@@ -9,7 +9,7 @@ public abstract class Upgrade : MonoBehaviour
 
 	public int Price { get; set; }
 	public string Name { get; set; }
-	//public Image Image { get; set; }
+	public Sprite Sprite { get; set; }
 
 	public UnityEvent OnAquire;
 	
