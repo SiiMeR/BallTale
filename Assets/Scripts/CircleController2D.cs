@@ -148,6 +148,11 @@ public class CircleController2D : RayCastController
 				Debug.DrawRay(rayOg ,
 					Vector2.down * rayl, Color.yellow);
 			}
+			else
+			{
+				Debug.DrawRay(rayOg ,
+					Vector2.down * rayl, Color.magenta);
+			}
 
 		}
 

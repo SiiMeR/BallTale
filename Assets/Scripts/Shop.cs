@@ -117,6 +117,8 @@ public class Shop : Interactable
 			yield return null;
 		}
 		
+		_selectionFrame.transform.position = _slots[_currentSelectionSlot].transform.position;
+		
 		
 	}
 
