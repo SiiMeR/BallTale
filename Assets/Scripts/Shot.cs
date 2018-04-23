@@ -7,7 +7,7 @@ using UnityEngine;
 public class Shot : MonoBehaviour
 {
 
-	[SerializeField] private LayerMask KillMask;
+	[SerializeField] private LayerMask _killMask;
 	
 	private CircleController2D _controller;
 	
@@ -19,17 +19,15 @@ public class Shot : MonoBehaviour
 		get { return _direction; }
 		set
 		{
-			gameObject.GetComponent<SpriteRenderer>().flipX = value == -1;
+			gameObject.GetComponent<SpriteRenderer>().flipX = Math.Abs(value - (-1)) < 0.01f;
 			
 			_direction = value;
 		}
 	}
 
-	public float Movespeed { get; set;}
+	public float MoveSpeed { get; set;}
 
 	public Vector2 CurrentVelocity { get; set; }
-
-
 	
 	private float _distanceCovered;
 	
@@ -37,7 +35,7 @@ public class Shot : MonoBehaviour
 	void Start ()
 	{
 		_controller = GetComponent<CircleController2D>();
-		CurrentVelocity = new Vector2(_direction, 0) * Movespeed;
+		CurrentVelocity = new Vector2(_direction, 0) * MoveSpeed;
 		_distanceCovered = 0;
 	}
 	
@@ -51,14 +49,14 @@ public class Shot : MonoBehaviour
 			Destroy(gameObject);
 		}
 		
-		_distanceCovered += Time.deltaTime * Movespeed;
+		_distanceCovered += Time.deltaTime * MoveSpeed;
 		Move();
 	}
 
 	private void Move()
 	{
 		
-		// any collision is death
+		// any collision is death for the shot
 		if (_controller.collisions.right || 
 		    _controller.collisions.left  || 
 		    _controller.collisions.above ||
@@ -74,9 +72,8 @@ public class Shot : MonoBehaviour
 	private void OnTriggerEnter2D(Collider2D other)
 	{
 		// TODO, CHECK IF IT IS A THING THAT GIVES MONEY OR NOT
-		if (_controller.IsInLayerMask(other.gameObject.layer, KillMask))
+		if (_controller.IsInLayerMask(other.gameObject.layer, _killMask))
 		{
-			print("collided with " + other.gameObject.name);
 			GameObject.FindGameObjectWithTag("Player").GetComponent<Player>().Currency +=
 				other.gameObject.GetComponent<BasicEnemy>().CurrencyOnKill;
 			Destroy(other.gameObject);
@@ -91,10 +88,6 @@ public class Shot : MonoBehaviour
 		}
 	}
 
-	public Shot(float direction, float maxRange, float movespeed)
-	{
-		this._direction = direction;
-		MaxRange = maxRange;
-		Movespeed = movespeed;
-	}
+
+
 }

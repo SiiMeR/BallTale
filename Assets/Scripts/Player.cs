@@ -148,13 +148,17 @@ public class Player : MonoBehaviour
 
 	private void CheckShooting()
 	{
+		
+		Vector2 input = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+
+		
 		if (Input.GetKeyDown(KeyCode.C) && shotCoolDown < _shotCoolDownTimer)
 		{
 			var particle = Instantiate(shootParticle, transform.position, Quaternion.identity);
 			
 			var shot = particle.GetComponent<Shot>();
 
-			shot.Movespeed = shotSpeed;
+			shot.MoveSpeed = shotSpeed;
 			shot.Direction = _lastFacingDirection;
 			shot.MaxRange = maxShotRange;
 
@@ -257,7 +261,7 @@ public class Player : MonoBehaviour
 		
 		Vector2 input = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
 
-		Debug.DrawRay(transform.position, new Vector3(input.x, input.y, 0f).normalized, Color.yellow);
+		Debug.DrawRay(transform.position, input.normalized, Color.yellow);
 
 
 		if (Input.GetKeyDown(KeyCode.Z) && !_controller.collisions.below && _canBoost)
