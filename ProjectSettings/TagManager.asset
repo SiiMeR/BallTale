@@ -11,6 +11,8 @@ TagManager:
   - Deathscreen
   - TilemapCol
   - Shop
+  - Boss
+  - Shot
   layers:
   - Default
   - TransparentFX

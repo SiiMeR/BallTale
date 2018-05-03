@@ -189,7 +189,8 @@ public class Player : MonoBehaviour
 		
 		
 	}
-
+	
+	// TODO : Rewrite this logic into each enemy script, rather than checking them in here
 	private void OnTriggerStay2D(Collider2D other)
 	{	
 
@@ -197,37 +198,27 @@ public class Player : MonoBehaviour
 		{
 			var enemy = other.gameObject.GetComponent<BasicEnemy>();
 			
-
-			if (!_animator.GetBool("Damaged"))
-			{			
-				StartCoroutine(PlayerDamaged());
-				CurrentHealth -= enemy.Damage;
-				Debug.Log(string.Format("Took a hit from {0}, {1} health left. ",
-					other.gameObject.name,
-					_currentHealth));
-			}
-
-
+			DamagePlayer(enemy.Damage);
 		}
 		else if (other.gameObject.CompareTag("Trap"))
 		{
 			var trap = other.gameObject.GetComponent<Trap>();
 			
-			if (!_animator.GetBool("Damaged"))
-			{			
-				StartCoroutine(PlayerDamaged());
-				CurrentHealth -= trap.Damage;
-				Debug.Log(string.Format("Took a hit from {0}, {1} health left. ",
-					other.gameObject.name,
-					_currentHealth));
-			}
+			DamagePlayer(trap.Damage);
 			
 		}
-
-		
+				
 	}
-	
-	
+
+	public void DamagePlayer(int damageToTake)
+	{
+		if (!_animator.GetBool("Damaged"))
+		{			
+			StartCoroutine(PlayerDamaged());
+			CurrentHealth -= damageToTake;
+			Debug.Log($"Took a hit, {_currentHealth} health left. ");
+		}
+	}
 
 	public IEnumerator PlayerDamaged()
 	{

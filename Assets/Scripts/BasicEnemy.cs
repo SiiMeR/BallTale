@@ -198,9 +198,6 @@ public class BasicEnemy : MonoBehaviour
 
 		_justTurnedAround = false;
 
-
-
-
 	}
 
 
