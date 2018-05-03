@@ -37,6 +37,10 @@ public class Player : MonoBehaviour
 
 	[SerializeField] private int currency = 100;
 
+
+	public bool HasShotUpgrade = false;
+	
+	
 	private float _lastFacingDirection;
 	
 	private float _maxJumpVelocity;
@@ -148,9 +152,9 @@ public class Player : MonoBehaviour
 
 	private void CheckShooting()
 	{
+		if (!HasShotUpgrade) return;
 		
 		Vector2 input = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
-
 		
 		if (Input.GetKeyDown(KeyCode.C) && shotCoolDown < _shotCoolDownTimer)
 		{

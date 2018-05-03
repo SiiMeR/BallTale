@@ -27,8 +27,11 @@ public class Shop : Interactable
 		Upgrade healthUpgrade2 = UpgradeBuilder.Instance.GetHealthUpgrade(10, 15);
 		Upgrade healthUpgrade3 = UpgradeBuilder.Instance.GetHealthUpgrade(50, 500);
 		Upgrade healthUpgrade4 = UpgradeBuilder.Instance.GetHealthUpgrade(100, 1000);
+
+		Upgrade powerUpgrade = UpgradeBuilder.Instance.GetShotUpgrade(50);
 		
 		_saleQueue.Enqueue(healthUpgrade);
+		_saleQueue.Enqueue(powerUpgrade);
 		_saleQueue.Enqueue(healthUpgrade2);
 		_saleQueue.Enqueue(healthUpgrade3);
 		_saleQueue.Enqueue(healthUpgrade4);
@@ -83,7 +86,7 @@ public class Shop : Interactable
 				{
 					slot
 						.Upgrade
-						.GetComponent<HealthUpgrade>()
+						.GetComponent<Upgrade>()
 						.OnAquire
 						.Invoke();
 

@@ -20,6 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4003411111042912}
   - component: {fileID: 212020270146700312}
+  - component: {fileID: 114508901348117624}
   m_Layer: 0
   m_Name: powerup
   m_TagString: Untagged
@@ -40,6 +41,22 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114508901348117624
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1824589529149580}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 22b0b33838ed39b4a97fb778891cb1b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OnAquire:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
 --- !u!212 &212020270146700312
 SpriteRenderer:
   m_ObjectHideFlags: 1
