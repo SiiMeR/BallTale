@@ -129,7 +129,7 @@ public class BasicEnemy : MonoBehaviour
 		}
 	}
 
-	private void UpdateMovement()
+	protected virtual void UpdateMovement()
 	{
 		var moveDirection = Mathf.Sign(moveSpeed);
 		
