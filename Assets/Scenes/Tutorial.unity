@@ -56930,6 +56930,28 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!1 &569011807 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1700365627749058, guid: dacd53bebce7a2e4ab492aaf5e9697de,
+    type: 2}
+  m_PrefabInternal: {fileID: 922713159}
+--- !u!95 &569011813
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 569011807}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 311718d4baf204d469baac608e0495a3, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
 --- !u!1001 &640157158
 Prefab:
   m_ObjectHideFlags: 0
@@ -57472,6 +57494,31 @@ Prefab:
       propertyPath: _hpbar
       value: 
       objectReference: {fileID: 305064999}
+    - target: {fileID: 114226398384701254, guid: dacd53bebce7a2e4ab492aaf5e9697de,
+        type: 2}
+      propertyPath: _moveSpeed
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 114226398384701254, guid: dacd53bebce7a2e4ab492aaf5e9697de,
+        type: 2}
+      propertyPath: _secondsMove
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 212812561164667632, guid: dacd53bebce7a2e4ab492aaf5e9697de,
+        type: 2}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 212812561164667632, guid: dacd53bebce7a2e4ab492aaf5e9697de,
+        type: 2}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 212812561164667632, guid: dacd53bebce7a2e4ab492aaf5e9697de,
+        type: 2}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: dacd53bebce7a2e4ab492aaf5e9697de, type: 2}
   m_IsPrefabParent: 0
@@ -58061,7 +58108,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 11.999992, y: -27}
+  m_AnchoredPosition: {x: 11.999992, y: -16}
   m_SizeDelta: {x: 1600, y: 90}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &1273928556
@@ -58929,6 +58976,16 @@ Prefab:
         type: 2}
       propertyPath: EdgePushStrength
       value: 0.02
+      objectReference: {fileID: 0}
+    - target: {fileID: 114801287842111352, guid: 7333fc2108db98b4094d16889aec8418,
+        type: 2}
+      propertyPath: focusAreaSize.x
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 114801287842111352, guid: 7333fc2108db98b4094d16889aec8418,
+        type: 2}
+      propertyPath: focusAreaSize.y
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 7333fc2108db98b4094d16889aec8418, type: 2}
