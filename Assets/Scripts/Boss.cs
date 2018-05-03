@@ -62,7 +62,7 @@ public class Boss : MonoBehaviour
 	{
 		yield return new WaitForSeconds(0.5f);
 		
-		_hpbar.SetActive(false);
+		_hpbar.transform.parent.transform.parent.gameObject.SetActive(false);
 		GameObject.FindGameObjectWithTag("Player").GetComponent<Player>().Currency += _currencyOnKill;
 		Destroy(gameObject);
 		
@@ -70,13 +70,14 @@ public class Boss : MonoBehaviour
 
 	
 	// Use this for initialization
-	void Start ()
+	void Awake ()
 	{
+		_hpbar.transform.parent.parent.gameObject.SetActive(true);
 		CurrentState = BossState.MOVE;
 		_animator = GetComponent<Animator>();
 		_controller = GetComponent<BoxController2D>();
 		_currentHealth = _maxHealth;
-
+		
 		_velocity = new Vector3(_moveSpeed,_moveSpeed,0);
 		
 	}

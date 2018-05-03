@@ -46,13 +46,24 @@ public class Shot : MonoBehaviour
 
 		if (_distanceCovered > MaxRange)
 		{
-			Destroy(gameObject);
+			StartCoroutine(DestroyShot());
 		}
 		
 		_distanceCovered += Time.deltaTime * MoveSpeed;
 		Move();
 	}
 
+	IEnumerator DestroyShot()
+	{
+		GetComponent<SpriteRenderer>().enabled = false;
+		
+		GetComponentInChildren<ParticleSystem>()?.Stop(true, ParticleSystemStopBehavior.StopEmitting);
+		
+		
+		yield return new WaitForSeconds(0.5f);
+		
+		Destroy(gameObject);
+	}
 	private void Move()
 	{
 		
@@ -62,7 +73,7 @@ public class Shot : MonoBehaviour
 		    _controller.collisions.above ||
 		    _controller.collisions.below)
 		{
-			Destroy(gameObject);
+			StartCoroutine(DestroyShot());
 		}
 		
 		_controller.Move(CurrentVelocity * Time.deltaTime);
@@ -76,15 +87,17 @@ public class Shot : MonoBehaviour
 		{
 			GameObject.FindGameObjectWithTag("Player").GetComponent<Player>().Currency +=
 				other.gameObject.GetComponent<BasicEnemy>().CurrencyOnKill;
+			
 			Destroy(other.gameObject);
-			Destroy(gameObject);
+
+			StartCoroutine(DestroyShot());
 
 
 		}
 		
 		else if (_controller.IsInCollisionMask(other.gameObject.layer))
-		{
-			Destroy(gameObject);
+		{;
+			StartCoroutine(DestroyShot());
 		}
 	}
 
