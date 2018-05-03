@@ -21,17 +21,20 @@ public class Boss : MonoBehaviour
 	[SerializeField] private GameObject _hpbar;
 	[SerializeField] private float _secondsVulnerable = 5.0f;
 	[SerializeField] private float _secondsMove = 20.0f;
+	
+	[SerializeField] private GameObject _hitCollider;
 
 	public int Damage { get; set; } = 10;
 	public int DamageFromPlayer { get; set; } = 15;
-
+	public BossState CurrentState;
+	
 	private BoxController2D _controller;
 	private Vector3 _velocity;
 	private int _currentHealth;
 	private Animator _animator;
 	private bool _justCollided;
 	
-	[SerializeField] private BossState _currentState;
+	
 	private float _timeInState;
 	
 	public int CurrentHealth
@@ -41,7 +44,8 @@ public class Boss : MonoBehaviour
 		{
 			if (value < 1)
 			{
-				Die();
+				_currentHealth = 0;
+				StartCoroutine(Die());
 			}
 			_currentHealth = value;
 		}
@@ -52,18 +56,23 @@ public class Boss : MonoBehaviour
 		int originalHp = CurrentHealth;
 		CurrentHealth -= DamageFromPlayer;
 		StartCoroutine(ChangeHP(originalHp, CurrentHealth, 0.5f));
+		NextState();
 	}
-	private void Die()
+	private IEnumerator Die()
 	{
-		Destroy(gameObject);
+		yield return new WaitForSeconds(0.5f);
+		
+		_hpbar.SetActive(false);
 		GameObject.FindGameObjectWithTag("Player").GetComponent<Player>().Currency += _currencyOnKill;
+		Destroy(gameObject);
+		
 	}
 
 	
 	// Use this for initialization
 	void Start ()
 	{
-		_currentState = BossState.MOVE;
+		CurrentState = BossState.MOVE;
 		_animator = GetComponent<Animator>();
 		_controller = GetComponent<BoxController2D>();
 		_currentHealth = _maxHealth;
@@ -80,7 +89,7 @@ public class Boss : MonoBehaviour
 
 	private void StateActions()
 	{
-		switch (_currentState)
+		switch (CurrentState)
 		{
 				case BossState.MOVE:
 					UpdateMovement();
@@ -96,14 +105,14 @@ public class Boss : MonoBehaviour
 	{
 		_timeInState += Time.deltaTime;
 		
-		if (_currentState == BossState.VULNERABLE)
+		if (CurrentState == BossState.VULNERABLE)
 		{
 			if (!(_timeInState > _secondsVulnerable)) return;
 			
 			NextState();
 		}
 		
-		else if (_currentState == BossState.MOVE)
+		else if (CurrentState == BossState.MOVE)
 		{
 			if (!(_timeInState > _secondsMove)) return;
 			
@@ -114,22 +123,24 @@ public class Boss : MonoBehaviour
 
 	private void NextState()
 	{
-		switch (_currentState)
+		switch (CurrentState)
 		{
 				case BossState.MOVE:
 					_animator.SetTrigger("vulnerable");
-					_currentState = BossState.VULNERABLE;
+					CurrentState = BossState.VULNERABLE;
 					_timeInState = 0;
+					_hitCollider.SetActive(true);
 					break;
 				
 				case BossState.VULNERABLE:
 					_animator.SetTrigger("move");
-					_currentState = BossState.MOVE;
+					_hitCollider.SetActive(false);
+					CurrentState = BossState.MOVE;
 					_timeInState = 0;
 					break;
 				
 				default:
-					Debug.LogWarning("State not handled by StateActions(): " + _currentState);
+					Debug.LogWarning("State not handled by StateActions(): " + CurrentState);
 					break;
 		}
 	}
@@ -189,10 +200,9 @@ public class Boss : MonoBehaviour
 	{
 		if (other.gameObject.CompareTag("Shot"))
 		{
-			if (_currentState == BossState.VULNERABLE)
+			if (CurrentState == BossState.VULNERABLE)
 			{
 				GetDamaged();
-				NextState();
 			}
 			
 			Destroy(other.gameObject);

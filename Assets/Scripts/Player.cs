@@ -172,7 +172,6 @@ public class Player : MonoBehaviour
 
 	}
 
-
 	private void OnTriggerEnter2D(Collider2D other)
 	{
 		if (other.gameObject.CompareTag("Killcollider") && !_animator.GetBool("Damaged"))
@@ -186,7 +185,20 @@ public class Player : MonoBehaviour
 			_velocity.y = 0;
 			_velocity.y += killBounceEnergy;
 		}
-		
+
+
+		if (other.gameObject.CompareTag("HitCollider") && !_animator.GetBool("Damaged"))
+		{
+			var boss = other.gameObject.GetComponentInParent<Boss>();
+
+			if (boss.CurrentState == BossState.VULNERABLE)
+			{
+				boss.GetDamaged();
+				_velocity.y = 0;
+				_velocity.y += killBounceEnergy;
+			}		
+
+		}
 		
 	}
 	
@@ -237,6 +249,7 @@ public class Player : MonoBehaviour
 		
 	}	
 
+	
 	private void UpdateMovement()
 	{
 		
