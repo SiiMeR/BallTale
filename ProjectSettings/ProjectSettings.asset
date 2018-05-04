@@ -634,7 +634,7 @@ PlayerSettings:
   cloudServicesEnabled:
     UNet: 1
   facebookSdkVersion: 7.9.4
-  apiCompatibilityLevel: 2
+  apiCompatibilityLevel: 3
   cloudProjectId: e455d1f4-0711-41ee-9ec6-c58ae554f389
   projectName: BallTale
   organizationId: siimer

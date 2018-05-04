@@ -169,13 +169,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a86864747c5b9794db5942089d1c90a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maxHealth: 15
+  _maxHealth: 100
   _moveSpeed: 10
   _useGravity: 0
   _currencyOnKill: 150
   _hpbar: {fileID: 0}
   _secondsVulnerable: 5
-  _secondsMove: 5
+  _secondsMove: 9
   _vortexscreen: {fileID: 0}
   _vortextext: {fileID: 0}
   _hitCollider: {fileID: 1595321589956734}
