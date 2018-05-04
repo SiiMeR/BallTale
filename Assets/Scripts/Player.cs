@@ -39,7 +39,7 @@ public class Player : MonoBehaviour
 
 
 	public bool HasShotUpgrade = false;
-	
+	public bool IgnoreGround = false;
 	
 	private float _lastFacingDirection;
 	
@@ -49,7 +49,8 @@ public class Player : MonoBehaviour
 
 	private float _currentBoostTime = 0f;
 	
-	private Vector3 _velocity;
+	public Vector3 _velocity;
+	
 	private CircleController2D _controller;
 
 	private Animator _animator;
@@ -259,7 +260,12 @@ public class Player : MonoBehaviour
 		
 		if (_controller.collisions.above || _controller.collisions.below)
 		{
-			_velocity.y = 0;
+			if (!IgnoreGround)
+			{
+				_velocity.y = 0;
+			}
+			
+			
 		}
 
 		if (_controller.collisions.below)

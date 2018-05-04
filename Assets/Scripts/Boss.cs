@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Assertions.Comparers;
 using UnityEngine.UI;
@@ -8,7 +9,8 @@ using UnityEngine.UI;
 public enum BossState
 {
 	MOVE,
-	VULNERABLE
+	VULNERABLE,
+	VORTEX
 }
 
 public class Boss : MonoBehaviour
@@ -21,6 +23,10 @@ public class Boss : MonoBehaviour
 	[SerializeField] private GameObject _hpbar;
 	[SerializeField] private float _secondsVulnerable = 5.0f;
 	[SerializeField] private float _secondsMove = 20.0f;
+
+	[SerializeField] private GameObject _vortexscreen;
+	[SerializeField] private GameObject _vortextext;
+	
 	
 	[SerializeField] private GameObject _hitCollider;
 
@@ -60,11 +66,16 @@ public class Boss : MonoBehaviour
 	}
 	private IEnumerator Die()
 	{
+		GameObject.FindGameObjectWithTag("BossFight").GetComponent<Bossfight>().Endfight();
+		
 		yield return new WaitForSeconds(0.5f);
 		
 		_hpbar.transform.parent.transform.parent.gameObject.SetActive(false);
-		GameObject.FindGameObjectWithTag("Player").GetComponent<Player>().Currency += _currencyOnKill;
-		Destroy(gameObject);
+		
+		StartCoroutine(Vortex());
+		
+	//	GameObject.FindGameObjectWithTag("Player").GetComponent<Player>().Currency += _currencyOnKill;
+	//	Destroy(gameObject);
 		
 	}
 
@@ -84,8 +95,12 @@ public class Boss : MonoBehaviour
 	
 	// Update is called once per frame
 	void Update () {
-		CheckStates();
-		StateActions();
+
+		if (CurrentState != BossState.VORTEX)
+		{
+			CheckStates();
+			StateActions();
+		}
 	}
 
 	private void StateActions()
@@ -99,6 +114,97 @@ public class Boss : MonoBehaviour
 				case BossState.VULNERABLE:
 					// nothing yet
 					break;
+				
+				case BossState.VORTEX:
+					break;
+		}
+	}
+
+	private IEnumerator Vortex()
+	{
+		CurrentState = BossState.VORTEX;
+			
+		yield return StartCoroutine(MoveBossToPos());
+	
+		_animator.SetBool("vortex", true);
+
+		var player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
+
+		player.IgnoreGround = true;
+		
+		float timer = 0;
+
+		yield return new WaitUntil(() =>
+		{
+			var dirToVortex = transform.position - player.transform.position;
+			
+			player._velocity += dirToVortex.normalized * (Time.deltaTime * timer);
+			
+			_animator.speed += Mathf.Sqrt(Time.deltaTime * timer) / 10.0f;
+			
+			timer += 0.1f;
+
+			var distance = Vector3.Distance(player.transform.position, transform.position);
+
+			var color = _vortexscreen.GetComponent<Image>().color;
+
+			color.a = Mathf.Lerp(1,0, distance / 8.0f);
+			
+			_vortexscreen.GetComponent<Image>().color = color;
+			
+			return  distance < 0.1f;
+		});
+		
+		var c = _vortexscreen.GetComponent<Image>().color;
+
+		c.a = 1;
+			
+		_vortexscreen.GetComponent<Image>().color = c;
+
+		
+		player.IgnoreGround = false;
+
+		Time.timeScale = 0f;
+
+
+		StartCoroutine(VortexText());
+
+	}
+
+	private IEnumerator VortexText()
+	{
+		yield return new WaitForSecondsRealtime(1.5f);
+		float timer = 0;
+
+		var text = _vortextext.GetComponent<TMP_Text>();
+		
+		while ((timer += Time.unscaledDeltaTime) < 8.0f)
+		{
+			var c = text.color;
+
+			c.a = Mathf.Lerp(0,1, timer / 8.0f);
+
+			text.color = c;
+
+			yield return null;
+		}
+		
+	}
+
+
+	private IEnumerator MoveBossToPos()
+	{
+		Vector3 startPos = transform.position;
+		Vector3 endPos = new Vector3(240, 0,0);
+
+		float secondsMove = 1.0f;
+		float timer = 0;
+
+		while ((timer += Time.deltaTime) < secondsMove)
+		{
+			transform.position = Vector3.Lerp(startPos, endPos, timer / secondsMove);
+
+			yield return null;
 		}
 	}
 
@@ -139,6 +245,7 @@ public class Boss : MonoBehaviour
 					CurrentState = BossState.MOVE;
 					_timeInState = 0;
 					break;
+
 				
 				default:
 					Debug.LogWarning("State not handled by StateActions(): " + CurrentState);
@@ -191,7 +298,7 @@ public class Boss : MonoBehaviour
 
 	private void OnTriggerStay2D(Collider2D other)
 	{
-		if (other.gameObject.CompareTag("Player"))
+		if (other.gameObject.CompareTag("Player") && CurrentState != BossState.VORTEX)
 		{
 			other.gameObject.GetComponent<Player>().DamagePlayer(Damage);
 		}

@@ -14,7 +14,8 @@ public class Bossfight : MonoBehaviour
 
 	[SerializeField] private bool _takeCameraControl;
 	[SerializeField] private Transform _cameraMiddle; // where to put the camera during the fight
-	
+
+	private bool _fightOn;
 	
 	// Use this for initialization
 	void Start () {
@@ -23,10 +24,7 @@ public class Bossfight : MonoBehaviour
 	
 	// Update is called once per frame
 	void Update () {
-		if (_boss && _boss.GetComponent<Boss>().CurrentHealth < 1)
-		{
-			Endfight();
-		}
+
 	}
 
 	private void OnTriggerEnter2D(Collider2D other)
@@ -38,23 +36,29 @@ public class Bossfight : MonoBehaviour
 	}
 
 	private void StartFight()
-	{	
-		_boss.SetActive(true);
-		
-		if (_takeCameraControl)
-		{
-			Camera.main.GetComponent<CameraFollow>().enabled = false;
+	{
 
-			StartCoroutine(MoveCameraToPos());
+		if (!_fightOn)
+		{
+			_boss.SetActive(true);
+		
+			if (_takeCameraControl)
+			{
+				Camera.main.GetComponent<CameraFollow>().enabled = false;
+
+				StartCoroutine(MoveCameraToPos());
 			
+			}
+
+			StartCoroutine(ActivateWalls());
+			_fightOn = true;
 		}
 
-		StartCoroutine(ActivateWalls());
 	}
 
 	private IEnumerator ActivateWalls()
 	{
-		yield return new WaitForSeconds(1.0f);
+		yield return new WaitForSeconds(0.1f);
 		
 		_walls.ForEach(go => go.SetActive(true));
 	}
@@ -74,13 +78,18 @@ public class Bossfight : MonoBehaviour
 		}
 	}
 
-	private void Endfight()
+	public void Endfight()
 	{
-		if (_takeCameraControl)
+		if (_boss && _boss.GetComponent<Boss>().CurrentHealth < 1)
 		{
-			Camera.main.GetComponent<CameraFollow>().enabled = true;
+			if (_takeCameraControl)
+			{
+				Camera.main.GetComponent<CameraFollow>().enabled = true;
+			}
+			
+			// FIGHTON FALSE TODO
+		//	_walls.ForEach(go => go.SetActive(false));
 		}
-		
-		_walls.ForEach(go => go.SetActive(false));
+
 	}
 }
