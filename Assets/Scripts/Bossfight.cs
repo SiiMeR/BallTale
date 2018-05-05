@@ -38,8 +38,11 @@ public class Bossfight : MonoBehaviour
 	private void StartFight()
 	{
 
+		
 		if (!_fightOn)
 		{
+			
+			//AudioManager.instance.Play("btest");
 			_boss.SetActive(true);
 		
 			if (_takeCameraControl)
