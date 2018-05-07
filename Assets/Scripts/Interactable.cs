@@ -21,7 +21,7 @@ public abstract class Interactable : MonoBehaviour
 	
 	// Update is called once per frame	
 	protected virtual void Update () {
-		if (Input.GetKeyDown(KeyCode.X) && _isCollidingWPlayer)
+		if (Input.GetButtonDown("Fire2") && _isCollidingWPlayer)
 		{
 			FlipDialogue();
 		}

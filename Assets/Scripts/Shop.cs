@@ -78,7 +78,7 @@ public class Shop : Interactable
 			
 			//_selectionFrame.transform.position = _slots[_currentSelectionSlot].transform.position;
 
-			if (Input.GetKeyDown(KeyCode.C) && !_slots[_currentSelectionSlot].IsEmpty())
+			if (Input.GetButtonDown("Fire3") && !_slots[_currentSelectionSlot].IsEmpty())
 			{
 				var slot = _slots[_currentSelectionSlot];
 			

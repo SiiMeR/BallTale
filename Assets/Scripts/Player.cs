@@ -155,9 +155,7 @@ public class Player : MonoBehaviour
 	{
 		if (!HasShotUpgrade) return;
 		
-		Vector2 input = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
-		
-		if (Input.GetKeyDown(KeyCode.C) && shotCoolDown < _shotCoolDownTimer)
+		if (Input.GetButtonDown("Fire3") && shotCoolDown < _shotCoolDownTimer)
 		{
 			var particle = Instantiate(shootParticle, transform.position, Quaternion.identity);
 			
@@ -278,7 +276,7 @@ public class Player : MonoBehaviour
 		Debug.DrawRay(transform.position, input.normalized, Color.yellow);
 
 
-		if (Input.GetKeyDown(KeyCode.Z) && !_controller.collisions.below && _canBoost)
+		if (Input.GetButtonDown("Fire1") && !_controller.collisions.below && _canBoost)
 		{
 
 			boostArrow.SetActive(true);
@@ -288,7 +286,7 @@ public class Player : MonoBehaviour
 			
 		}
 		
-		if (Input.GetKey(KeyCode.Z) && !_controller.collisions.below && _canBoost)
+		if (Input.GetButton("Fire1") && !_controller.collisions.below && _canBoost)
 		{
 			if (_currentBoostTime > maxBoostTime)
 			{
@@ -311,7 +309,7 @@ public class Player : MonoBehaviour
 			return;
 		}
 
-		if (Input.GetKeyUp(KeyCode.Z) && !_controller.collisions.below && _canBoost)
+		if (Input.GetButtonUp("Fire1") && !_controller.collisions.below && _canBoost)
 		{
 			_velocity = input * boostForce ; //* ((0.5f * currentBoostTime) + 0.5f);
 			_currentBoostTime = 0.0f;
@@ -319,12 +317,12 @@ public class Player : MonoBehaviour
 			boostArrow.SetActive(false);
 		}
 		
-		if (Input.GetKeyDown(KeyCode.UpArrow) && _controller.collisions.below)
+		if (Input.GetButtonDown("Jump") && _controller.collisions.below)
 		{
 			_velocity.y = _maxJumpVelocity;
 		}
 
-		if (Input.GetKeyUp(KeyCode.UpArrow))
+		if (Input.GetButtonUp("Jump"))
 		{
 			if (_velocity.y > _minJumpVelocity)
 			{
