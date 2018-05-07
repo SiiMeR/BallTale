@@ -15,7 +15,8 @@ public class Shop : Interactable
 	private List<Slot> _slots;
 	private Queue<Upgrade> _saleQueue; // holds items that are not yet on sale
 	private int _currentSelectionSlot;
-	
+
+	private bool _moveAxisInUse;
 	// Use this for initialization
 	protected  override void Start () {
 		base.Start();
@@ -62,19 +63,29 @@ public class Shop : Interactable
 	{
 		base.Update();
 
+		
 		if (Math.Abs(Time.timeScale) < 0.01f)
 		{
-			if (Input.GetKeyDown(KeyCode.LeftArrow))
+			var input = Input.GetAxisRaw("Horizontal");
+
+			if (input == 0)
 			{
-				StartCoroutine(MoveFrame(true));
-				
-			} 
-			else if (Input.GetKeyDown(KeyCode.RightArrow))
-			{
-				StartCoroutine(MoveFrame(false));
-				
+				_moveAxisInUse = false;
 			}
 			
+			if(input > 0.1 && !_moveAxisInUse)
+			{
+				_moveAxisInUse = true;
+				StartCoroutine(MoveFrame(false));
+			}
+			else if (input < -0.1 && !_moveAxisInUse)
+			{
+				_moveAxisInUse = true;
+				StartCoroutine(MoveFrame(true));
+			}
+			
+			
+
 			
 			//_selectionFrame.transform.position = _slots[_currentSelectionSlot].transform.position;
 

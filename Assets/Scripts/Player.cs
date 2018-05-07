@@ -60,6 +60,7 @@ public class Player : MonoBehaviour
 	
 	private int _currentHealth;
 	private double _shotCoolDownTimer;
+	private bool _isBoosting;
 
 	public int Currency
 	{
@@ -275,23 +276,26 @@ public class Player : MonoBehaviour
 
 		Debug.DrawRay(transform.position, input.normalized, Color.yellow);
 
+		float boostInput = Input.GetAxisRaw("Fire1");
 
-		if (Input.GetButtonDown("Fire1") && !_controller.collisions.below && _canBoost)
+		if (boostInput != 0 && !_controller.collisions.below && _canBoost)
 		{
 
 			boostArrow.SetActive(true);
 			
 			_arrowAnimator.speed = 1.0f / maxBoostTime;
 			_arrowAnimator.SetTrigger("Boost");
-			
+
+			_isBoosting = true;
 		}
 		
-		if (Input.GetButton("Fire1") && !_controller.collisions.below && _canBoost)
+		if (boostInput != 0  && !_controller.collisions.below && _canBoost)
 		{
 			if (_currentBoostTime > maxBoostTime)
 			{
 				boostArrow.SetActive(false);
 				_canBoost = false;
+				_isBoosting = false;
 				_currentBoostTime = 0.0f;
 				return;
 			}
@@ -309,11 +313,12 @@ public class Player : MonoBehaviour
 			return;
 		}
 
-		if (Input.GetButtonUp("Fire1") && !_controller.collisions.below && _canBoost)
+		if (boostInput == 0 && !_controller.collisions.below && _canBoost && _isBoosting)
 		{
 			_velocity = input * boostForce ; //* ((0.5f * currentBoostTime) + 0.5f);
 			_currentBoostTime = 0.0f;
 			_canBoost = false;
+			_isBoosting = false;
 			boostArrow.SetActive(false);
 		}
 		
@@ -331,7 +336,7 @@ public class Player : MonoBehaviour
 			
 		}
 
-		float targetVelocityX = input.x * moveSpeed;
+		float targetVelocityX = Mathf.Round(input.x) * moveSpeed;
 
 		_velocity.x = Mathf.SmoothDamp(_velocity.x, targetVelocityX, ref _velocityXSmoothing, (_controller.collisions.below) ? accelerationTimeGrounded : accelerationTimeAirborne);
 		
