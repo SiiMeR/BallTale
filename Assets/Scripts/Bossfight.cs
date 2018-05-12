@@ -49,7 +49,7 @@ public class Bossfight : MonoBehaviour
 			{
 				Camera.main.GetComponent<CameraFollow>().enabled = false;
 
-				StartCoroutine(MoveCameraToPos());
+				StartCoroutine(MoveCameraToPos(Camera.main.transform.position, _cameraMiddle.position));
 			
 			}
 
@@ -66,19 +66,26 @@ public class Bossfight : MonoBehaviour
 		_walls.ForEach(go => go.SetActive(true));
 	}
 
-	IEnumerator MoveCameraToPos()
+	IEnumerator MoveCameraToPos(Vector3 startPos, Vector3 endPos, bool cameraFollowEnabledAfter = false)
 	{
-		Vector3 startPos = Camera.main.transform.position;
-
+		
 		float secondsMove = 1.5f;
 		float timer = 0;
 
 		while ((timer += Time.deltaTime) < secondsMove)
 		{
-			Camera.main.transform.position = Vector3.Lerp(startPos, _cameraMiddle.position, timer / secondsMove);
+			Camera.main.transform.position = Vector3.Lerp(startPos, endPos, timer / secondsMove);
 
 			yield return null;
 		}
+
+		if (cameraFollowEnabledAfter)
+		{
+			Camera.main.GetComponent<CameraFollow>().enabled =  true;
+		}
+
+
+		
 	}
 
 	public void Endfight()
@@ -87,7 +94,8 @@ public class Bossfight : MonoBehaviour
 		{
 			if (_takeCameraControl)
 			{
-				Camera.main.GetComponent<CameraFollow>().enabled = true;
+				StartCoroutine(MoveCameraToPos(Camera.main.transform.position, FindObjectOfType<Player>().transform.position, true));
+				
 			}
 			
 			// FIGHTON FALSE TODO

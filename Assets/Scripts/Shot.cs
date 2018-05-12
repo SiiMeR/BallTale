@@ -56,6 +56,7 @@ public class Shot : MonoBehaviour
 	IEnumerator DestroyShot()
 	{
 		GetComponent<SpriteRenderer>().enabled = false;
+		GetComponent<CapsuleCollider2D>().enabled = false;
 		
 		GetComponentInChildren<ParticleSystem>()?.Stop(true, ParticleSystemStopBehavior.StopEmitting);
 		
