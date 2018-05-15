@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class MainMenu : SimpleMenu<MainMenu> {
 
@@ -20,8 +21,27 @@ public class MainMenu : SimpleMenu<MainMenu> {
 		Application.Quit();
 	}
 
+
+	public void OnNewGamePressed()
+	{
+		SceneManager.LoadScene("Tutorial");
+	}
+
+	public void OnContinuePressed()
+	{
+		print("Continue pressed");
+	}
+	
 	public void OnOptionsPressed()
 	{
 		OptionsMenu.Show();
 	}
+
+	public void OnCreditsPressed()
+	{
+		print("Credits pressed");	
+	}
+
+	
+
 }
