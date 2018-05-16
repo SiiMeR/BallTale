@@ -7,11 +7,30 @@ using UnityEngine;
 public class MenuManager : MonoBehaviour {
 
 	private Stack<Menu> _menuStack = new Stack<Menu>();
-	
-	public static MenuManager Instance { get; private set; }
+
+	private static MenuManager _instance;
+	public static MenuManager Instance
+	{
+		get
+		{
+			if (!_instance)
+			{
+//				_instance = this;
+			}
+
+			return _instance;
+		}
+		private set
+		{
+			
+		}
+	}
 
 	public MainMenu MainMenuPrefab;
 	public OptionsMenu OptionsMenuPrefab;
+	public CreditsMenu CreditsMenuPrefab;
+	//public ContinueMenu ContinueMenuPrefab;
+	
 
 	public void OpenMenu(Menu instance)
 	{
@@ -104,7 +123,7 @@ public class MenuManager : MonoBehaviour {
 	
 	private void Awake()
 	{
-		Instance = this;
+		_instance = this;
 
 		MainMenu.Show();
 	}

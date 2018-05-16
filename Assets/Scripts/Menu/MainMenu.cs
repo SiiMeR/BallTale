@@ -39,7 +39,7 @@ public class MainMenu : SimpleMenu<MainMenu> {
 
 	public void OnCreditsPressed()
 	{
-		print("Credits pressed");	
+		CreditsMenu.Show();
 	}
 
 	

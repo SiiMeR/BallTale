@@ -19,7 +19,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4535574069637544}
-  - component: {fileID: 114916809656419366}
+  - component: {fileID: 114153096611048444}
   m_Layer: 0
   m_Name: MenuManager
   m_TagString: Untagged
@@ -40,7 +40,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &114916809656419366
+--- !u!114 &114153096611048444
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -54,4 +54,6 @@ MonoBehaviour:
   MainMenuPrefab: {fileID: 114004298940817138, guid: 0733a6d6e1bf371438528cf27b1f0db0,
     type: 2}
   OptionsMenuPrefab: {fileID: 114522576589939122, guid: 99fab3557e6ebb543a91d5d3af15bbfd,
+    type: 2}
+  CreditsMenuPrefab: {fileID: 114220455018559904, guid: b94c4be6321ff324a93d9437e4c63d47,
     type: 2}
