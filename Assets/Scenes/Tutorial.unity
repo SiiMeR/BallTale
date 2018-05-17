@@ -63380,7 +63380,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb125033d16c9f54096bd9fd2ca90e65, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  audioClips: []
+  audioClips:
+  - {fileID: 8300000, guid: 8820fab1d0014324984eded097a1e1f2, type: 3}
   musicVolume: 1
   soundVolume: 1
   maxAudios: 16

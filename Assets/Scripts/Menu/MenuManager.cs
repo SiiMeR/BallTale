@@ -124,7 +124,8 @@ public class MenuManager : MonoBehaviour {
 	private void Awake()
 	{
 		_instance = this;
-
+		
+		AudioManager.instance.Play("01Peaceful");
 		MainMenu.Show();
 	}
 

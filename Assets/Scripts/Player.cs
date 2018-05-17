@@ -109,6 +109,7 @@ public class Player : MonoBehaviour
 	// Use this for initialization
 	void Start ()
 	{
+		AudioManager.instance.Play("01Peaceful", isLooping: true);
 		
 		deathScreen.SetActive(false);
 		
