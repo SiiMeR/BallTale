@@ -60,7 +60,6 @@ public class Shot : MonoBehaviour
 		
 		GetComponentInChildren<ParticleSystem>()?.Stop(true, ParticleSystemStopBehavior.StopEmitting);
 		
-		
 		yield return new WaitForSeconds(0.5f);
 		
 		Destroy(gameObject);
@@ -86,6 +85,8 @@ public class Shot : MonoBehaviour
 		// TODO, CHECK IF IT IS A THING THAT GIVES MONEY OR NOT
 		if (_controller.IsInLayerMask(other.gameObject.layer, _killMask))
 		{
+			AudioManager.instance.Play("MonsterHit");
+			
 			GameObject.FindGameObjectWithTag("Player").GetComponent<Player>().Currency +=
 				other.gameObject.GetComponent<BasicEnemy>().CurrencyOnKill;
 			

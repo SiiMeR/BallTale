@@ -81,6 +81,33 @@ public class AudioManager : MonoBehaviour
         Play(audioName[i], vol, isLooping, position);
     }
 
+    public void Stop(string audioName)
+    {
+        if (audioName == null || audioName == "")
+        {
+            return;
+        }
+        AudioClip clip;
+        bool succ = audioMap.TryGetValue(audioName, out clip);
+        if (succ)
+        {
+            
+            foreach (AudioSource source in sourcePool)
+            {
+                
+                if (source.clip == clip)
+                {
+                    source.Stop();
+                    return;
+                }
+            }
+        }
+        else
+        {
+            Debug.LogWarning("Could not find audio: " + succ);
+        }
+    }
+    
     public void Play(string audioName, float vol = 1f, bool isLooping = false, Vector3? position = null)
     {
         if (audioName == null || audioName == "")
@@ -119,5 +146,30 @@ public class AudioManager : MonoBehaviour
         }
     }
 
-    
+    public void Play(AudioClip clip, float vol = 1f, bool isLooping = false, Vector3? position = null)
+    {
+        foreach (AudioSource source in sourcePool)
+        {
+            if (!source.isPlaying)
+            {
+                source.clip = clip;
+                source.volume = vol * (isLooping ? musicVolume : soundVolume);
+                source.loop = isLooping;
+                source.Play();
+
+                if (position != null)
+                {
+                    source.transform.position = (Vector3)position;
+                }
+                else
+                {
+                    source.transform.localPosition = Vector3.zero;
+                }
+
+                break;
+            }
+        }
+    }
+
+
 }

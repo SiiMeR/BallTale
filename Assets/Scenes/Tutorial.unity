@@ -7300,6 +7300,11 @@ Prefab:
       propertyPath: deathScreen
       value: 
       objectReference: {fileID: 1085026207}
+    - target: {fileID: 212293388885712598, guid: 7333fc2108db98b4094d16889aec8418,
+        type: 2}
+      propertyPath: m_SortingOrder
+      value: -1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 7333fc2108db98b4094d16889aec8418, type: 2}
   m_IsPrefabParent: 0
@@ -63382,8 +63387,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   audioClips:
   - {fileID: 8300000, guid: 8820fab1d0014324984eded097a1e1f2, type: 3}
+  - {fileID: 8300000, guid: 15468e3156cab184b990ce273869a24c, type: 3}
+  - {fileID: 8300000, guid: 923f94e4d6bd58e4ab5f60bbe3d0be70, type: 3}
+  - {fileID: 8300000, guid: a85b31fec21aaf142b837c453ca3545c, type: 3}
+  - {fileID: 8300000, guid: 202c1a3414f604542b5282828998e436, type: 3}
+  - {fileID: 8300000, guid: 49365813f2cf70647a027ac14ac99125, type: 3}
+  - {fileID: 8300000, guid: 3ad37acc50d093345bc8726b8cff4da2, type: 3}
   musicVolume: 1
-  soundVolume: 1
+  soundVolume: 0.3
   maxAudios: 16
 --- !u!4 &1119133166 stripped
 Transform:
@@ -64094,7 +64105,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 116.70964, y: -111}
+  m_AnchoredPosition: {x: 116.70964, y: -26}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!4 &1539055154 stripped
@@ -64792,7 +64803,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 116.70964, y: -145.99997}
+  m_AnchoredPosition: {x: 116.709625, y: -60.999985}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2063759969

@@ -6,6 +6,7 @@ using System.Runtime.InteropServices;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
+using Random = UnityEngine.Random;
 
 [RequireComponent(typeof(CircleController2D))]
 public class Player : MonoBehaviour
@@ -159,6 +160,9 @@ public class Player : MonoBehaviour
 		
 		if (Input.GetButtonDown("Fire3") && shotCoolDown < _shotCoolDownTimer)
 		{
+			
+			AudioManager.instance.Play("Shot");
+			
 			var particle = Instantiate(shootParticle, transform.position, Quaternion.identity);
 			
 			var shot = particle.GetComponent<Shot>();
@@ -220,6 +224,7 @@ public class Player : MonoBehaviour
 		else if (other.gameObject.CompareTag("Trap"))
 		{
 			var trap = other.gameObject.GetComponent<Trap>();
+
 			
 			DamagePlayer(trap.Damage);
 			
@@ -229,8 +234,10 @@ public class Player : MonoBehaviour
 
 	public void DamagePlayer(int damageToTake)
 	{
+		
 		if (!_animator.GetBool("Damaged"))
-		{			
+		{	
+			
 			StartCoroutine(PlayerDamaged());
 			CurrentHealth -= damageToTake;
 			Debug.Log($"Took a hit, {_currentHealth} health left. ");
@@ -239,11 +246,17 @@ public class Player : MonoBehaviour
 
 	public IEnumerator PlayerDamaged()
 	{
+		AudioManager.instance.Play("PlayerDamaged");
 		
 		_animator.SetBool("Damaged", true);
 		
+		var randomXJitter = Random.Range(-1.5f,1.5f);
+		var randomYJitter = Random.Range(100, 100f); // TODO : Fix y boost not working on ground on damaged
 		
-		var timer = secondsInvincibility; // TODO : sync this with animation TODONE : I GUESS IT IT :)
+		_velocity = new Vector3(randomXJitter, randomYJitter,0);
+		
+		
+		var timer = secondsInvincibility;
 		while (timer > .0f)
 		{
 			timer -= Time.deltaTime;
@@ -251,7 +264,8 @@ public class Player : MonoBehaviour
 		}
 		
 		_animator.SetBool("Damaged", false);
-		
+
+
 	}	
 
 	
@@ -279,9 +293,15 @@ public class Player : MonoBehaviour
 
 		float boostInput = Input.GetAxisRaw("Fire1");
 
+		if (Input.GetButtonDown("Fire1"))
+		{
+			AudioManager.instance.Play("BoostCharge");
+		}
+		
+		
 		if (boostInput != 0 && !_controller.collisions.below && _canBoost)
 		{
-
+			
 			boostArrow.SetActive(true);
 			
 			_arrowAnimator.speed = 1.0f / maxBoostTime;
@@ -294,6 +314,7 @@ public class Player : MonoBehaviour
 		{
 			if (_currentBoostTime > maxBoostTime)
 			{
+				
 				boostArrow.SetActive(false);
 				_canBoost = false;
 				_isBoosting = false;
@@ -316,6 +337,8 @@ public class Player : MonoBehaviour
 
 		if (boostInput == 0 && !_controller.collisions.below && _canBoost && _isBoosting)
 		{
+			AudioManager.instance.Stop("BoostCharge");
+			AudioManager.instance.Play("BoostFinish");
 			_velocity = input * boostForce ; //* ((0.5f * currentBoostTime) + 0.5f);
 			_currentBoostTime = 0.0f;
 			_canBoost = false;
@@ -325,6 +348,7 @@ public class Player : MonoBehaviour
 		
 		if (Input.GetButtonDown("Jump") && _controller.collisions.below)
 		{
+			AudioManager.instance.Play("Jump");
 			_velocity.y = _maxJumpVelocity;
 		}
 
