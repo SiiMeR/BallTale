@@ -185,7 +185,8 @@ public class Player : MonoBehaviour
 	{
 		if (other.gameObject.CompareTag("Killcollider") && !_animator.GetBool("Damaged"))
 		{
-
+			AudioManager.instance.Play("MonsterHit");
+			
 			var enemy = other.transform.parent.gameObject;
 
 			Currency += enemy.GetComponent<BasicEnemy>().CurrencyOnKill;
