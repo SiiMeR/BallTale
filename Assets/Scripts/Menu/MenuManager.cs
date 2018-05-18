@@ -125,7 +125,7 @@ public class MenuManager : MonoBehaviour {
 	{
 		_instance = this;
 		
-		AudioManager.instance.Play("01Peaceful");
+//		AudioManager.instance.Play("01Peaceful");
 		MainMenu.Show();
 	}
 

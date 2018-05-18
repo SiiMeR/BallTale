@@ -169,6 +169,7 @@ public class Boss : MonoBehaviour
 
 
 		StartCoroutine(VortexText());
+		
 
 	}
 
@@ -184,11 +185,17 @@ public class Boss : MonoBehaviour
 			var c = text.color;
 
 			c.a = Mathf.Lerp(0,1, timer / 8.0f);
+			AudioManager.instance.musicVolume = Mathf.Lerp(0.95f,0, timer/8.0f);
 
 			text.color = c;
 
 			yield return null;
 		}
+		var c2 = text.color;
+		c2.a = 1;
+		text.color = c2;
+		AudioManager.instance.musicVolume = 0;
+
 		
 	}
 
@@ -335,7 +342,7 @@ public class Boss : MonoBehaviour
 	IEnumerator Collided()
 	{
 		
-		AudioManager.instance.Play("Boss1WallCollide");
+		AudioManager.instance.Play("Boss1WallCollide",0.5f);
 		var timer = .1f;
 
 		

@@ -24,7 +24,7 @@ public class Bossfight : MonoBehaviour
 	
 	// Update is called once per frame
 	void Update () {
-
+		
 	}
 
 	private void OnTriggerEnter2D(Collider2D other)
@@ -42,7 +42,10 @@ public class Bossfight : MonoBehaviour
 		if (!_fightOn)
 		{
 			
-			//AudioManager.instance.Play("btest");
+			AudioManager.instance.StopAllMusic();
+
+		//	StartCoroutine(AudioManager.instance.FadeToNextMusic("02VortexBoss", 2.0f));
+			AudioManager.instance.Play("02VortexBoss", isLooping:true);
 			_boss.SetActive(true);
 		
 			if (_takeCameraControl)
@@ -97,6 +100,9 @@ public class Bossfight : MonoBehaviour
 				StartCoroutine(MoveCameraToPos(Camera.main.transform.position, FindObjectOfType<Player>().transform.position, true));
 				
 			}
+			
+			
+			
 			
 			// FIGHTON FALSE TODO
 		//	_walls.ForEach(go => go.SetActive(false));

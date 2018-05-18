@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using UnityEngine;
 
 public class AudioManager : MonoBehaviour
@@ -107,6 +108,63 @@ public class AudioManager : MonoBehaviour
             Debug.LogWarning("Could not find audio: " + succ);
         }
     }
+
+    public IEnumerator FadeToNextMusic(string nextMusicName, float time = 2.0f)
+    {
+        if (nextMusicName == null || nextMusicName == "")
+        {
+            yield break;
+        }
+        
+        AudioClip clip;
+        AudioSource src = null;
+        bool succ = audioMap.TryGetValue(nextMusicName, out clip);
+        if (succ)
+        {
+            foreach (AudioSource source in sourcePool)
+            {
+                if (source.loop)
+                {
+                    src = source;
+
+
+                    break;
+                }
+            }
+        }
+        else
+        {
+            Debug.LogWarning("Could not find audio: " + succ);
+        }
+
+        if (src == null)
+        {
+            
+            yield break;
+        }
+
+        float timer = 0;
+
+        while ((timer += Time.unscaledDeltaTime) < time/2)
+        {
+            src.volume = Mathf.Lerp(1,0, timer / (time/2.0f));
+            yield return null;
+        }
+
+        src.clip = clip;
+
+        timer = 0f;
+
+        while ((timer += Time.unscaledDeltaTime) < time / 2)
+        {
+            src.volume = Mathf.Lerp(0,1, timer / (time/2.0f));
+            yield return null;
+        }
+
+
+    }
+    
+    
     
     public void Play(string audioName, float vol = 1f, bool isLooping = false, Vector3? position = null)
     {
