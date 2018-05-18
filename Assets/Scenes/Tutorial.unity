@@ -63047,6 +63047,11 @@ Prefab:
       propertyPath: _maxHealth
       value: 100
       objectReference: {fileID: 0}
+    - target: {fileID: 212812561164667632, guid: dacd53bebce7a2e4ab492aaf5e9697de,
+        type: 2}
+      propertyPath: m_SortingOrder
+      value: -2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: dacd53bebce7a2e4ab492aaf5e9697de, type: 2}
   m_IsPrefabParent: 0
@@ -63393,8 +63398,11 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 202c1a3414f604542b5282828998e436, type: 3}
   - {fileID: 8300000, guid: 49365813f2cf70647a027ac14ac99125, type: 3}
   - {fileID: 8300000, guid: 3ad37acc50d093345bc8726b8cff4da2, type: 3}
+  - {fileID: 8300000, guid: 3d030f1f6c1bee349aadc6d35e781aaa, type: 3}
+  - {fileID: 8300000, guid: 1a7c10a2dfc9b0946b6bf56fdcbe74c4, type: 3}
+  - {fileID: 8300000, guid: a01fc7283f714cf4b94048927d04c49e, type: 3}
   musicVolume: 1
-  soundVolume: 0.3
+  soundVolume: 0.5
   maxAudios: 16
 --- !u!4 &1119133166 stripped
 Transform:

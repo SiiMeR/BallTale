@@ -95,6 +95,8 @@ public class Shop : Interactable
 			
 				if (slot.Upgrade.Price <= FindObjectOfType<Player>().Currency)
 				{
+					AudioManager.instance.Play("Buy");
+					
 					slot
 						.Upgrade
 						.GetComponent<Upgrade>()

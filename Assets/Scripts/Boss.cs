@@ -59,6 +59,7 @@ public class Boss : MonoBehaviour
 
 	public void GetDamaged()
 	{
+		AudioManager.instance.Play("BossHit",vol:2.0f);
 		int originalHp = CurrentHealth;
 		CurrentHealth -= DamageFromPlayer;
 		StartCoroutine(ChangeHP(originalHp, CurrentHealth, 0.5f));
@@ -333,6 +334,8 @@ public class Boss : MonoBehaviour
 	
 	IEnumerator Collided()
 	{
+		
+		AudioManager.instance.Play("Boss1WallCollide");
 		var timer = .1f;
 
 		

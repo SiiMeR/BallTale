@@ -161,7 +161,7 @@ public class Player : MonoBehaviour
 		if (Input.GetButtonDown("Fire3") && shotCoolDown < _shotCoolDownTimer)
 		{
 			
-			AudioManager.instance.Play("Shot");
+			AudioManager.instance.Play("Shot",0.3f);
 			
 			var particle = Instantiate(shootParticle, transform.position, Quaternion.identity);
 			
@@ -252,9 +252,9 @@ public class Player : MonoBehaviour
 		_animator.SetBool("Damaged", true);
 		
 		var randomXJitter = Random.Range(-1.5f,1.5f);
-		var randomYJitter = Random.Range(100, 100f); // TODO : Fix y boost not working on ground on damaged
+		var randomYJitter = Random.Range(0.5f, 1f); // TODO : Fix y boost not working on ground on damaged
 		
-		_velocity = new Vector3(randomXJitter, randomYJitter,0);
+		_velocity += new Vector3(randomXJitter, randomYJitter,0);
 		
 		
 		var timer = secondsInvincibility;
@@ -294,7 +294,7 @@ public class Player : MonoBehaviour
 
 		float boostInput = Input.GetAxisRaw("Fire1");
 
-		if (Input.GetButtonDown("Fire1"))
+		if (Input.GetButtonDown("Fire1")  && !_controller.collisions.below && _canBoost)
 		{
 			AudioManager.instance.Play("BoostCharge");
 		}
