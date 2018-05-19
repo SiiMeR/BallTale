@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class MenuManager : MonoBehaviour {
 
@@ -13,11 +14,6 @@ public class MenuManager : MonoBehaviour {
 	{
 		get
 		{
-			if (!_instance)
-			{
-//				_instance = this;
-			}
-
 			return _instance;
 		}
 		private set
@@ -29,11 +25,13 @@ public class MenuManager : MonoBehaviour {
 	public MainMenu MainMenuPrefab;
 	public OptionsMenu OptionsMenuPrefab;
 	public CreditsMenu CreditsMenuPrefab;
-	//public ContinueMenu ContinueMenuPrefab;
+//	public ContinueMenu ContinueMenuPrefab;
+	public PauseMenu PauseMenuPrefab;
 	
 
 	public void OpenMenu(Menu instance)
 	{
+		
 		// De-activate top menu
 		if (_menuStack.Count > 0)
 		{
@@ -58,6 +56,7 @@ public class MenuManager : MonoBehaviour {
 
 	public void CloseMenu(Menu menu)
 	{
+		
 		if (_menuStack.Count == 0)
 		{
 			Debug.LogError("No menus open that can be closed. Type: " + menu.GetType());
@@ -123,10 +122,20 @@ public class MenuManager : MonoBehaviour {
 	
 	private void Awake()
 	{
-		_instance = this;
+		if (!_instance)
+		{
+			_instance = this;
+		//	DontDestroyOnLoad(gameObject);
+		}
+		
 		
 //		AudioManager.instance.Play("01Peaceful");
-		MainMenu.Show();
+
+		if (SceneManager.GetActiveScene().name == "Menu")
+		{
+			MainMenu.Show();
+		}
+		
 	}
 
 	private void OnDestroy()

@@ -57,3 +57,5 @@ MonoBehaviour:
     type: 2}
   CreditsMenuPrefab: {fileID: 114220455018559904, guid: b94c4be6321ff324a93d9437e4c63d47,
     type: 2}
+  PauseMenuPrefab: {fileID: 114835001628400060, guid: ccff2ba7a51f07f448b15df2f3366114,
+    type: 2}

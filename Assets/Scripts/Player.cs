@@ -138,16 +138,32 @@ public class Player : MonoBehaviour
 	void Update ()
 	{
 
+		if (Input.GetButtonDown("Cancel"))
+		{
+			if (PauseMenu.Instance)
+			{
+				PauseMenu.Hide();
+			}
+			else
+			{
+				PauseMenu.Show();
+			}
+
+		}
+
+
 		if (Time.timeScale > 0.01f)
 		{
 			UpdateMovement();
 			CheckShooting();
-
+			
 			if (Math.Abs(_velocity.x) > .01f)
 			{
 				_lastFacingDirection = Mathf.Sign(_velocity.x);
 	
 			}
+
+
 		
 
 		}
@@ -157,7 +173,7 @@ public class Player : MonoBehaviour
 	private void CheckShooting()
 	{
 		if (!HasShotUpgrade) return;
-		
+
 		if (Input.GetButtonDown("Fire3") && shotCoolDown < _shotCoolDownTimer)
 		{
 			

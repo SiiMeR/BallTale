@@ -238,6 +238,106 @@ Prefab:
       propertyPath: m_Pivot.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 224686480721273732, guid: 0733a6d6e1bf371438528cf27b1f0db0,
+        type: 2}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224686480721273732, guid: 0733a6d6e1bf371438528cf27b1f0db0,
+        type: 2}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224686480721273732, guid: 0733a6d6e1bf371438528cf27b1f0db0,
+        type: 2}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224686480721273732, guid: 0733a6d6e1bf371438528cf27b1f0db0,
+        type: 2}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224877748578839772, guid: 0733a6d6e1bf371438528cf27b1f0db0,
+        type: 2}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224877748578839772, guid: 0733a6d6e1bf371438528cf27b1f0db0,
+        type: 2}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224877748578839772, guid: 0733a6d6e1bf371438528cf27b1f0db0,
+        type: 2}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224877748578839772, guid: 0733a6d6e1bf371438528cf27b1f0db0,
+        type: 2}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224971398908598014, guid: 0733a6d6e1bf371438528cf27b1f0db0,
+        type: 2}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224971398908598014, guid: 0733a6d6e1bf371438528cf27b1f0db0,
+        type: 2}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224971398908598014, guid: 0733a6d6e1bf371438528cf27b1f0db0,
+        type: 2}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224971398908598014, guid: 0733a6d6e1bf371438528cf27b1f0db0,
+        type: 2}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224660525676244982, guid: 0733a6d6e1bf371438528cf27b1f0db0,
+        type: 2}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224660525676244982, guid: 0733a6d6e1bf371438528cf27b1f0db0,
+        type: 2}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224660525676244982, guid: 0733a6d6e1bf371438528cf27b1f0db0,
+        type: 2}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224660525676244982, guid: 0733a6d6e1bf371438528cf27b1f0db0,
+        type: 2}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224861626096744976, guid: 0733a6d6e1bf371438528cf27b1f0db0,
+        type: 2}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224861626096744976, guid: 0733a6d6e1bf371438528cf27b1f0db0,
+        type: 2}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224861626096744976, guid: 0733a6d6e1bf371438528cf27b1f0db0,
+        type: 2}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224861626096744976, guid: 0733a6d6e1bf371438528cf27b1f0db0,
+        type: 2}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 0733a6d6e1bf371438528cf27b1f0db0, type: 2}
   m_IsPrefabParent: 0
