@@ -35,6 +35,7 @@ public class ButtonHighlighter : MonoBehaviour
 			if(selectedAsButton.transform.name != "PauseButton")
 				HighlightButton(selectedAsButton);
 		}
+
  
 		if (previousButton != null && previousButton != selectedAsButton)
 		{
@@ -56,6 +57,6 @@ public class ButtonHighlighter : MonoBehaviour
 	void UnHighlightButton(Button butt)
 	{
 		butt.transform.localScale = new Vector3(1, 1, 1);
-	//	butt.;
+
 	}
 }

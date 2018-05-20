@@ -129,6 +129,7 @@ public class Player : MonoBehaviour
 		float gravity = -(2 * maxJumpHeight) / Mathf.Pow(timeToJumpApex, 2);
 	
 		Physics2D.gravity = new Vector3(gravity, 0,0);
+		
 		_maxJumpVelocity = Mathf.Abs(gravity * timeToJumpApex);
 		_minJumpVelocity = Mathf.Sqrt(2 * Mathf.Abs(gravity) * minJumpHeight);
 	}
