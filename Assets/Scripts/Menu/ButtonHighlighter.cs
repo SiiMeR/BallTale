@@ -6,10 +6,13 @@ using UnityEngine.UI;
  
 public class ButtonHighlighter : MonoBehaviour
 {
-	private Button previousButton;
+	
 	[SerializeField] private float scaleAmount = 1.4f;
+	[SerializeField] private Color highLightColor = Color.red;
 	[SerializeField] private GameObject defaultButton;
  
+	private Button previousButton;
+	
 	void Start()
 	{
 		if (defaultButton != null)
@@ -20,8 +23,12 @@ public class ButtonHighlighter : MonoBehaviour
 	void Update()
 	{
 		var selectedObj = EventSystem.current.currentSelectedGameObject;
- 
-		if (selectedObj == null) return;
+
+		if (selectedObj == null)
+		{
+			EventSystem.current.SetSelectedGameObject(previousButton.gameObject);
+			return;
+		}
 		var selectedAsButton = selectedObj.GetComponent<Button>();
 		if(selectedAsButton != null && selectedAsButton != previousButton)
 		{
@@ -31,7 +38,7 @@ public class ButtonHighlighter : MonoBehaviour
  
 		if (previousButton != null && previousButton != selectedAsButton)
 		{
-			UnHighlightButton(previousButton);
+		//	UnHighlightButton(previousButton);
 		}
 		previousButton = selectedAsButton;
 	}
@@ -42,11 +49,13 @@ public class ButtonHighlighter : MonoBehaviour
  
 	void HighlightButton(Button butt)
 	{
-		butt.transform.localScale = new Vector3(scaleAmount, scaleAmount, scaleAmount);
+//		butt.transform.localScale = new Vector3(scaleAmount, scaleAmount, scaleAmount);
+		butt.Select();
 	}
  
 	void UnHighlightButton(Button butt)
 	{
 		butt.transform.localScale = new Vector3(1, 1, 1);
+	//	butt.;
 	}
 }
