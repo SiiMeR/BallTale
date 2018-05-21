@@ -7,56 +7,50 @@ using UnityEngine.UI;
 public class ButtonHighlighter : MonoBehaviour
 {
 	
-	[SerializeField] private float scaleAmount = 1.4f;
-	[SerializeField] private Color highLightColor = Color.red;
-	[SerializeField] private GameObject defaultButton;
- 
-	private Button previousButton;
-	
-	void Start()
-	{
-		if (defaultButton != null)
-		{
-			EventSystem.current.SetSelectedGameObject(defaultButton);
-		}
-	}
+	public Button currentButton;
+
 	void Update()
 	{
+		if (!currentButton)
+		{
+			return;
+		}
+		
 		var selectedObj = EventSystem.current.currentSelectedGameObject;
 
 		if (selectedObj == null)
 		{
-			EventSystem.current.SetSelectedGameObject(previousButton.gameObject);
+			EventSystem.current.SetSelectedGameObject(currentButton.gameObject);
 			return;
 		}
 		var selectedAsButton = selectedObj.GetComponent<Button>();
-		if(selectedAsButton != null && selectedAsButton != previousButton)
+		if(selectedAsButton != null && selectedAsButton != currentButton)
 		{
 			if(selectedAsButton.transform.name != "PauseButton")
 				HighlightButton(selectedAsButton);
 		}
 
  
-		if (previousButton != null && previousButton != selectedAsButton)
+		if (currentButton != null && currentButton != selectedAsButton)
 		{
 		//	UnHighlightButton(previousButton);
 		}
-		previousButton = selectedAsButton;
+		currentButton = selectedAsButton;
 	}
 	void OnDisable()
 	{
-		if (previousButton != null) UnHighlightButton(previousButton);
+		if (currentButton != null) UnHighlightButton(currentButton);
 	}
  
-	void HighlightButton(Button butt)
+	public void HighlightButton(Button butt)
 	{
-//		butt.transform.localScale = new Vector3(scaleAmount, scaleAmount, scaleAmount);
+		currentButton = butt;
 		butt.Select();
 	}
  
-	void UnHighlightButton(Button butt)
+	public void UnHighlightButton(Button butt)
 	{
-		butt.transform.localScale = new Vector3(1, 1, 1);
 
 	}
+
 }

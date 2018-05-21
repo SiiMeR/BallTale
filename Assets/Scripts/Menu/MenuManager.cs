@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class MenuManager : MonoBehaviour {
 
@@ -27,10 +30,13 @@ public class MenuManager : MonoBehaviour {
 	public CreditsMenu CreditsMenuPrefab;
 //	public ContinueMenu ContinueMenuPrefab;
 	public PauseMenu PauseMenuPrefab;
-	
 
+	private ButtonHighlighter _buttonHighlighter;
+	
 	public void OpenMenu(Menu instance)
 	{
+		SelectFirstButton(instance);
+		
 		
 		// De-activate top menu
 		if (_menuStack.Count > 0)
@@ -54,8 +60,14 @@ public class MenuManager : MonoBehaviour {
 		_menuStack.Push(instance);
 	}
 
-	public void CloseMenu(Menu menu)
+	private void SelectFirstButton(Menu instance)
 	{
+		var firstButton = instance.gameObject.GetComponentInChildren<Button>(true);
+		_buttonHighlighter.HighlightButton(firstButton);
+	}
+
+	public void CloseMenu(Menu menu)
+	{	
 		
 		if (_menuStack.Count == 0)
 		{
@@ -77,6 +89,7 @@ public class MenuManager : MonoBehaviour {
 	{
 		var instance = _menuStack.Pop();
 
+		
 		if (instance.DestroyWhenClosed)
 		{
 			Destroy(instance.gameObject);
@@ -96,6 +109,12 @@ public class MenuManager : MonoBehaviour {
 			}
 		}
 
+		if (_menuStack.Count > 0)
+		{
+			SelectFirstButton(_menuStack.Peek());
+		}
+		
+
 	}
 
 	public void CreateInstance<T>() where T : Menu
@@ -114,7 +133,26 @@ public class MenuManager : MonoBehaviour {
 		{
 			var prefab = field.GetValue(this) as T;
 
-			if (prefab != null) return prefab;
+			if (prefab != null)
+			{
+				
+				// set all button colors
+				var prefabButtons = prefab.gameObject.GetComponentsInChildren<Button>().ToList();
+				
+				prefabButtons.ForEach(button =>
+				{
+					var colors = button.colors;
+					
+					
+					colors.highlightedColor = Color.green;
+
+					button.colors = colors;
+				});
+				
+			//	Debug.Log("MenuManager - successfully set highlight colors on buttons");
+				
+				return prefab;
+			}
 		}
 
 		throw new Exception("Prefab not found that matches type.");
@@ -122,13 +160,13 @@ public class MenuManager : MonoBehaviour {
 	
 	private void Awake()
 	{
+		
 		if (!_instance)
 		{
 			_instance = this;
-		//	DontDestroyOnLoad(gameObject);
 		}
-		
-		
+
+		_buttonHighlighter = GetComponent<ButtonHighlighter>();
 //		AudioManager.instance.Play("01Peaceful");
 
 		if (SceneManager.GetActiveScene().name == "Menu")

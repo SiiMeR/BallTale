@@ -622,6 +622,11 @@ Prefab:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 3403dc4e697080e428e5acc6825a75f8, type: 2}
+    - target: {fileID: 114883902540651594, guid: 9d820979489850443bc51955d06c689a,
+        type: 2}
+      propertyPath: moveSpeed
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9d820979489850443bc51955d06c689a, type: 2}
   m_IsPrefabAsset: 0
@@ -2956,10 +2961,6 @@ Prefab:
     - target: {fileID: 4535574069637544, guid: 834b182870aeccb4cbf286a247c3c524, type: 2}
       propertyPath: m_RootOrder
       value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 1572485892005932, guid: 834b182870aeccb4cbf286a247c3c524, type: 2}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 834b182870aeccb4cbf286a247c3c524, type: 2}
