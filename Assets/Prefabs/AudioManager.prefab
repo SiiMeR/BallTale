@@ -1,0 +1,68 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &100100000
+Prefab:
+  m_ObjectHideFlags: 1
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications: []
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 0}
+  m_RootGameObject: {fileID: 1984691482083904}
+  m_IsPrefabAsset: 1
+--- !u!1 &1984691482083904
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4826669667055816}
+  - component: {fileID: 114200885645069592}
+  m_Layer: 0
+  m_Name: AudioManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4826669667055816
+Transform:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1984691482083904}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 914.75146, y: 547.74445, z: -3.5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114200885645069592
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1984691482083904}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb125033d16c9f54096bd9fd2ca90e65, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  audioClips:
+  - {fileID: 8300000, guid: 8820fab1d0014324984eded097a1e1f2, type: 3}
+  - {fileID: 8300000, guid: 15468e3156cab184b990ce273869a24c, type: 3}
+  - {fileID: 8300000, guid: 923f94e4d6bd58e4ab5f60bbe3d0be70, type: 3}
+  - {fileID: 8300000, guid: a85b31fec21aaf142b837c453ca3545c, type: 3}
+  - {fileID: 8300000, guid: 202c1a3414f604542b5282828998e436, type: 3}
+  - {fileID: 8300000, guid: 49365813f2cf70647a027ac14ac99125, type: 3}
+  - {fileID: 8300000, guid: 3ad37acc50d093345bc8726b8cff4da2, type: 3}
+  - {fileID: 8300000, guid: 3d030f1f6c1bee349aadc6d35e781aaa, type: 3}
+  - {fileID: 8300000, guid: 1a7c10a2dfc9b0946b6bf56fdcbe74c4, type: 3}
+  - {fileID: 8300000, guid: a01fc7283f714cf4b94048927d04c49e, type: 3}
+  - {fileID: 8300000, guid: 55f6b3a2637356d42afa8b4bd3b54d46, type: 3}
+  musicVolume: 0
+  soundVolume: 0.4
+  maxAudios: 16

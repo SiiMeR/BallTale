@@ -22,6 +22,8 @@ public class AudioManager : MonoBehaviour
 
     void Awake()
     {
+        //DontDestroyOnLoad(this);
+        
         audioMap = new Dictionary<string, AudioClip>();
 
         foreach (AudioClip clip in audioClips)

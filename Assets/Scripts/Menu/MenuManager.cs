@@ -28,6 +28,8 @@ public class MenuManager : MonoBehaviour {
 	public MainMenu MainMenuPrefab;
 	public OptionsMenu OptionsMenuPrefab;
 	public CreditsMenu CreditsMenuPrefab;
+
+	public PauseOptionsMenu PauseOptionsMenuPrefab;
 //	public ContinueMenu ContinueMenuPrefab;
 	public PauseMenu PauseMenuPrefab;
 

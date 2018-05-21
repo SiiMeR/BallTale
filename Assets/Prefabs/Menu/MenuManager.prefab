@@ -56,7 +56,9 @@ MonoBehaviour:
     type: 2}
   OptionsMenuPrefab: {fileID: 114522576589939122, guid: 99fab3557e6ebb543a91d5d3af15bbfd,
     type: 2}
-  CreditsMenuPrefab: {fileID: 114220455018559904, guid: b94c4be6321ff324a93d9437e4c63d47,
+  CreditsMenuPrefab: {fileID: 114269230789616232, guid: cc4ad4f9a88a5b24e8d3917e9e990e33,
+    type: 2}
+  PauseOptionsMenuPrefab: {fileID: 114391825493012704, guid: 66f209b0b89567740b8aa4d2f32040d0,
     type: 2}
   PauseMenuPrefab: {fileID: 114835001628400060, guid: ccff2ba7a51f07f448b15df2f3366114,
     type: 2}

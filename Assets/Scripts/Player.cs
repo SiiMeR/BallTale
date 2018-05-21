@@ -290,7 +290,7 @@ public class Player : MonoBehaviour
 	private void UpdateMovement()
 	{
 		
-		if (_controller.collisions.above || _controller.collisions.below)
+			if (_controller.collisions.above || _controller.collisions.below)
 		{
 			if (!IgnoreGround)
 			{

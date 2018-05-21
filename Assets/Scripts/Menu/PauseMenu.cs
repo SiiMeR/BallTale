@@ -41,7 +41,7 @@ public class PauseMenu : SimpleMenu<PauseMenu>{
 
 	public void OnOptionsPressed()
 	{
-		
+		PauseOptionsMenu.Show();
 	}
 	
 }
