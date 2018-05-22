@@ -86,9 +86,14 @@ public class Shot : MonoBehaviour
 		if (_controller.IsInLayerMask(other.gameObject.layer, _killMask))
 		{
 			AudioManager.instance.Play("MonsterHit");
-			
-			GameObject.FindGameObjectWithTag("Player").GetComponent<Player>().Currency +=
-				other.gameObject.GetComponent<BasicEnemy>().CurrencyOnKill;
+
+
+			if (other.gameObject.GetComponent<BasicEnemy>())
+			{
+				GameObject.FindGameObjectWithTag("Player").GetComponent<Player>().Currency +=
+					other.gameObject.GetComponent<BasicEnemy>().CurrencyOnKill;
+			}
+
 			
 			Destroy(other.gameObject);
 

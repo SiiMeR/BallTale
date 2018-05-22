@@ -1,12 +1,12 @@
 fileFormatVersion: 2
-guid: 677103c0d6878d34086b3b8c3908a48f
+guid: b6d97ab95f79a2943ac2f169c4d8e9e5
 TextureImporter:
   fileIDToRecycleName: {}
   externalObjects: {}
   serializedVersion: 6
   mipmaps:
     mipMapMode: 0
-    enableMipMap: 1
+    enableMipMap: 0
     sRGBTexture: 1
     linearTexture: 0
     fadeOut: 0
@@ -32,24 +32,24 @@ TextureImporter:
   textureSettings:
     serializedVersion: 2
     filterMode: 0
-    aniso: 1
-    mipBias: 0
-    wrapU: 0
-    wrapV: 0
-    wrapW: 0
+    aniso: -1
+    mipBias: -100
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 3
+  spriteMode: 1
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 4
+  spritePixelsToUnits: 72
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
-  alphaIsTransparency: 0
+  alphaIsTransparency: 1
   spriteTessellationDetail: -1
   textureType: 8
   textureShape: 1
@@ -62,7 +62,7 @@ TextureImporter:
     buildTarget: DefaultTexturePlatform
     maxTextureSize: 2048
     resizeAlgorithm: 0
-    textureFormat: 4
+    textureFormat: -1
     textureCompression: 0
     compressionQuality: 50
     crunchedCompression: 0
@@ -73,7 +73,7 @@ TextureImporter:
     buildTarget: Standalone
     maxTextureSize: 2048
     resizeAlgorithm: 0
-    textureFormat: 4
+    textureFormat: -1
     textureCompression: 0
     compressionQuality: 50
     crunchedCompression: 0
@@ -83,18 +83,10 @@ TextureImporter:
   spriteSheet:
     serializedVersion: 2
     sprites: []
-    outline:
-    - - {x: -2, y: -2}
-      - {x: -2, y: 2}
-      - {x: 2, y: 2}
-      - {x: 2, y: -2}
-    physicsShape:
-    - - {x: -2, y: -2}
-      - {x: -2, y: 2}
-      - {x: 2, y: 2}
-      - {x: 2, y: -2}
+    outline: []
+    physicsShape: []
     bones: []
-    spriteID: da5bdb0dd8554e54889550a9c8977013
+    spriteID: 0ab7d653d415a904da975e2acd15b632
     vertices: []
     indices: 
     edges: []
