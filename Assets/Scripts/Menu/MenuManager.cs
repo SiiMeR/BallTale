@@ -79,7 +79,7 @@ public class MenuManager : MonoBehaviour {
 
 		if (_menuStack.Peek() != menu)
 		{
-			Debug.LogError(menu.GetType() + " cannot be closed because it is not on top of the stack.");
+			Debug.LogError(menu.GetType() + " cannot be closed because it is not on top of the stack. On top of the stack is: " + _menuStack.Peek().GetType());
 			return;
 		}
 
@@ -169,13 +169,35 @@ public class MenuManager : MonoBehaviour {
 		}
 
 		_buttonHighlighter = GetComponent<ButtonHighlighter>();
-//		AudioManager.instance.Play("01Peaceful");
+
 
 		if (SceneManager.GetActiveScene().name == "Menu")
 		{
+			AudioManager.instance.Play("03Dreams", isLooping:true);
 			MainMenu.Show();
 		}
 		
+	}
+
+	private void Update()
+	{
+		if (Input.GetButtonDown("Cancel"))
+		{
+			
+			if (_menuStack.Count > 0)
+			{
+				if (_menuStack.Peek() is MainMenu) return;
+				
+				CloseMenu(_menuStack.Peek());
+			}
+			
+			
+			else if(SceneManager.GetActiveScene().name != "Menu")
+			{
+				PauseMenu.Show();
+			}
+
+		}
 	}
 
 	private void OnDestroy()

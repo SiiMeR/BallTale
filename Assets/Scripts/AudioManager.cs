@@ -24,6 +24,9 @@ public class AudioManager : MonoBehaviour
     {
         //DontDestroyOnLoad(this);
         
+        SetMusicVolume(PlayerPrefs.GetInt("MusicVolume") / 10f);
+        SetSoundVolume(PlayerPrefs.GetInt("SoundVolume") / 10f);
+        
         audioMap = new Dictionary<string, AudioClip>();
 
         foreach (AudioClip clip in audioClips)

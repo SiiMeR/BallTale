@@ -139,18 +139,7 @@ public class Player : MonoBehaviour
 	void Update ()
 	{
 
-		if (Input.GetButtonDown("Cancel"))
-		{
-			if (PauseMenu.Instance)
-			{
-				PauseMenu.Hide();
-			}
-			else
-			{
-				PauseMenu.Show();
-			}
 
-		}
 
 
 		if (Time.timeScale > 0.01f)
