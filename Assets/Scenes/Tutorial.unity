@@ -843,7 +843,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 340808512}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.47, y: 1.4, z: -10}
+  m_LocalPosition: {x: -4.47, y: 2.15, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 155843010}
@@ -1717,10 +1717,9 @@ Prefab:
       propertyPath: _vortextext
       value: 
       objectReference: {fileID: 365719241}
-    - target: {fileID: 114226398384701254, guid: dacd53bebce7a2e4ab492aaf5e9697de,
-        type: 2}
-      propertyPath: _maxHealth
-      value: 30
+    - target: {fileID: 1700365627749058, guid: dacd53bebce7a2e4ab492aaf5e9697de, type: 2}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dacd53bebce7a2e4ab492aaf5e9697de, type: 2}
@@ -2264,7 +2263,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 11.999992, y: -16}
+  m_AnchoredPosition: {x: 12, y: -40}
   m_SizeDelta: {x: 1600, y: 90}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &1273928556
