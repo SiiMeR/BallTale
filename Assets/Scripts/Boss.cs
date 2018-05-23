@@ -67,6 +67,8 @@ public class Boss : MonoBehaviour
 	}
 	private IEnumerator Die()
 	{
+		FindObjectOfType<Player>().Currency += _currencyOnKill;
+		
 		GameObject.FindGameObjectWithTag("BossFight").GetComponent<Bossfight>().Endfight();
 		
 		yield return new WaitForSeconds(0.5f);

@@ -12,14 +12,16 @@ public class Shop : Interactable
 	[SerializeField] private List<Upgrade> _itemsOnSale;
 	[SerializeField] private GameObject _selectionFrame;
 	
-	private List<Slot> _slots;
-	private Queue<Upgrade> _saleQueue; // holds items that are not yet on sale
+	
 	private int _currentSelectionSlot;
 
 	private bool _moveAxisInUse;
+
+	public List<Slot> _slots;
+	public Queue<Upgrade> _saleQueue; // holds items that are not yet on sale
+
 	// Use this for initialization
-	protected  override void Start () {
-		base.Start();
+	protected void Awake () {
 		
 		_saleQueue = new Queue<Upgrade>();
 		_slots = GetComponentsInChildren<Slot>(true).ToList();
@@ -47,6 +49,23 @@ public class Shop : Interactable
 		}
 	}
 
+
+	public void RefillSlots(params Upgrade[] upgrades)
+	{
+		_slots = GetComponentsInChildren<Slot>(true).ToList();
+		_saleQueue = new Queue<Upgrade>(upgrades);
+		
+		foreach (var slot in _slots)
+		{
+			if (_saleQueue.Count < 1)
+			{
+				break;
+			}
+			slot.Upgrade = _saleQueue.Dequeue();
+		}
+		
+		
+	}
 	
 	private void AddItemToSlot(Upgrade item)
 	{
@@ -85,10 +104,6 @@ public class Shop : Interactable
 			}
 			
 			
-
-			
-			//_selectionFrame.transform.position = _slots[_currentSelectionSlot].transform.position;
-
 			if (Input.GetButtonDown("Fire3") && !_slots[_currentSelectionSlot].IsEmpty())
 			{
 				var slot = _slots[_currentSelectionSlot];

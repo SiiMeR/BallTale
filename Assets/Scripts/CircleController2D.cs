@@ -115,7 +115,6 @@ public class CircleController2D : RayCastController
 			Bounds b = collider.bounds;
 			b.Expand(SKINWIDTH * -2);
 
-			float spacing = b.size.x / (3 - 1);
 
 			Vector2 rayOg = new Vector2();
 			float rayl = rayLength;

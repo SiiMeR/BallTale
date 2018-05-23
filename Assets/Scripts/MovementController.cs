@@ -32,12 +32,8 @@ public class MovementController : MonoBehaviour
 		}
 		
 		float moveX = Input.GetAxis("Horizontal");
-		float moveY = Input.GetAxis("Vertical");
-		
-		Vector2 v2 = new Vector2(moveX, _rigidbody.velocity.y);
+	//	float moveY = Input.GetAxis("Vertical");
 
-		Vector2 v3 = new Vector2(transform.forward.x, transform.forward.y);
-		//_rigidbody.MovePosition(transform.position + (v3 * Time.deltaTime));
 		_rigidbody.velocity = new Vector2(moveX * _movespeed,  _rigidbody.velocity.y);
 	}
 }
