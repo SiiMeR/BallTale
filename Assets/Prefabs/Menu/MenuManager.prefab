@@ -58,6 +58,8 @@ MonoBehaviour:
     type: 2}
   CreditsMenuPrefab: {fileID: 114269230789616232, guid: cc4ad4f9a88a5b24e8d3917e9e990e33,
     type: 2}
+  DeleteConfirmationMenuPrefab: {fileID: 114763454553132802, guid: afe98cd5798916b418e7eb7affbd4666,
+    type: 2}
   PauseOptionsMenuPrefab: {fileID: 114391825493012704, guid: 66f209b0b89567740b8aa4d2f32040d0,
     type: 2}
   PauseMenuPrefab: {fileID: 114835001628400060, guid: ccff2ba7a51f07f448b15df2f3366114,

@@ -110,7 +110,7 @@ public class Player : MonoBehaviour
 	// Use this for initialization
 	void Start ()
 	{
-		AudioManager.instance.Play("01Peaceful", isLooping: true);
+		AudioManager.Instance.Play("01Peaceful", isLooping: true);
 		
 		deathScreen.SetActive(false);
 		
@@ -167,7 +167,7 @@ public class Player : MonoBehaviour
 		if (Input.GetButtonDown("Fire3") && shotCoolDown < _shotCoolDownTimer)
 		{
 			
-			AudioManager.instance.Play("Shot",0.3f);
+			AudioManager.Instance.Play("Shot",0.3f);
 			
 			var particle = Instantiate(shootParticle, transform.position, Quaternion.identity);
 			
@@ -191,7 +191,7 @@ public class Player : MonoBehaviour
 	{
 		if (other.gameObject.CompareTag("Killcollider") && !_animator.GetBool("Damaged"))
 		{
-			AudioManager.instance.Play("MonsterHit");
+			AudioManager.Instance.Play("MonsterHit");
 			
 			var enemy = other.transform.parent.gameObject;
 
@@ -253,7 +253,7 @@ public class Player : MonoBehaviour
 
 	public IEnumerator PlayerDamaged()
 	{
-		AudioManager.instance.Play("PlayerDamaged");
+		AudioManager.Instance.Play("PlayerDamaged");
 		
 		_animator.SetBool("Damaged", true);
 		
@@ -302,7 +302,7 @@ public class Player : MonoBehaviour
 
 		if (Input.GetButtonDown("Fire1")  && !_controller.collisions.below && _canBoost)
 		{
-			AudioManager.instance.Play("BoostCharge");
+			AudioManager.Instance.Play("BoostCharge");
 		}
 		
 		
@@ -344,8 +344,8 @@ public class Player : MonoBehaviour
 
 		if (boostInput == 0 && !_controller.collisions.below && _canBoost && _isBoosting)
 		{
-			AudioManager.instance.Stop("BoostCharge");
-			AudioManager.instance.Play("BoostFinish");
+			AudioManager.Instance.Stop("BoostCharge");
+			AudioManager.Instance.Play("BoostFinish");
 			_velocity = input * boostForce ; //* ((0.5f * currentBoostTime) + 0.5f);
 			_currentBoostTime = 0.0f;
 			_canBoost = false;
@@ -355,7 +355,7 @@ public class Player : MonoBehaviour
 		
 		if (Input.GetButtonDown("Jump") && _controller.collisions.below)
 		{
-			AudioManager.instance.Play("Jump", 0.5f);
+			AudioManager.Instance.Play("Jump", 0.5f);
 			_velocity.y = _maxJumpVelocity;
 		}
 

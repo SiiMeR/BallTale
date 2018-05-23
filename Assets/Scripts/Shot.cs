@@ -85,7 +85,7 @@ public class Shot : MonoBehaviour
 		// TODO, CHECK IF IT IS A THING THAT GIVES MONEY OR NOT
 		if (_controller.IsInLayerMask(other.gameObject.layer, _killMask))
 		{
-			AudioManager.instance.Play("MonsterHit");
+			AudioManager.Instance.Play("MonsterHit");
 
 
 			if (other.gameObject.GetComponent<BasicEnemy>())

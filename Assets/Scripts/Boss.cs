@@ -59,7 +59,7 @@ public class Boss : MonoBehaviour
 
 	public void GetDamaged()
 	{
-		AudioManager.instance.Play("BossHit",vol:2.0f);
+		AudioManager.Instance.Play("BossHit",vol:2.0f);
 		int originalHp = CurrentHealth;
 		CurrentHealth -= DamageFromPlayer;
 		StartCoroutine(ChangeHP(originalHp, CurrentHealth, 0.5f));
@@ -185,7 +185,7 @@ public class Boss : MonoBehaviour
 			var c = text.color;
 
 			c.a = Mathf.Lerp(0,1, timer / 8.0f);
-			AudioManager.instance.musicVolume = Mathf.Lerp(0.95f,0, timer/8.0f);
+			AudioManager.Instance.musicVolume = Mathf.Lerp(0.95f,0, timer/8.0f);
 
 			text.color = c;
 
@@ -194,7 +194,7 @@ public class Boss : MonoBehaviour
 		var c2 = text.color;
 		c2.a = 1;
 		text.color = c2;
-		AudioManager.instance.musicVolume = 0;
+		AudioManager.Instance.musicVolume = 0;
 
 		
 	}
@@ -342,7 +342,7 @@ public class Boss : MonoBehaviour
 	IEnumerator Collided()
 	{
 		
-		AudioManager.instance.Play("Boss1WallCollide",0.5f);
+		AudioManager.Instance.Play("Boss1WallCollide",0.5f);
 		var timer = .1f;
 
 		

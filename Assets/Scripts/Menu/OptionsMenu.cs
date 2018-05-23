@@ -49,7 +49,7 @@ public class OptionsMenu : SimpleMenu<OptionsMenu>
 		var newVal = soundSlider.value * 10;
 		soundSliderVal.text = newVal.ToString();
 		
-		AudioManager.instance.SetSoundVolume(PlayerPrefs.GetInt("SoundVolume") / 10f);
+		AudioManager.Instance.SetSoundVolume(PlayerPrefs.GetInt("SoundVolume") / 10f);
 		
 	}
 	public void OnMusicValueChanged()
@@ -59,8 +59,13 @@ public class OptionsMenu : SimpleMenu<OptionsMenu>
 		var newVal = musicSlider.value * 10;
 		musicSliderVal.text = newVal.ToString();
 		
-		AudioManager.instance.SetMusicVolume(PlayerPrefs.GetInt("MusicVolume") / 10f);
+		AudioManager.Instance.SetMusicVolume(PlayerPrefs.GetInt("MusicVolume") / 10f);
 
+	}
+
+	public void DeleteSaveData()
+	{
+		DeleteConfirmationMenu.Show();
 	}
 	
 	

@@ -3,11 +3,29 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using UnityEngine;
 
-public class AudioManager : MonoBehaviour
+public class AudioManager : Singleton<AudioManager>
 {
-    public static AudioManager instance;
+  //  public static AudioManager instance;
+
+
     public List<AudioClip> audioClips;
-    public Dictionary<string, AudioClip> audioMap;
+
+
+    private Dictionary<string, AudioClip> audioMap;
+    
+    public Dictionary<string, AudioClip> AudioMap
+    {
+        get
+        {
+            if (audioMap == null)
+            {
+                CreateAudioMap();
+            }
+
+            return audioMap;
+        }
+        set { audioMap = value; }
+    }
 
     public float musicVolume = 1;
     public float soundVolume = 1;
@@ -17,21 +35,19 @@ public class AudioManager : MonoBehaviour
 
     public AudioManager()
     {
-        instance = this;
+      //  instance = this;
     }
 
-    void Awake()
+
+    void CreateAudioMap()
     {
-        //DontDestroyOnLoad(this);
-        
-        SetMusicVolume(PlayerPrefs.GetInt("MusicVolume") / 10f);
-        SetSoundVolume(PlayerPrefs.GetInt("SoundVolume") / 10f);
-        
         audioMap = new Dictionary<string, AudioClip>();
+
+        AudioMap = new Dictionary<string, AudioClip>();
 
         foreach (AudioClip clip in audioClips)
         {
-            audioMap.Add(clip.name, clip);
+            AudioMap.Add(clip.name, clip);
         }
 
         sourcePool = new List<AudioSource>();
@@ -44,6 +60,14 @@ public class AudioManager : MonoBehaviour
             AudioSource audioSource = gob.AddComponent<AudioSource>();
             sourcePool.Add(audioSource);
         }
+        
+        SetMusicVolume(PlayerPrefs.GetInt("MusicVolume") / 10f);
+        SetSoundVolume(PlayerPrefs.GetInt("SoundVolume") / 10f);
+
+    }
+    void Awake()
+    {
+  //      CreateAudioMap();
 
     }
 
@@ -94,7 +118,7 @@ public class AudioManager : MonoBehaviour
             return;
         }
         AudioClip clip;
-        bool succ = audioMap.TryGetValue(audioName, out clip);
+        bool succ = AudioMap.TryGetValue(audioName, out clip);
         if (succ)
         {
             
@@ -123,7 +147,7 @@ public class AudioManager : MonoBehaviour
         
         AudioClip clip;
         AudioSource src = null;
-        bool succ = audioMap.TryGetValue(nextMusicName, out clip);
+        bool succ = AudioMap.TryGetValue(nextMusicName, out clip);
         if (succ)
         {
             foreach (AudioSource source in sourcePool)
@@ -178,7 +202,7 @@ public class AudioManager : MonoBehaviour
             return;
         }
         AudioClip clip;
-        bool succ = audioMap.TryGetValue(audioName, out clip);
+        bool succ = AudioMap.TryGetValue(audioName, out clip);
         if (succ)
         {
             foreach (AudioSource source in sourcePool)

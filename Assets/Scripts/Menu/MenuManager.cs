@@ -28,7 +28,7 @@ public class MenuManager : MonoBehaviour {
 	public MainMenu MainMenuPrefab;
 	public OptionsMenu OptionsMenuPrefab;
 	public CreditsMenu CreditsMenuPrefab;
-
+	public DeleteConfirmationMenu DeleteConfirmationMenuPrefab;
 	public PauseOptionsMenu PauseOptionsMenuPrefab;
 //	public ContinueMenu ContinueMenuPrefab;
 	public PauseMenu PauseMenuPrefab;
@@ -173,7 +173,7 @@ public class MenuManager : MonoBehaviour {
 
 		if (SceneManager.GetActiveScene().name == "Menu")
 		{
-			AudioManager.instance.Play("03Dreams", isLooping:true);
+			AudioManager.Instance.Play("03Dreams", isLooping:true);
 			MainMenu.Show();
 		}
 		

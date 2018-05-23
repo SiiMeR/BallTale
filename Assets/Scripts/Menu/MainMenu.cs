@@ -1,19 +1,33 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using BayatGames.SaveGameFree;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
-public class MainMenu : SimpleMenu<MainMenu> {
+public class MainMenu : SimpleMenu<MainMenu>
+{
 
-
+	public Button continueButton;
+	
 	// Use this for initialization
 	void Start () {
-		
+		if (SaveGame.Exists("player"))
+		{
+			continueButton.interactable = true;
+		}
 	}
-	
-	// Update is called once per frame
-	void Update () {
-		
+
+	private void FixedUpdate()
+	{
+		if (SaveGame.Exists("player"))
+		{
+			continueButton.interactable = true;
+		}
+		else
+		{
+			continueButton.interactable = false;
+		}
 	}
 
 	public override void OnBackPressed()
@@ -29,7 +43,9 @@ public class MainMenu : SimpleMenu<MainMenu> {
 
 	public void OnContinuePressed()
 	{
-		print("Continue pressed");
+		PlayerPrefs.SetInt("loadgame", 1);
+		SceneManager.LoadScene("Tutorial");
+		
 	}
 	
 	public void OnOptionsPressed()

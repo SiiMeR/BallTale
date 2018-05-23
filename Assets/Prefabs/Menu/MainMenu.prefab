@@ -154,6 +154,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DestroyWhenClosed: 1
   DisableMenusUnderneath: 0
+  continueButton: {fileID: 114891216999796980}
 --- !u!114 &114013280081772574
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1043,7 +1044,7 @@ MonoBehaviour:
     m_HighlightedTrigger: Highlighted
     m_PressedTrigger: Pressed
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 114627166873394316}
   m_OnClick:
     m_PersistentCalls:

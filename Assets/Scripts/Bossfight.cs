@@ -42,10 +42,10 @@ public class Bossfight : MonoBehaviour
 		if (!_fightOn)
 		{
 			
-			AudioManager.instance.StopAllMusic();
+			AudioManager.Instance.StopAllMusic();
 
 		//	StartCoroutine(AudioManager.instance.FadeToNextMusic("02VortexBoss", 2.0f));
-			AudioManager.instance.Play("02VortexBoss", isLooping:true);
+			AudioManager.Instance.Play("02VortexBoss", isLooping:true);
 			_boss.SetActive(true);
 		
 			if (_takeCameraControl)
