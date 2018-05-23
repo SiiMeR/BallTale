@@ -6,6 +6,7 @@ using System.Runtime.InteropServices;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
 [RequireComponent(typeof(CircleController2D))]
@@ -33,9 +34,13 @@ public class Player : MonoBehaviour
 	[SerializeField] private float maxBoostTime = 2.0f;
 	[SerializeField] private float boostForce = 20f;
 	[SerializeField] private GameObject boostArrow;
+	[SerializeField] private GameObject boostTimer;
+	[SerializeField] private Image boostTimerFill;
+	
+	
 	[SerializeField] private GameObject deathScreen;
 	[SerializeField] private GameObject shootParticle;
-
+	
 	[SerializeField] private int currency = 100;
 
 
@@ -121,6 +126,11 @@ public class Player : MonoBehaviour
 		if (boostArrow)
 		{
 			boostArrow.SetActive(false);
+		}
+
+		if (boostTimer)
+		{
+			boostTimer.SetActive(false);	
 		}
 
 		_arrowAnimator = boostArrow.GetComponent<Animator>();
@@ -305,27 +315,28 @@ public class Player : MonoBehaviour
 			AudioManager.Instance.Play("BoostCharge");
 		}
 		
-		
-		if (boostInput != 0 && !_controller.collisions.below && _canBoost)
-		{
-			
-			boostArrow.SetActive(true);
-			
-			_arrowAnimator.speed = 1.0f / maxBoostTime;
-			_arrowAnimator.SetTrigger("Boost");
 
-			_isBoosting = true;
-		}
 		
 		if (boostInput != 0  && !_controller.collisions.below && _canBoost)
 		{
+			
+			boostArrow.SetActive(true);
+			boostTimer.SetActive(true);
+			
+			
+//			_arrowAnimator.speed = 1.0f / maxBoostTime;
+//			_arrowAnimator.SetTrigger("Boost");
+
+			_isBoosting = true;
 			if (_currentBoostTime > maxBoostTime)
 			{
 				
 				boostArrow.SetActive(false);
+				boostTimer.SetActive(false);
 				_canBoost = false;
 				_isBoosting = false;
 				_currentBoostTime = 0.0f;
+				boostTimerFill.fillAmount = 0;
 				return;
 			}
 			
@@ -335,7 +346,7 @@ public class Player : MonoBehaviour
 
 			boostArrow.transform.rotation = Quaternion.Slerp(boostArrow.transform.rotation, q, 10 * Time.deltaTime);
 
-
+			boostTimerFill.fillAmount = _currentBoostTime / maxBoostTime;
 			
 			_currentBoostTime += Time.deltaTime;
 			
@@ -350,7 +361,9 @@ public class Player : MonoBehaviour
 			_currentBoostTime = 0.0f;
 			_canBoost = false;
 			_isBoosting = false;
+			boostTimerFill.fillAmount = 0;
 			boostArrow.SetActive(false);
+			boostTimer.SetActive(false);
 		}
 		
 		if (Input.GetButtonDown("Jump") && _controller.collisions.below)

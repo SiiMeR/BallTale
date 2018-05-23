@@ -34,22 +34,19 @@ public class UI : MonoBehaviour
 		
 		if (lastCurrency != player.Currency) // changed
 		{
+			StopCoroutine(FadeOut());
 			Timer = 0;
-
-			StartCoroutine(SmoothChangeValue(lastCurrency, player.Currency, 0.5f, currency));
-			
-			//currency.SetText(player.Currency.ToString());
-			
 			_isFaded = false;
 			currencyCanvas.alpha = 1;
+			StartCoroutine(SmoothChangeValue(lastCurrency, player.Currency, 0.5f, currency));
+			
 
 		}
-
-		
-		if ((Timer += Time.unscaledDeltaTime) > CurrencyFadeCD && !_isFaded)
+		else if ((Timer += Time.unscaledDeltaTime) > CurrencyFadeCD && !_isFaded)
 		{
 			Timer = 0;
 			StartCoroutine(FadeOut());
+			
 		}
 		
 		health.fillAmount = ((float)player.CurrentHealth/player.MaxHealth) + 0.01f;
@@ -86,6 +83,7 @@ public class UI : MonoBehaviour
 		}
 
 		_isFaded = true;
+		currencyCanvas.alpha = 0;
 
 	}
 }
