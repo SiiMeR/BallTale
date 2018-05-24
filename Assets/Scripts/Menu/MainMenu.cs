@@ -11,7 +11,11 @@ public class MainMenu : SimpleMenu<MainMenu>
 	public Button continueButton;
 	
 	// Use this for initialization
-	void Start () {
+	void Start ()
+	{
+
+		Time.timeScale = 1;
+		
 		if (SaveGame.Exists("player.txt"))
 		{
 			continueButton.interactable = true;

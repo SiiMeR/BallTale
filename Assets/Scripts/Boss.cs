@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Assertions.Comparers;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public enum BossState
@@ -198,6 +199,10 @@ public class Boss : MonoBehaviour
 		c2.a = 1;
 		text.color = c2;
 		AudioManager.Instance.SetMusicVolume(0);
+
+		yield return new WaitForSecondsRealtime(3.0f);
+		
+		SceneManager.LoadScene("Menu");
 
 		
 	}

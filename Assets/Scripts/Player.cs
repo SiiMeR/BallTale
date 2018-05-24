@@ -187,7 +187,7 @@ public class Player : MonoBehaviour
 		if (Input.GetButtonDown("Fire3") && shotCoolDown < _shotCoolDownTimer)
 		{
 			
-			AudioManager.Instance.Play("Shot",0.3f);
+			AudioManager.Instance.Play("Shot",0.7f);
 			
 			var particle = Instantiate(shootParticle, transform.position, Quaternion.identity);
 			

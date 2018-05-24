@@ -164,9 +164,9 @@ public class AudioManager : Singleton<AudioManager>
         Play(nextMusicName, isLooping:true);
         timer = 0f;
 
-        while ((timer += Time.unscaledDeltaTime) < 0.5f)
+        while ((timer += Time.unscaledDeltaTime) < 0.4f)
         {
-            SetMusicVolume(Mathf.Lerp(0,startAudioVol, timer / 0.5f));
+            SetMusicVolume(Mathf.Lerp(0,startAudioVol, timer / 0.4f));
             yield return null;
         }
 
