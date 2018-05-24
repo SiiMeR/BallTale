@@ -144,51 +144,33 @@ public class AudioManager : Singleton<AudioManager>
         {
             yield break;
         }
-        
-        AudioClip clip;
-        AudioSource src = null;
-        bool succ = AudioMap.TryGetValue(nextMusicName, out clip);
-        if (succ)
-        {
-            foreach (AudioSource source in sourcePool)
-            {
-                if (source.loop)
-                {
-                    src = source;
 
+        var startAudioVol = musicVolume;
 
-                    break;
-                }
-            }
-        }
-        else
-        {
-            Debug.LogWarning("Could not find audio: " + succ);
-        }
+        float timer = 0f;
 
-        if (src == null)
+        while ((timer += Time.unscaledDeltaTime) < 0.5f)
         {
             
-            yield break;
-        }
-
-        float timer = 0;
-
-        while ((timer += Time.unscaledDeltaTime) < time/2)
-        {
-            src.volume = Mathf.Lerp(1,0, timer / (time/2.0f));
+            SetMusicVolume(Mathf.Lerp(startAudioVol,0, timer / 0.5f));
+    
             yield return null;
         }
 
-        src.clip = clip;
-
+        SetMusicVolume(0);
+        
+        StopAllMusic();
+        
+        Play(nextMusicName, isLooping:true);
         timer = 0f;
 
-        while ((timer += Time.unscaledDeltaTime) < time / 2)
+        while ((timer += Time.unscaledDeltaTime) < 0.5f)
         {
-            src.volume = Mathf.Lerp(0,1, timer / (time/2.0f));
+            SetMusicVolume(Mathf.Lerp(0,startAudioVol, timer / 0.5f));
             yield return null;
         }
+
+        SetMusicVolume(startAudioVol);
 
 
     }

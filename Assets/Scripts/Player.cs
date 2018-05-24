@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
+using BayatGames.SaveGameFree;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
@@ -104,11 +105,20 @@ public class Player : MonoBehaviour
 	{		
 		deathScreen.SetActive(true);
 		
-		yield return new WaitUntil((() => Input.GetKeyDown(KeyCode.Return)));
+		AudioManager.Instance.StopAllMusic();
+		AudioManager.Instance.SetSoundVolume(0);
 		
+		yield return new WaitUntil((() => Input.GetKeyDown(KeyCode.Return)));
+
+
+		if (SaveGame.Exists("player.txt"))
+		{
+			PlayerPrefs.SetInt("loadgame",1);
+		}
+		deathScreen.SetActive(false);
 		SceneManager.LoadScene(SceneManager.GetActiveScene().name);
 		
-		deathScreen.SetActive(false);
+		
 	}
 
 
@@ -346,7 +356,7 @@ public class Player : MonoBehaviour
 
 			boostArrow.transform.rotation = Quaternion.Slerp(boostArrow.transform.rotation, q, 10 * Time.deltaTime);
 
-			boostTimerFill.fillAmount = _currentBoostTime / maxBoostTime;
+			boostTimerFill.fillAmount = (_currentBoostTime / maxBoostTime) + 0.05f;
 			
 			_currentBoostTime += Time.deltaTime;
 			

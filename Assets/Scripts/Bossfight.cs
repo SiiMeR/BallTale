@@ -14,7 +14,7 @@ public class Bossfight : MonoBehaviour
 
 	[SerializeField] private bool _takeCameraControl;
 	[SerializeField] private Transform _cameraMiddle; // where to put the camera during the fight
-
+	[SerializeField] private GameObject _booster;
 	private bool _fightOn;
 	
 	// Use this for initialization
@@ -42,10 +42,11 @@ public class Bossfight : MonoBehaviour
 		if (!_fightOn)
 		{
 			
-			AudioManager.Instance.StopAllMusic();
+			//AudioManager.Instance.StopAllMusic();
 
-		//	StartCoroutine(AudioManager.instance.FadeToNextMusic("02VortexBoss", 2.0f));
-			AudioManager.Instance.Play("02VortexBoss", isLooping:true);
+			StartCoroutine(AudioManager.Instance.FadeToNextMusic("02VortexBoss", 2.0f));
+			
+		//	AudioManager.Instance.Play("02VortexBoss", isLooping:true);
 			_boss.SetActive(true);
 		
 			if (_takeCameraControl)
@@ -75,7 +76,7 @@ public class Bossfight : MonoBehaviour
 		float secondsMove = 1.5f;
 		float timer = 0;
 
-		while ((timer += Time.deltaTime) < secondsMove)
+		while ((timer += Time.unscaledDeltaTime) < secondsMove)
 		{
 			Camera.main.transform.position = Vector3.Lerp(startPos, endPos, timer / secondsMove);
 
@@ -97,7 +98,9 @@ public class Bossfight : MonoBehaviour
 		{
 			if (_takeCameraControl)
 			{
-				StartCoroutine(MoveCameraToPos(Camera.main.transform.position, FindObjectOfType<Player>().transform.position, true));
+				var booster = GameObject.FindGameObjectWithTag("boosttimer");
+				
+				StartCoroutine(MoveCameraToPos(Camera.main.transform.position, _booster.transform.position , true));
 				
 			}
 			

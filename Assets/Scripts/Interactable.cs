@@ -27,7 +27,7 @@ public abstract class Interactable : MonoBehaviour
 		}
 	}
 
-	public void FlipDialogue()
+	public virtual void FlipDialogue()
 	{
 		if (_pauseOnInteract)
 		{

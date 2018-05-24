@@ -12,21 +12,26 @@ public class MainMenu : SimpleMenu<MainMenu>
 	
 	// Use this for initialization
 	void Start () {
-		if (SaveGame.Exists("player"))
+		if (SaveGame.Exists("player.txt"))
 		{
 			continueButton.interactable = true;
+		}
+		else
+		{
+			PlayerPrefs.SetInt("loadgame",0);
 		}
 	}
 
 	private void FixedUpdate()
 	{
-		if (SaveGame.Exists("player"))
+		if (SaveGame.Exists("player.txt"))
 		{
 			continueButton.interactable = true;
 		}
 		else
 		{
 			continueButton.interactable = false;
+			PlayerPrefs.SetInt("loadgame",0);
 		}
 	}
 

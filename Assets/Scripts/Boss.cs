@@ -181,13 +181,14 @@ public class Boss : MonoBehaviour
 		float timer = 0;
 
 		var text = _vortextext.GetComponent<TMP_Text>();
-		
+
+		var startvol = AudioManager.Instance.musicVolume;
 		while ((timer += Time.unscaledDeltaTime) < 8.0f)
 		{
 			var c = text.color;
 
 			c.a = Mathf.Lerp(0,1, timer / 8.0f);
-			AudioManager.Instance.musicVolume = Mathf.Lerp(0.95f,0, timer/8.0f);
+			AudioManager.Instance.SetMusicVolume(Mathf.Lerp(startvol,0, timer/8.0f));
 
 			text.color = c;
 
@@ -196,7 +197,7 @@ public class Boss : MonoBehaviour
 		var c2 = text.color;
 		c2.a = 1;
 		text.color = c2;
-		AudioManager.Instance.musicVolume = 0;
+		AudioManager.Instance.SetMusicVolume(0);
 
 		
 	}

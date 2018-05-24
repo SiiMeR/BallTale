@@ -11,7 +11,9 @@ public class Shop : Interactable
 	
 	[SerializeField] private List<Upgrade> _itemsOnSale;
 	[SerializeField] private GameObject _selectionFrame;
-	
+
+
+	[SerializeField] private TextMeshProUGUI _shootingText;
 	
 	private int _currentSelectionSlot;
 
@@ -20,6 +22,8 @@ public class Shop : Interactable
 	public List<Slot> _slots;
 	public Queue<Upgrade> _saleQueue; // holds items that are not yet on sale
 
+	private bool _justBoughtShootingUpgrade;
+	
 	// Use this for initialization
 	protected void Awake () {
 		
@@ -76,7 +80,65 @@ public class Shop : Interactable
 			freeSlots.Upgrade = item;
 		}
 	}
-	
+
+
+	public override void FlipDialogue()
+	{
+		base.FlipDialogue();
+
+		if (_justBoughtShootingUpgrade)
+		{
+			StartCoroutine(ShowShootingHelpText());
+			_justBoughtShootingUpgrade = false;
+		}
+	}
+
+	private IEnumerator ShowShootingHelpText()
+	{
+		var timer = 0f;
+		var totaltime = 4f;
+
+		while ((timer += Time.deltaTime) < 0.75f)
+		{
+			var c = _shootingText.color;
+
+			c.a = Mathf.Lerp(0, 1, timer / 0.75f);
+
+			_shootingText.color = c;
+			
+			yield return null;
+		}
+		
+		var c2 = _shootingText.color;
+
+		c2.a = 1;
+
+		_shootingText.color = c2;
+		
+		yield return new WaitForSeconds(totaltime);
+
+		timer = 0;
+		
+		while ((timer += Time.deltaTime) < 0.75f)
+		{
+			var c = _shootingText.color;
+
+			c.a = Mathf.Lerp(1,0, timer / 0.75f);
+
+			_shootingText.color = c;
+			
+			yield return null;
+		}
+		
+		var c3 = _shootingText.color;
+
+		c3.a = 0;
+
+		_shootingText.color = c3;
+
+		
+	}
+
 	// Update is called once per frame	
 	protected override void Update()
 	{
@@ -106,11 +168,19 @@ public class Shop : Interactable
 			
 			if (Input.GetButtonDown("Fire3") && !_slots[_currentSelectionSlot].IsEmpty())
 			{
+				
 				var slot = _slots[_currentSelectionSlot];
-			
+
+
+				
 				if (slot.Upgrade.Price <= FindObjectOfType<Player>().Currency)
 				{
-					AudioManager.Instance.Play("Buy", 3.5f);
+					if (slot.Upgrade is SkillUpgrade)
+					{
+						_justBoughtShootingUpgrade = true;
+					}
+					
+					AudioManager.Instance.Play("Buy", 6f);
 					
 					slot
 						.Upgrade

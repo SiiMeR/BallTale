@@ -15,6 +15,7 @@ TagManager:
   - Shot
   - HitCollider
   - BossFight
+  - boosttimer
   layers:
   - Default
   - TransparentFX
