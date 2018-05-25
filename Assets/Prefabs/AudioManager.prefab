@@ -64,6 +64,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: a01fc7283f714cf4b94048927d04c49e, type: 3}
   - {fileID: 8300000, guid: 55f6b3a2637356d42afa8b4bd3b54d46, type: 3}
   - {fileID: 8300000, guid: 1d0e1f73948f9b64cb2de9cde6755c0e, type: 3}
+  - {fileID: 8300000, guid: 6d2e5376f1417bb4bbdd5d141f7bac4a, type: 3}
   musicVolume: 1
   soundVolume: 1
   maxAudios: 16

@@ -27,6 +27,7 @@ public class ButtonHighlighter : MonoBehaviour
 		if(selectedAsButton != null && selectedAsButton != currentButton)
 		{
 			if(selectedAsButton.transform.name != "PauseButton")
+				AudioManager.Instance.Play("menuselect");
 				HighlightButton(selectedAsButton);
 		}
 

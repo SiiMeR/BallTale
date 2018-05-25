@@ -63,7 +63,8 @@ public class Boss : MonoBehaviour
 		AudioManager.Instance.Play("BossHit",vol:2.0f);
 		int originalHp = CurrentHealth;
 		CurrentHealth -= DamageFromPlayer;
-		StartCoroutine(ChangeHP(originalHp, CurrentHealth, 0.5f));
+		_hpbar.GetComponent<Image>().fillAmount = (float)CurrentHealth / _maxHealth;
+		//StartCoroutine(ChangeHP(originalHp, CurrentHealth, 0.5f));
 		NextState();
 	}
 	private IEnumerator Die()
@@ -337,14 +338,24 @@ public class Boss : MonoBehaviour
 	{
 		float timer = 0;
 
+		var end = Mathf.Min(from, to);
+		var begin = Mathf.Max(from, to);
+		
+		print(from/to+ " end begin");
+		print(to/from + " what");
 		Image hp = _hpbar.GetComponent<Image>();
 		
 		while((timer += Time.deltaTime) < seconds)
 		{
-			hp.fillAmount = Mathf.Lerp(from, to, timer/(seconds)) / 100;
+			
+			var lerp =  Mathf.Lerp(to,from, timer/(seconds));
+
+			hp.fillAmount = lerp/_maxHealth;
 
 			yield return null;
 		}
+
+		//hp.fillAmount = from;
 	}
 	
 	IEnumerator Collided()
