@@ -23,9 +23,26 @@ public class Shop : Interactable
 	public Queue<Upgrade> _saleQueue; // holds items that are not yet on sale
 
 	private bool _justBoughtShootingUpgrade;
-	
+
+	private UI ui;
+
+
+	private void OnDisable()
+	{
+		if (ui)
+		{
+			ui.KeepOpen = false;
+		}
+		
+	}
+
 	// Use this for initialization
-	protected void Awake () {
+	protected void Awake ()
+	{
+
+		ui = FindObjectOfType<UI>();
+		
+
 		
 		_saleQueue = new Queue<Upgrade>();
 		_slots = GetComponentsInChildren<Slot>(true).ToList();
@@ -86,6 +103,8 @@ public class Shop : Interactable
 	{
 		base.FlipDialogue();
 
+		ui.KeepOpen = !ui.KeepOpen;
+		
 		if (_justBoughtShootingUpgrade)
 		{
 			StartCoroutine(ShowShootingHelpText());
@@ -143,7 +162,8 @@ public class Shop : Interactable
 	protected override void Update()
 	{
 		base.Update();
-
+		
+		
 		
 		if (Math.Abs(Time.timeScale) < 0.01f)
 		{

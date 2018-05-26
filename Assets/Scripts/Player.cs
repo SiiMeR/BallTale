@@ -69,6 +69,8 @@ public class Player : MonoBehaviour
 	private double _shotCoolDownTimer;
 	private bool _isBoosting;
 
+	private Vector3 _lastInput;
+
 	public int Currency
 	{
 		get { return currency; }
@@ -159,9 +161,6 @@ public class Player : MonoBehaviour
 	void Update ()
 	{
 
-
-
-
 		if (Time.timeScale > 0.01f)
 		{
 			UpdateMovement();
@@ -172,9 +171,6 @@ public class Player : MonoBehaviour
 				_lastFacingDirection = Mathf.Sign(_velocity.x);
 	
 			}
-
-
-		
 
 		}
 
@@ -299,7 +295,7 @@ public class Player : MonoBehaviour
 	private void UpdateMovement()
 	{
 		
-			if (_controller.collisions.above || _controller.collisions.below)
+		if (_controller.collisions.above || _controller.collisions.below)
 		{
 			if (!IgnoreGround)
 			{
@@ -315,8 +311,19 @@ public class Player : MonoBehaviour
 		}
 		
 		Vector2 input = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+		//input = new Vector2(Mathf.Round(input.x), Mathf.Round(input.y));
+		//print(input);
 
-		Debug.DrawRay(transform.position, input.normalized, Color.yellow);
+		input = ConvertToInteger(input);
+		
+		
+		if (input != Vector2.zero)
+		{
+			_lastInput = input;
+			
+		}
+
+		Debug.DrawRay(transform.position, input, Color.yellow);
 
 		float boostInput = Input.GetAxisRaw("Fire1");
 
@@ -333,10 +340,6 @@ public class Player : MonoBehaviour
 			boostArrow.SetActive(true);
 			boostTimer.SetActive(true);
 			
-			
-//			_arrowAnimator.speed = 1.0f / maxBoostTime;
-//			_arrowAnimator.SetTrigger("Boost");
-
 			_isBoosting = true;
 			if (_currentBoostTime > maxBoostTime)
 			{
@@ -350,13 +353,13 @@ public class Player : MonoBehaviour
 				return;
 			}
 			
-			float angle = Mathf.Atan2(input.y, input.x) * Mathf.Rad2Deg;
+			float angle = Mathf.Atan2(_lastInput.y, _lastInput.x) * Mathf.Rad2Deg;
 			
 			Quaternion q = Quaternion.AngleAxis(angle, Vector3.forward);
 
-			boostArrow.transform.rotation = Quaternion.Slerp(boostArrow.transform.rotation, q, 10 * Time.deltaTime);
+			boostArrow.transform.rotation = Quaternion.Slerp(boostArrow.transform.rotation, q, 8 * Time.deltaTime);
 
-			boostTimerFill.fillAmount = (_currentBoostTime / maxBoostTime) + 0.05f;
+			boostTimerFill.fillAmount = (_currentBoostTime / maxBoostTime) + 0.07f;
 			
 			_currentBoostTime += Time.deltaTime;
 			
@@ -367,7 +370,10 @@ public class Player : MonoBehaviour
 		{
 			AudioManager.Instance.Stop("BoostCharge");
 			AudioManager.Instance.Play("BoostFinish");
-			_velocity = input * boostForce ; //* ((0.5f * currentBoostTime) + 0.5f);
+			
+			_velocity = _lastInput * boostForce ;
+			
+			
 			_currentBoostTime = 0.0f;
 			_canBoost = false;
 			_isBoosting = false;
@@ -382,7 +388,7 @@ public class Player : MonoBehaviour
 			_velocity.y = _maxJumpVelocity;
 		}
 
-		if (Input.GetButtonUp("Jump"))
+		if (Input.GetButtonUp("Jump") && _canBoost)
 		{
 			if (_velocity.y > _minJumpVelocity)
 			{
@@ -397,5 +403,31 @@ public class Player : MonoBehaviour
 		
 		_velocity.y += Physics2D.gravity.x * Time.deltaTime;
 		_controller.Move(_velocity * Time.deltaTime);
+	}
+
+	private Vector2 ConvertToInteger(Vector2 input)
+	{
+
+		if (input.x < 0)
+		{
+			input.x = -1;
+		}
+
+		if (input.x > 0)
+		{
+			input.x = 1;
+		}
+
+		if (input.y < 0)
+		{
+			input.y = -1;
+		}
+
+		if (input.y > 0)
+		{
+			input.y = 1;
+		}
+
+		return input;
 	}
 }

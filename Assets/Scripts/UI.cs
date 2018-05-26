@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -20,7 +21,30 @@ public class UI : MonoBehaviour
 	
 	private Player player;
 	private bool _isFaded;
-	
+
+	private bool _keepOpen;
+	public bool KeepOpen
+	{
+		get { return _keepOpen; }
+		set
+		{
+			if (value)
+			{
+				currencyCanvas.alpha = 1;
+				Timer = 0;
+				_isFaded = false;
+			}
+			else
+			{
+				StartCoroutine(FadeOut());
+				Timer = 0;
+				_isFaded = true;
+			}
+
+			_keepOpen = value;
+		}
+	}
+
 	private int lastCurrency;
 	// Use this for initialization
 	void Start () {
@@ -42,14 +66,13 @@ public class UI : MonoBehaviour
 			
 
 		}
-		else if ((Timer += Time.unscaledDeltaTime) > CurrencyFadeCD && !_isFaded)
+		else if ((Timer += Time.unscaledDeltaTime) > CurrencyFadeCD && !_isFaded && !KeepOpen)
 		{
 			Timer = 0;
 			StartCoroutine(FadeOut());
-			
 		}
 		
-		health.fillAmount = ((float)player.CurrentHealth/player.MaxHealth) + 0.01f;
+		health.fillAmount = ((float)player.CurrentHealth/player.MaxHealth);
 		
 		
 		lastCurrency = player.Currency;

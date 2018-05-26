@@ -1207,7 +1207,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4343867861530720, guid: 7333fc2108db98b4094d16889aec8418, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -4.95
+      value: 170
       objectReference: {fileID: 0}
     - target: {fileID: 4343867861530720, guid: 7333fc2108db98b4094d16889aec8418, type: 2}
       propertyPath: m_LocalPosition.y
@@ -1237,21 +1237,16 @@ Prefab:
       propertyPath: m_RootOrder
       value: 4
       objectReference: {fileID: 0}
-    - target: {fileID: 114822414754692254, guid: 7333fc2108db98b4094d16889aec8418,
-        type: 2}
-      propertyPath: deathScreen
-      value: 
-      objectReference: {fileID: 1085026207}
     - target: {fileID: 223154131113212582, guid: 7333fc2108db98b4094d16889aec8418,
         type: 2}
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 708795847}
-    - target: {fileID: 212358518237572436, guid: 7333fc2108db98b4094d16889aec8418,
+    - target: {fileID: 114822414754692254, guid: 7333fc2108db98b4094d16889aec8418,
         type: 2}
-      propertyPath: m_SortingOrder
-      value: 3000
-      objectReference: {fileID: 0}
+      propertyPath: deathScreen
+      value: 
+      objectReference: {fileID: 1085026207}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7333fc2108db98b4094d16889aec8418, type: 2}
   m_IsPrefabAsset: 0
