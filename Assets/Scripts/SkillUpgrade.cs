@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class SkillUpgrade : Upgrade {
 
+	
+	
 	// Use this for initialization
 	void Start () {
 		OnAquire.AddListener(AddShootingAbility);

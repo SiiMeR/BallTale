@@ -9,10 +9,18 @@ public abstract class Upgrade : MonoBehaviour
 
 	public int Price { get; set; }
 	public string Name { get; set; }
-	public Sprite Sprite { get; set; }
 
-	public UnityEvent OnAquire;
+	public virtual string Description
+	{
+		get { return _description; }
+		set { _description = value; }
+	}
+
+	public Sprite Sprite { get; set; }
 	
+	public UnityEvent OnAquire;
+	protected string _description = $"IMPLEMENT DESCRIPTION FOR THIS OBJECT";
+
 	private void Start()
 	{
 		if (OnAquire == null)

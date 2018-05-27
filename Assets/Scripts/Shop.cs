@@ -14,7 +14,7 @@ public class Shop : Interactable
 
 
 	[SerializeField] private TextMeshProUGUI _shootingText;
-	
+	[SerializeField] private TextMeshProUGUI _descriptionText;
 	private int _currentSelectionSlot;
 
 	private bool _moveAxisInUse;
@@ -48,11 +48,11 @@ public class Shop : Interactable
 		_slots = GetComponentsInChildren<Slot>(true).ToList();
 
 		Upgrade healthUpgrade = UpgradeBuilder.Instance.GetHealthUpgrade(10, 10);
-		Upgrade healthUpgrade2 = UpgradeBuilder.Instance.GetHealthUpgrade(10, 15);
+		Upgrade healthUpgrade2 = UpgradeBuilder.Instance.GetHealthUpgrade(20, 15);
 		Upgrade healthUpgrade3 = UpgradeBuilder.Instance.GetHealthUpgrade(50, 500);
 		Upgrade healthUpgrade4 = UpgradeBuilder.Instance.GetHealthUpgrade(100, 1000);
 
-		Upgrade powerUpgrade = UpgradeBuilder.Instance.GetShotUpgrade(50);
+		Upgrade powerUpgrade = UpgradeBuilder.Instance.GetShotUpgrade(50, "Gives the ability to shoot fireballs");
 		
 		_saleQueue.Enqueue(healthUpgrade);
 		_saleQueue.Enqueue(powerUpgrade);
@@ -62,11 +62,15 @@ public class Shop : Interactable
 		
 		foreach (var slot in _slots)
 		{
+			
 			if (_saleQueue.Count < 1)
 			{
 				break;
 			}
-			slot.Upgrade = _saleQueue.Dequeue();
+
+			var upgrade = _saleQueue.Dequeue();
+			slot.Upgrade = upgrade;
+			_descriptionText.text = upgrade.Description;
 		}
 	}
 
@@ -76,13 +80,17 @@ public class Shop : Interactable
 		_slots = GetComponentsInChildren<Slot>(true).ToList();
 		_saleQueue = new Queue<Upgrade>(upgrades);
 		
+		
 		foreach (var slot in _slots)
 		{
+			
 			if (_saleQueue.Count < 1)
 			{
 				break;
 			}
-			slot.Upgrade = _saleQueue.Dequeue();
+
+			var upgrade = _saleQueue.Dequeue();
+			slot.Upgrade = upgrade;
 		}
 		
 		
@@ -208,10 +216,11 @@ public class Shop : Interactable
 						.OnAquire
 						.Invoke();
 
-					slot.Upgrade = null;
+					//slot.Upgrade = null;
+					FillSlotWithNewItem(slot);
 				}
 
-				FillSlotWithNewItem(slot);
+				
 			}
 		}
 
@@ -240,6 +249,8 @@ public class Shop : Interactable
 		
 		_selectionFrame.transform.position = _slots[_currentSelectionSlot].transform.position;
 		
+		_descriptionText.text = _slots[_currentSelectionSlot].Upgrade.Description;
+		
 		
 	}
 
@@ -247,7 +258,9 @@ public class Shop : Interactable
 	{
 		if (_saleQueue.Count != 0)
 		{
-			slot.Upgrade = _saleQueue.Dequeue();
+			var upgrade = _saleQueue.Dequeue();
+			_descriptionText.text = upgrade.Description;
+			slot.Upgrade = upgrade;
 		}
 	}
 }

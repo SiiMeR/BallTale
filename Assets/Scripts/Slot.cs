@@ -8,7 +8,7 @@ public class Slot : MonoBehaviour
 {
 	[SerializeField] private TMP_Text _priceText;
 	[SerializeField] private Image _itemImage;
-
+	
 
 	private Upgrade _upgrade;
 	

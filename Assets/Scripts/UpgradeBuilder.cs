@@ -33,13 +33,14 @@ public class UpgradeBuilder : Singleton<UpgradeBuilder> {
 		return healthUpgrade;
 	}
 
-	public Upgrade GetShotUpgrade(int price)
+	public Upgrade GetShotUpgrade(int price, string description)
 	{
 		GameObject huGo = Instantiate(_shotUpgradePrefab);
 
 		SkillUpgrade skillUpgrade = huGo.GetComponent<SkillUpgrade>();
 		
 		skillUpgrade.Price = price;
+		skillUpgrade.Description = description;
 		skillUpgrade.Sprite = huGo.GetComponent<SpriteRenderer>().sprite;
 
 		huGo.GetComponent<SpriteRenderer>().enabled = false;

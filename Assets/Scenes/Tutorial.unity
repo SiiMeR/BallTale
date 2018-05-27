@@ -2094,6 +2094,56 @@ Prefab:
       propertyPath: m_RootOrder
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 114809858174313392, guid: 6ea1a970ff86dc64dbb6b894f996dbfd,
+        type: 2}
+      propertyPath: m_havePropertiesChanged
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114809858174313392, guid: 6ea1a970ff86dc64dbb6b894f996dbfd,
+        type: 2}
+      propertyPath: m_isInputParsingRequired
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114813069896916730, guid: 6ea1a970ff86dc64dbb6b894f996dbfd,
+        type: 2}
+      propertyPath: m_havePropertiesChanged
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114813069896916730, guid: 6ea1a970ff86dc64dbb6b894f996dbfd,
+        type: 2}
+      propertyPath: m_isInputParsingRequired
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114351462071384362, guid: 6ea1a970ff86dc64dbb6b894f996dbfd,
+        type: 2}
+      propertyPath: m_havePropertiesChanged
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114351462071384362, guid: 6ea1a970ff86dc64dbb6b894f996dbfd,
+        type: 2}
+      propertyPath: m_isInputParsingRequired
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114049349507069460, guid: 6ea1a970ff86dc64dbb6b894f996dbfd,
+        type: 2}
+      propertyPath: m_havePropertiesChanged
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114049349507069460, guid: 6ea1a970ff86dc64dbb6b894f996dbfd,
+        type: 2}
+      propertyPath: m_isInputParsingRequired
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114344113865095944, guid: 6ea1a970ff86dc64dbb6b894f996dbfd,
+        type: 2}
+      propertyPath: m_havePropertiesChanged
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114344113865095944, guid: 6ea1a970ff86dc64dbb6b894f996dbfd,
+        type: 2}
+      propertyPath: m_isInputParsingRequired
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 114220621416484954, guid: 6ea1a970ff86dc64dbb6b894f996dbfd,
         type: 2}
       propertyPath: m_havePropertiesChanged
@@ -2103,6 +2153,15 @@ Prefab:
         type: 2}
       propertyPath: m_isInputParsingRequired
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114370155221605918, guid: 6ea1a970ff86dc64dbb6b894f996dbfd,
+        type: 2}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1295471418126622, guid: 6ea1a970ff86dc64dbb6b894f996dbfd, type: 2}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6ea1a970ff86dc64dbb6b894f996dbfd, type: 2}

@@ -339,8 +339,9 @@ public class Player : MonoBehaviour
 			
 			boostArrow.SetActive(true);
 			boostTimer.SetActive(true);
+
+
 			
-			_isBoosting = true;
 			if (_currentBoostTime > maxBoostTime)
 			{
 				
@@ -357,14 +358,25 @@ public class Player : MonoBehaviour
 			
 			Quaternion q = Quaternion.AngleAxis(angle, Vector3.forward);
 
-			boostArrow.transform.rotation = Quaternion.Slerp(boostArrow.transform.rotation, q, 8 * Time.deltaTime);
+			
+			if (!_isBoosting)
+			{
+				boostArrow.transform.rotation = q;
+				_isBoosting = true;
+			}
+			else
+			{
+				boostArrow.transform.rotation = Quaternion.Slerp(boostArrow.transform.rotation, q, 8 * Time.deltaTime);
+			}
 
 			boostTimerFill.fillAmount = (_currentBoostTime / maxBoostTime) + 0.07f;
 			
 			_currentBoostTime += Time.deltaTime;
 			
+			
 			return;
 		}
+
 
 		if (boostInput == 0 && !_controller.collisions.below && _canBoost && _isBoosting)
 		{
