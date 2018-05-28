@@ -48,7 +48,9 @@ public class Player : MonoBehaviour
 	public bool HasShotUpgrade = false;
 	public bool IgnoreGround = false;
 	
-	private float _lastFacingDirection;
+	private Vector2 _lastFacingDirection;
+	private Vector3 _lastInput;
+	
 	
 	private float _maxJumpVelocity;
 	private float _minJumpVelocity;
@@ -69,7 +71,7 @@ public class Player : MonoBehaviour
 	private double _shotCoolDownTimer;
 	private bool _isBoosting;
 
-	private Vector3 _lastInput;
+	
 
 	public int Currency
 	{
@@ -168,7 +170,7 @@ public class Player : MonoBehaviour
 			
 			if (Math.Abs(_velocity.x) > .01f)
 			{
-				_lastFacingDirection = Mathf.Sign(_velocity.x);
+				_lastFacingDirection = ConvertToInteger(new Vector2(_velocity.x,_velocity.y));
 	
 			}
 
@@ -190,7 +192,14 @@ public class Player : MonoBehaviour
 			var shot = particle.GetComponent<Shot>();
 
 			shot.MoveSpeed = shotSpeed;
-			shot.Direction = _lastFacingDirection;
+			
+			
+			shot.Direction = _isBoosting?
+				ConvertToInteger(new Vector2(_lastInput.x,_lastInput.y)) 
+				: 
+				_lastFacingDirection;
+			
+			
 			shot.MaxRange = maxShotRange;
 
 			_shotCoolDownTimer = 0;

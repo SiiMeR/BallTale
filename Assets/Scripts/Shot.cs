@@ -13,13 +13,17 @@ public class Shot : MonoBehaviour
 	
 	public float MaxRange { get; set; }
 	
-	private float _direction;
-	public float Direction
+	private Vector2 _direction;
+	public Vector2 Direction
 	{
 		get { return _direction; }
 		set
 		{
-			gameObject.GetComponent<SpriteRenderer>().flipX = Math.Abs(value - (-1)) < 0.01f;
+			//gameObject.GetComponent<SpriteRenderer>().flipX = Math.Abs(value - (-1)) < 0.01f;
+			
+			float angle = Mathf.Atan2(value.y, value.x) * Mathf.Rad2Deg;
+			Quaternion q = Quaternion.AngleAxis(angle, Vector3.forward);
+			transform.rotation = q;
 			
 			_direction = value;
 		}
@@ -35,7 +39,7 @@ public class Shot : MonoBehaviour
 	void Start ()
 	{
 		_controller = GetComponent<CircleController2D>();
-		CurrentVelocity = new Vector2(_direction, 0) * MoveSpeed;
+		CurrentVelocity = _direction * MoveSpeed;
 		_distanceCovered = 0;
 	}
 	
