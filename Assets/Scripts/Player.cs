@@ -129,6 +129,7 @@ public class Player : MonoBehaviour
 	// Use this for initialization
 	void Start ()
 	{
+		_lastFacingDirection = Vector2.right;
 		AudioManager.Instance.Play("01Peaceful", isLooping: true);
 		
 		deathScreen.SetActive(false);
@@ -195,9 +196,9 @@ public class Player : MonoBehaviour
 			
 			
 			shot.Direction = _isBoosting?
-				ConvertToInteger(new Vector2(_lastInput.x,_lastInput.y)) 
-				: 
-				_lastFacingDirection;
+				new Vector2(_lastInput.normalized.x, _lastInput.normalized.y)
+				:
+				new Vector2(_lastFacingDirection.x, 0);
 			
 			
 			shot.MaxRange = maxShotRange;

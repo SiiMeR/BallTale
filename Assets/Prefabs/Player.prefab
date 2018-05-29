@@ -294,7 +294,7 @@ MonoBehaviour:
   shootParticle: {fileID: 1191552461824492, guid: 4fdf3def032d30147afcc40f0202dc28,
     type: 2}
   currency: 500
-  HasShotUpgrade: 0
+  HasShotUpgrade: 1
   IgnoreGround: 0
   _velocity: {x: 0, y: 0, z: 0}
 --- !u!212 &212293388885712598

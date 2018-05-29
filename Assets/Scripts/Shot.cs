@@ -19,11 +19,15 @@ public class Shot : MonoBehaviour
 		get { return _direction; }
 		set
 		{
-			//gameObject.GetComponent<SpriteRenderer>().flipX = Math.Abs(value - (-1)) < 0.01f;
 			
-			float angle = Mathf.Atan2(value.y, value.x) * Mathf.Rad2Deg;
+			
+	//		gameObject.GetComponent<SpriteRenderer>().flipY = Math.Abs(value.y - (-1)) < 0.01f;
+			float angle = Mathf.Atan2(value.y,value.x) * Mathf.Rad2Deg;
 			Quaternion q = Quaternion.AngleAxis(angle, Vector3.forward);
-			transform.rotation = q;
+			
+			//GetComponentInChildren<SpriteRenderer>().flipX = Math.Abs(value.x - (-1)) < 0.01f;
+			GetComponentInChildren<SpriteRenderer>().transform.rotation = q;
+		  //  transform.rotation = q;
 			
 			_direction = value;
 		}
@@ -54,12 +58,18 @@ public class Shot : MonoBehaviour
 		}
 		
 		_distanceCovered += Time.deltaTime * MoveSpeed;
+		
 		Move();
 	}
 
 	IEnumerator DestroyShot()
 	{
-		GetComponent<SpriteRenderer>().enabled = false;
+
+		if (GetComponentInChildren<SpriteRenderer>())
+		{
+			GetComponentInChildren<SpriteRenderer>().enabled = false;
+		}
+		
 		GetComponent<CapsuleCollider2D>().enabled = false;
 		
 		GetComponentInChildren<ParticleSystem>()?.Stop(true, ParticleSystemStopBehavior.StopEmitting);

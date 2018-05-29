@@ -1237,16 +1237,16 @@ Prefab:
       propertyPath: m_RootOrder
       value: 4
       objectReference: {fileID: 0}
-    - target: {fileID: 223154131113212582, guid: 7333fc2108db98b4094d16889aec8418,
-        type: 2}
-      propertyPath: m_Camera
-      value: 
-      objectReference: {fileID: 708795847}
     - target: {fileID: 114822414754692254, guid: 7333fc2108db98b4094d16889aec8418,
         type: 2}
       propertyPath: deathScreen
       value: 
       objectReference: {fileID: 1085026207}
+    - target: {fileID: 223154131113212582, guid: 7333fc2108db98b4094d16889aec8418,
+        type: 2}
+      propertyPath: m_Camera
+      value: 
+      objectReference: {fileID: 708795847}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7333fc2108db98b4094d16889aec8418, type: 2}
   m_IsPrefabAsset: 0
