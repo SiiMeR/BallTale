@@ -1207,7 +1207,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4343867861530720, guid: 7333fc2108db98b4094d16889aec8418, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 170
+      value: 207.61
       objectReference: {fileID: 0}
     - target: {fileID: 4343867861530720, guid: 7333fc2108db98b4094d16889aec8418, type: 2}
       propertyPath: m_LocalPosition.y
@@ -1237,16 +1237,63 @@ Prefab:
       propertyPath: m_RootOrder
       value: 4
       objectReference: {fileID: 0}
-    - target: {fileID: 114822414754692254, guid: 7333fc2108db98b4094d16889aec8418,
-        type: 2}
-      propertyPath: deathScreen
-      value: 
-      objectReference: {fileID: 1085026207}
     - target: {fileID: 223154131113212582, guid: 7333fc2108db98b4094d16889aec8418,
         type: 2}
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 708795847}
+    - target: {fileID: 114822414754692254, guid: 7333fc2108db98b4094d16889aec8418,
+        type: 2}
+      propertyPath: deathScreen
+      value: 
+      objectReference: {fileID: 1085026207}
+    - target: {fileID: 114896664719031728, guid: 7333fc2108db98b4094d16889aec8418,
+        type: 2}
+      propertyPath: m_havePropertiesChanged
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114896664719031728, guid: 7333fc2108db98b4094d16889aec8418,
+        type: 2}
+      propertyPath: m_isInputParsingRequired
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114896664719031728, guid: 7333fc2108db98b4094d16889aec8418,
+        type: 2}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 380a4b658610e41489f7b5394d047920,
+        type: 2}
+    - target: {fileID: 114896664719031728, guid: 7333fc2108db98b4094d16889aec8418,
+        type: 2}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 21805847044707156, guid: 380a4b658610e41489f7b5394d047920,
+        type: 2}
+    - target: {fileID: 114896664719031728, guid: 7333fc2108db98b4094d16889aec8418,
+        type: 2}
+      propertyPath: m_fontSize
+      value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 114896664719031728, guid: 7333fc2108db98b4094d16889aec8418,
+        type: 2}
+      propertyPath: m_fontSizeBase
+      value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 114896664719031728, guid: 7333fc2108db98b4094d16889aec8418,
+        type: 2}
+      propertyPath: m_fontColor.a
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114896664719031728, guid: 7333fc2108db98b4094d16889aec8418,
+        type: 2}
+      propertyPath: m_fontColor32.rgba
+      value: 767
+      objectReference: {fileID: 0}
+    - target: {fileID: 114896664719031728, guid: 7333fc2108db98b4094d16889aec8418,
+        type: 2}
+      propertyPath: m_fontStyle
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7333fc2108db98b4094d16889aec8418, type: 2}
   m_IsPrefabAsset: 0

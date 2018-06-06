@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
 using BayatGames.SaveGameFree;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
@@ -41,6 +42,8 @@ public class Player : MonoBehaviour
 	
 	[SerializeField] private GameObject deathScreen;
 	[SerializeField] private GameObject shootParticle;
+
+	[SerializeField] private TextMeshProUGUI damageText;
 	
 	[SerializeField] private int currency = 100;
 
@@ -92,8 +95,9 @@ public class Player : MonoBehaviour
 				StartCoroutine(Death());
 			}
 			else
-			{
-				_currentHealth = value;
+			{		
+				_currentHealth = value;	
+				
 			}
 		}
 	}
@@ -271,12 +275,50 @@ public class Player : MonoBehaviour
 		if (!_animator.GetBool("Damaged"))
 		{	
 			
+			damageText.text = damageToTake.ToString();
+			
+			StartCoroutine(FloatingDamage());
+			
 			StartCoroutine(PlayerDamaged());
+			
+			
 			CurrentHealth -= damageToTake;
 			Debug.Log($"Took a hit, {_currentHealth} health left. ");
 		}
 	}
 
+	public IEnumerator FloatingDamage()
+	{
+		var timer = 0f;
+		
+		var orig = damageText.color;
+		orig.a = 1.0f;
+		damageText.color = orig;
+		
+		
+		var startPos = transform.position + Vector3.up;
+		var endPos = startPos + Vector3.up * 2;
+		
+		while ((timer += Time.deltaTime) < 2.0f)
+		{
+			var t = timer / 2.0f;
+			var sint = Mathf.Sin(t * Mathf.PI * 0.5f);
+			
+			damageText.transform.position = Vector3.Lerp(startPos, endPos, timer / 2.0f);
+			
+			var c = damageText.color;
+			c.a = Mathf.Lerp(1.0f, 0.0f, sint);
+			damageText.color = c;
+			
+			yield return null;
+		}
+
+		var end = damageText.color;
+		end.a = 0.0f;
+		damageText.color = end;
+		
+	}
+	
 	public IEnumerator PlayerDamaged()
 	{
 		AudioManager.Instance.Play("PlayerDamaged");
@@ -287,6 +329,7 @@ public class Player : MonoBehaviour
 		var randomYJitter = Random.Range(0.5f, 1f); // TODO : Fix y boost not working on ground on damaged
 		
 		_velocity += new Vector3(randomXJitter, randomYJitter,0);
+		
 		
 		
 		var timer = secondsInvincibility;
