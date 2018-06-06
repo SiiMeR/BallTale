@@ -116,7 +116,7 @@ public class Player : MonoBehaviour
 		AudioManager.Instance.StopAllMusic();
 		AudioManager.Instance.SetSoundVolume(0);
 		
-		yield return new WaitUntil((() => Input.GetKeyDown(KeyCode.Return)));
+		yield return new WaitUntil((() => Input.GetButtonDown("Submit")));
 
 
 		if (SaveGame.Exists("player.txt"))
@@ -299,12 +299,12 @@ public class Player : MonoBehaviour
 		var startPos = transform.position + Vector3.up;
 		var endPos = startPos + Vector3.up * 2;
 		
-		while ((timer += Time.deltaTime) < 2.0f)
+		while ((timer += Time.deltaTime) < 1.0f)
 		{
-			var t = timer / 2.0f;
+			var t = timer / 1.0f;
 			var sint = Mathf.Sin(t * Mathf.PI * 0.5f);
 			
-			damageText.transform.position = Vector3.Lerp(startPos, endPos, timer / 2.0f);
+			damageText.transform.position = Vector3.Lerp(startPos, endPos, timer / 1.0f);
 			
 			var c = damageText.color;
 			c.a = Mathf.Lerp(1.0f, 0.0f, sint);
