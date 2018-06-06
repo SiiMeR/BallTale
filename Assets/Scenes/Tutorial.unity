@@ -176,6 +176,15 @@ Prefab:
       propertyPath: m_isInputParsingRequired
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 114697339086104176, guid: fbc09c59964314c44ac606bf364f7fe8,
+        type: 2}
+      propertyPath: _text
+      value: '
+
+
+        Press <sprite=12> (UP arrow key) to jump. Holding jump for longer allows you
+        to jump even higher.'
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fbc09c59964314c44ac606bf364f7fe8, type: 2}
   m_IsPrefabAsset: 0
@@ -1647,9 +1656,9 @@ Prefab:
       propertyPath: _text
       value: '
 
-        While in air, press and hold <sprite=0> to be suspended in air. Release <sprite=0>  to
-        gain a boost in selected direction. Be careful though, the suspension time
-        is limited.'
+        While in air, press and hold <sprite=0> (Z) to be suspended in air. Release
+        <sprite=0> (Z)  to gain a boost in selected direction. Be careful though,
+        the suspension time is limited.'
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fbc09c59964314c44ac606bf364f7fe8, type: 2}
@@ -2129,11 +2138,6 @@ Prefab:
       propertyPath: _vortextext
       value: 
       objectReference: {fileID: 365719241}
-    - target: {fileID: 114226398384701254, guid: dacd53bebce7a2e4ab492aaf5e9697de,
-        type: 2}
-      propertyPath: _maxHealth
-      value: 30
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dacd53bebce7a2e4ab492aaf5e9697de, type: 2}
   m_IsPrefabAsset: 0
@@ -2286,6 +2290,83 @@ Prefab:
     - target: {fileID: 1295471418126622, guid: 6ea1a970ff86dc64dbb6b894f996dbfd, type: 2}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114220621416484954, guid: 6ea1a970ff86dc64dbb6b894f996dbfd,
+        type: 2}
+      propertyPath: m_text
+      value: You can now shoot using <sprite=1> (C)
+      objectReference: {fileID: 0}
+    - target: {fileID: 114220621416484954, guid: 6ea1a970ff86dc64dbb6b894f996dbfd,
+        type: 2}
+      propertyPath: m_textInfo.characterCount
+      value: 29
+      objectReference: {fileID: 0}
+    - target: {fileID: 114220621416484954, guid: 6ea1a970ff86dc64dbb6b894f996dbfd,
+        type: 2}
+      propertyPath: m_textInfo.spaceCount
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 114220621416484954, guid: 6ea1a970ff86dc64dbb6b894f996dbfd,
+        type: 2}
+      propertyPath: m_textInfo.wordCount
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 114813069896916730, guid: 6ea1a970ff86dc64dbb6b894f996dbfd,
+        type: 2}
+      propertyPath: m_text
+      value: '<sprite=9> (X) - exit
+
+        <sprite=1> (C) - buy '
+      objectReference: {fileID: 0}
+    - target: {fileID: 224629866060043672, guid: 6ea1a970ff86dc64dbb6b894f996dbfd,
+        type: 2}
+      propertyPath: m_AnchoredPosition.x
+      value: -134
+      objectReference: {fileID: 0}
+    - target: {fileID: 114813069896916730, guid: 6ea1a970ff86dc64dbb6b894f996dbfd,
+        type: 2}
+      propertyPath: m_textAlignment
+      value: 260
+      objectReference: {fileID: 0}
+    - target: {fileID: 114813069896916730, guid: 6ea1a970ff86dc64dbb6b894f996dbfd,
+        type: 2}
+      propertyPath: m_firstOverflowCharacterIndex
+      value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: 114813069896916730, guid: 6ea1a970ff86dc64dbb6b894f996dbfd,
+        type: 2}
+      propertyPath: m_textInfo.characterCount
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 114813069896916730, guid: 6ea1a970ff86dc64dbb6b894f996dbfd,
+        type: 2}
+      propertyPath: m_textInfo.spaceCount
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 114813069896916730, guid: 6ea1a970ff86dc64dbb6b894f996dbfd,
+        type: 2}
+      propertyPath: m_textInfo.wordCount
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 224629866060043672, guid: 6ea1a970ff86dc64dbb6b894f996dbfd,
+        type: 2}
+      propertyPath: m_AnchoredPosition.y
+      value: 73.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 224629866060043672, guid: 6ea1a970ff86dc64dbb6b894f996dbfd,
+        type: 2}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 224758400207339874, guid: 6ea1a970ff86dc64dbb6b894f996dbfd,
+        type: 2}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224804223136374116, guid: 6ea1a970ff86dc64dbb6b894f996dbfd,
+        type: 2}
+      propertyPath: m_RootOrder
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6ea1a970ff86dc64dbb6b894f996dbfd, type: 2}
@@ -2671,6 +2752,35 @@ Prefab:
         type: 2}
       propertyPath: m_isInputParsingRequired
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114697339086104176, guid: efbc9cad5241aa84e90d6c2c18f3fb29,
+        type: 2}
+      propertyPath: _text
+      value: '
+
+
+        Welcome to this world. Use <sprite=4> (LEFT and RIGHT arrow keys) to move
+        around.'
+      objectReference: {fileID: 0}
+    - target: {fileID: 114562547774397192, guid: efbc9cad5241aa84e90d6c2c18f3fb29,
+        type: 2}
+      propertyPath: m_text
+      value: Press <sprite=9> (X) to interact
+      objectReference: {fileID: 0}
+    - target: {fileID: 114562547774397192, guid: efbc9cad5241aa84e90d6c2c18f3fb29,
+        type: 2}
+      propertyPath: m_textInfo.characterCount
+      value: 23
+      objectReference: {fileID: 0}
+    - target: {fileID: 114562547774397192, guid: efbc9cad5241aa84e90d6c2c18f3fb29,
+        type: 2}
+      propertyPath: m_textInfo.spaceCount
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 114562547774397192, guid: efbc9cad5241aa84e90d6c2c18f3fb29,
+        type: 2}
+      propertyPath: m_textInfo.wordCount
+      value: 4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: efbc9cad5241aa84e90d6c2c18f3fb29, type: 2}
@@ -4206,7 +4316,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_text: Oh dear, you are dead! Press <sprite=12> to restart
+  m_text: Oh dear, you are dead! Press <sprite=12> (ENTER) to restart
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 380a4b658610e41489f7b5394d047920, type: 2}
   m_sharedMaterial: {fileID: 21805847044707156, guid: 380a4b658610e41489f7b5394d047920,
@@ -4282,11 +4392,11 @@ MonoBehaviour:
     lineCount: 4
     pageCount: 1
     materialCount: 2
-  m_havePropertiesChanged: 0
+  m_havePropertiesChanged: 1
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
-  m_isInputParsingRequired: 0
+  m_isInputParsingRequired: 1
   m_inputSource: 0
   m_hasFontAssetChanged: 0
   m_subTextObjects:

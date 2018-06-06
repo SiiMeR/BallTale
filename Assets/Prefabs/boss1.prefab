@@ -170,7 +170,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a86864747c5b9794db5942089d1c90a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maxHealth: 135
+  _maxHealth: 150
   _moveSpeed: 10
   _useGravity: 0
   _currencyOnKill: 150
