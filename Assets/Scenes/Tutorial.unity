@@ -1216,7 +1216,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4343867861530720, guid: 7333fc2108db98b4094d16889aec8418, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -5.08
+      value: 180
       objectReference: {fileID: 0}
     - target: {fileID: 4343867861530720, guid: 7333fc2108db98b4094d16889aec8418, type: 2}
       propertyPath: m_LocalPosition.y
@@ -1306,6 +1306,11 @@ Prefab:
     - target: {fileID: 114822414754692254, guid: 7333fc2108db98b4094d16889aec8418,
         type: 2}
       propertyPath: HasShotUpgrade
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114740821294598218, guid: 7333fc2108db98b4094d16889aec8418,
+        type: 2}
+      propertyPath: m_FillAmount
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

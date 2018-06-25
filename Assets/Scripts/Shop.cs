@@ -42,8 +42,6 @@ public class Shop : Interactable
 
 		ui = FindObjectOfType<UI>();
 		
-
-		
 		_saleQueue = new Queue<Upgrade>();
 		_slots = GetComponentsInChildren<Slot>(true).ToList();
 
@@ -169,9 +167,7 @@ public class Shop : Interactable
 	// Update is called once per frame	
 	protected override void Update()
 	{
-		base.Update();
-		
-		
+		base.Update();	
 		
 		if (Math.Abs(Time.timeScale) < 0.01f)
 		{
@@ -199,8 +195,6 @@ public class Shop : Interactable
 				
 				var slot = _slots[_currentSelectionSlot];
 
-
-				
 				if (slot.Upgrade.Price <= FindObjectOfType<Player>().Currency)
 				{
 					if (slot.Upgrade is SkillUpgrade)
@@ -216,7 +210,9 @@ public class Shop : Interactable
 						.OnAquire
 						.Invoke();
 
-					//slot.Upgrade = null;
+					slot.Upgrade = null;
+					_descriptionText.text = "";
+					
 					FillSlotWithNewItem(slot);
 				}
 
@@ -231,13 +227,13 @@ public class Shop : Interactable
 	{
 		float elapsedTime = 0;
 
-		Vector3 startPos = _slots[_currentSelectionSlot].transform.position;
-
+		var startPos = _slots[_currentSelectionSlot].transform.position;
+			
 		_currentSelectionSlot = moveLeft
 			? (int) Mathf.Repeat(++_currentSelectionSlot, _slots.Count)
 			: (int) Mathf.Repeat(--_currentSelectionSlot, _slots.Count);
 		
-		Vector3 endPos = _slots[_currentSelectionSlot].transform.position;
+		var endPos = _slots[_currentSelectionSlot].transform.position;
 		
 		while ((elapsedTime += Time.unscaledDeltaTime) < FrameMoveTime)
 		{
@@ -245,13 +241,15 @@ public class Shop : Interactable
 			_selectionFrame.transform.position = Vector3.Lerp(startPos, endPos, elapsedTime / FrameMoveTime);
 			
 			yield return null;
+			
 		}
 		
 		_selectionFrame.transform.position = _slots[_currentSelectionSlot].transform.position;
-		
-		_descriptionText.text = _slots[_currentSelectionSlot].Upgrade.Description;
-		
-		
+
+		var selectedUpgrade = _slots[_currentSelectionSlot];
+
+		_descriptionText.text = selectedUpgrade.Upgrade ? _slots[_currentSelectionSlot].Upgrade.Description : "";
+	
 	}
 
 	private void FillSlotWithNewItem(Slot slot)
