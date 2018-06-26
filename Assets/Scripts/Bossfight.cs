@@ -37,29 +37,22 @@ public class Bossfight : MonoBehaviour
 
 	private void StartFight()
 	{
-
+		if (_fightOn) return;
 		
-		if (!_fightOn)
-		{
-			
-			//AudioManager.Instance.StopAllMusic();
-
-			StartCoroutine(AudioManager.Instance.FadeToNextMusic("02VortexBoss", 2.0f));
-			
+		StartCoroutine(AudioManager.Instance.FadeToNextMusic("02VortexBoss", 2.0f));
 		//	AudioManager.Instance.Play("02VortexBoss", isLooping:true);
-			_boss.SetActive(true);
+		_boss.SetActive(true);
 		
-			if (_takeCameraControl)
-			{
-				Camera.main.GetComponent<CameraFollow>().enabled = false;
+		if (_takeCameraControl)
+		{
+			Camera.main.GetComponent<CameraFollow>().enabled = false;
 
-				StartCoroutine(MoveCameraToPos(Camera.main.transform.position, _cameraMiddle.position));
+			StartCoroutine(MoveCameraToPos(Camera.main.transform.position, _cameraMiddle.position));
 			
-			}
-
-			StartCoroutine(ActivateWalls());
-			_fightOn = true;
 		}
+
+		StartCoroutine(ActivateWalls());
+		_fightOn = true;
 
 	}
 
@@ -98,8 +91,7 @@ public class Bossfight : MonoBehaviour
 		{
 			if (_takeCameraControl)
 			{
-				var booster = GameObject.FindGameObjectWithTag("boosttimer");
-				
+
 				StartCoroutine(MoveCameraToPos(Camera.main.transform.position, _booster.transform.position , true));
 				
 			}

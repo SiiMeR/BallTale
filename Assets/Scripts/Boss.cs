@@ -37,13 +37,14 @@ public class Boss : MonoBehaviour
 	
 	private BoxController2D _controller;
 	private Vector3 _velocity;
-	private int _currentHealth;
+	
 	private Animator _animator;
 	private bool _justCollided;
 	
 	
 	private float _timeInState;
 	
+	private int _currentHealth;
 	public int CurrentHealth
 	{
 		get { return _currentHealth; }
@@ -60,11 +61,12 @@ public class Boss : MonoBehaviour
 
 	public void GetDamaged()
 	{
+		
 		AudioManager.Instance.Play("BossHit",vol:2.0f);
-		int originalHp = CurrentHealth;
-		CurrentHealth -= DamageFromPlayer;
-		_hpbar.GetComponent<Image>().fillAmount = (float)CurrentHealth / _maxHealth;
-		//StartCoroutine(ChangeHP(originalHp, CurrentHealth, 0.5f));
+
+		var dmg = CurrentHealth - DamageFromPlayer;
+
+		StartCoroutine(ChangeHP(CurrentHealth, dmg, 0.5f));
 		NextState();
 	}
 	private IEnumerator Die()
@@ -265,7 +267,7 @@ public class Boss : MonoBehaviour
 
 				
 				default:
-					Debug.LogWarning("State not handled by StateActions(): " + CurrentState);
+					Debug.LogWarning($"State not handled by StateActions(): {CurrentState}");
 					break;
 		}
 	}
@@ -278,25 +280,21 @@ public class Boss : MonoBehaviour
 			// reflect
 			if (_controller.collisions.left)
 			{
-				//	print("left collision");
 				_velocity = Vector3.Reflect(_velocity, Vector3.right);
 				StartCoroutine(Collided());
 			}
 			else if (_controller.collisions.right)
 			{
-				//	print("right collision");
 				_velocity = Vector3.Reflect(_velocity, Vector3.left);
 				StartCoroutine(Collided());
 			}
 			else if (_controller.collisions.above)
 			{
-				//	print("above collision");
 				_velocity = Vector3.Reflect(_velocity, Vector3.down);
 				StartCoroutine(Collided());
 			}
 			else if (_controller.collisions.below)
 			{
-				//	print("down collision");
 				_velocity = Vector3.Reflect(_velocity, Vector3.up);
 				StartCoroutine(Collided());
 			}
@@ -336,26 +334,18 @@ public class Boss : MonoBehaviour
 
 	IEnumerator ChangeHP(float from, float to, float seconds)
 	{
-		float timer = 0;
-
-		var end = Mathf.Min(from, to);
-		var begin = Mathf.Max(from, to);
-		
-		print(from/to+ " end begin");
-		print(to/from + " what");
-		Image hp = _hpbar.GetComponent<Image>();
+		var timer = 0f;
 		
 		while((timer += Time.deltaTime) < seconds)
 		{
+			var currentHealth =  Mathf.Lerp(from, to, timer/seconds);
+
+			_hpbar.GetComponent<Image>().fillAmount = currentHealth/_maxHealth;
 			
-			var lerp =  Mathf.Lerp(to,from, timer/(seconds));
-
-			hp.fillAmount = lerp/_maxHealth;
-
 			yield return null;
 		}
 
-		//hp.fillAmount = from;
+		CurrentHealth = (int) to;
 	}
 	
 	IEnumerator Collided()

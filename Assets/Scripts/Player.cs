@@ -198,7 +198,6 @@ public class Player : MonoBehaviour
 
 			shot.MoveSpeed = shotSpeed;
 			
-			
 			shot.Direction = _isBoosting?
 				new Vector2(_lastInput.normalized.x, _lastInput.normalized.y)
 				:
@@ -329,8 +328,6 @@ public class Player : MonoBehaviour
 		var randomYJitter = Random.Range(0.5f, 1f); // TODO : Fix y boost not working on ground on damaged
 		
 		_velocity += new Vector3(randomXJitter, randomYJitter,0);
-		
-		
 		
 		var timer = secondsInvincibility;
 		while (timer > .0f)

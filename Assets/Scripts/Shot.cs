@@ -19,16 +19,10 @@ public class Shot : MonoBehaviour
 		get { return _direction; }
 		set
 		{
+			var angle = Mathf.Atan2(value.y,value.x) * Mathf.Rad2Deg;
+			var q = Quaternion.AngleAxis(angle, Vector3.forward);
 			
-			
-	//		gameObject.GetComponent<SpriteRenderer>().flipY = Math.Abs(value.y - (-1)) < 0.01f;
-			float angle = Mathf.Atan2(value.y,value.x) * Mathf.Rad2Deg;
-			Quaternion q = Quaternion.AngleAxis(angle, Vector3.forward);
-			
-			//GetComponentInChildren<SpriteRenderer>().flipX = Math.Abs(value.x - (-1)) < 0.01f;
-			GetComponentInChildren<SpriteRenderer>().transform.rotation = q;
-		  //  transform.rotation = q;
-			
+			GetComponentInChildren<SpriteRenderer>().transform.rotation = q;			
 			_direction = value;
 		}
 	}
@@ -96,6 +90,12 @@ public class Shot : MonoBehaviour
 
 	private void OnTriggerEnter2D(Collider2D other)
 	{
+		if (other.CompareTag("HitCollider"))
+		{
+			StartCoroutine(DestroyShot());
+			return;
+		}
+		
 		// TODO, CHECK IF IT IS A THING THAT GIVES MONEY OR NOT
 		if (_controller.IsInLayerMask(other.gameObject.layer, _killMask))
 		{
@@ -112,8 +112,6 @@ public class Shot : MonoBehaviour
 			Destroy(other.gameObject);
 
 			StartCoroutine(DestroyShot());
-
-
 		}
 		
 		else if (_controller.IsInCollisionMask(other.gameObject.layer))
