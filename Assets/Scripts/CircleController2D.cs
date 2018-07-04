@@ -91,14 +91,14 @@ public class CircleController2D : RayCastController
 
 	public override void VerticalCollisions(ref Vector3 velocity)
 	{
-		float directionY = Mathf.Sign(velocity.y);
-		float rayLength = Mathf.Abs(velocity.y) + SKINWIDTH;
+		var directionY = Mathf.Sign(velocity.y);
+		var rayLength = Mathf.Abs(velocity.y) + SKINWIDTH;
 
-		Vector2 rayOrigin = rayCastOrigins.center;
+		var rayOrigin = rayCastOrigins.center;
 
-		float radius = Vector2.Distance(rayCastOrigins.center, rayCastOrigins.bottom);
+		var radius = Vector2.Distance(rayCastOrigins.center, rayCastOrigins.bottom);
 		
-		RaycastHit2D hit = Physics2D.CircleCast(rayOrigin, radius,Vector2.up * directionY, rayLength, collisionMask);
+		var hit = Physics2D.CircleCast(rayOrigin, radius,Vector2.up * directionY, rayLength, collisionMask);
 		if (hit)
 		{
 			//Vector2 reflect = Vector2.Reflect(velocity,hit.normal);
@@ -110,32 +110,31 @@ public class CircleController2D : RayCastController
 			collisions.above = directionY == 1;
 		}
 
-		for (int i = 0; i < 3; i++)
+		for (var i = 0; i < 3; i++)
 		{
-			Bounds b = collider.bounds;
+			var b = collider.bounds;
 			b.Expand(SKINWIDTH * -2);
 
 
-			Vector2 rayOg = new Vector2();
-			float rayl = rayLength;
-			if (i == 0)
+			var rayOg = new Vector2();
+			var rayl = rayLength;
+			switch (i)
 			{
-				rayOg = new Vector2(b.min.x, b.center.y);
-				rayl += radius;
-			}
-			else if (i == 1)
-			{
-				rayOg = new Vector2(b.center.x,b.min.y);
-			
-			}
-			else if (i == 2)
-			{
-				rayOg = new Vector2(b.max.x, b.center.y);
-				rayl += radius;
+				case 0:
+					rayOg = new Vector2(b.min.x, b.center.y);
+					rayl += radius;
+					break;
+				case 1:
+					rayOg = new Vector2(b.center.x,b.min.y);
+					break;
+				case 2:
+					rayOg = new Vector2(b.max.x, b.center.y);
+					rayl += radius;
+					break;
 			}
 								
 
-			RaycastHit2D edgehit = Physics2D.Raycast(
+			var edgehit = Physics2D.Raycast(
 				rayOg,
 				Vector2.up * directionY,
 				rayl,
@@ -167,7 +166,7 @@ public class CircleController2D : RayCastController
 		return b ? 1 : 0;
 	}
 
-	void EdgeMove(ref Vector3 velocity)
+	private void EdgeMove(ref Vector3 velocity)
 	{
 		int leftCollision = bToInt(collisions.edgecheck[0]);
 		int middleCollision = bToInt(collisions.edgecheck[1]);
@@ -208,7 +207,7 @@ public class CircleController2D : RayCastController
 
 	public override void UpdateRaycastOrigins()
 	{
-		Bounds bounds = collider.bounds;
+		var bounds = collider.bounds;
 		bounds.Expand(SKINWIDTH * -2);
 		
 		rayCastOrigins.left = new Vector2(bounds.min.x, bounds.center.y);

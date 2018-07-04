@@ -1266,6 +1266,72 @@ Prefab:
       propertyPath: m_isInputParsingRequired
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 114822414754692254, guid: 7333fc2108db98b4094d16889aec8418,
+        type: 2}
+      propertyPath: _boostArrow
+      value: 
+      objectReference: {fileID: 1932428146}
+    - target: {fileID: 114822414754692254, guid: 7333fc2108db98b4094d16889aec8418,
+        type: 2}
+      propertyPath: _boostTimer
+      value: 
+      objectReference: {fileID: 388495697}
+    - target: {fileID: 114822414754692254, guid: 7333fc2108db98b4094d16889aec8418,
+        type: 2}
+      propertyPath: _boostTimerFill
+      value: 
+      objectReference: {fileID: 1133326085}
+    - target: {fileID: 114822414754692254, guid: 7333fc2108db98b4094d16889aec8418,
+        type: 2}
+      propertyPath: _deathScreen
+      value: 
+      objectReference: {fileID: 1085026207}
+    - target: {fileID: 114822414754692254, guid: 7333fc2108db98b4094d16889aec8418,
+        type: 2}
+      propertyPath: _shootParticle
+      value: 
+      objectReference: {fileID: 1191552461824492, guid: 4fdf3def032d30147afcc40f0202dc28,
+        type: 2}
+    - target: {fileID: 114822414754692254, guid: 7333fc2108db98b4094d16889aec8418,
+        type: 2}
+      propertyPath: _damageText
+      value: 
+      objectReference: {fileID: 1742082948}
+    - target: {fileID: 114822414754692254, guid: 7333fc2108db98b4094d16889aec8418,
+        type: 2}
+      propertyPath: _shotSpeed
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 114822414754692254, guid: 7333fc2108db98b4094d16889aec8418,
+        type: 2}
+      propertyPath: _maxShotRange
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 114822414754692254, guid: 7333fc2108db98b4094d16889aec8418,
+        type: 2}
+      propertyPath: _currency
+      value: 500
+      objectReference: {fileID: 0}
+    - target: {fileID: 114822414754692254, guid: 7333fc2108db98b4094d16889aec8418,
+        type: 2}
+      propertyPath: HasShotUpgrade
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114822414754692254, guid: 7333fc2108db98b4094d16889aec8418,
+        type: 2}
+      propertyPath: _velocity.x
+      value: -1e-45
+      objectReference: {fileID: 0}
+    - target: {fileID: 114822414754692254, guid: 7333fc2108db98b4094d16889aec8418,
+        type: 2}
+      propertyPath: _velocity.y
+      value: -1.7700598
+      objectReference: {fileID: 0}
+    - target: {fileID: 114822414754692254, guid: 7333fc2108db98b4094d16889aec8418,
+        type: 2}
+      propertyPath: _killBounceEnergy
+      value: 20
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7333fc2108db98b4094d16889aec8418, type: 2}
   m_IsPrefabAsset: 0
@@ -2556,6 +2622,12 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4050153718008416, guid: efbc9cad5241aa84e90d6c2c18f3fb29,
     type: 2}
   m_PrefabInternal: {fileID: 1252883127}
+--- !u!114 &1133326085 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 114740821294598218, guid: 7333fc2108db98b4094d16889aec8418,
+    type: 2}
+  m_PrefabInternal: {fileID: 402597719}
+  m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
 --- !u!4 &1148257399 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4418736205045970, guid: 1dc546dfa03820a4a9f0ebb76d783996,
@@ -3773,6 +3845,12 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4490422825623322, guid: b5be652909addc548adab7c844f8d6d1,
     type: 2}
   m_PrefabInternal: {fileID: 1996182192}
+--- !u!114 &1742082948 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 114896664719031728, guid: 7333fc2108db98b4094d16889aec8418,
+    type: 2}
+  m_PrefabInternal: {fileID: 402597719}
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
 --- !u!1001 &1746581350
 Prefab:
   m_ObjectHideFlags: 0
@@ -4146,6 +4224,11 @@ Prefab:
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4ac69981bbb105e49a5601b63016dfbb, type: 2}
   m_IsPrefabAsset: 0
+--- !u!1 &1932428146 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1231417571871360, guid: 7333fc2108db98b4094d16889aec8418,
+    type: 2}
+  m_PrefabInternal: {fileID: 402597719}
 --- !u!1001 &1935717016
 Prefab:
   m_ObjectHideFlags: 0

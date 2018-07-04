@@ -23,7 +23,7 @@ public class BoxController2D : RayCastController
 			above = below = left = right = false;
 		}
 	}
-	
+
 	public RaycastOrigins rayCastOrigins;
 
 	public struct RaycastOrigins

@@ -98,6 +98,17 @@ public class BasicEnemy : MonoBehaviour
 		UpdateMovement();
 	}
 
+
+	private void OnTriggerStay2D(Collider2D other)
+	{
+		if (other.gameObject.CompareTag("Player"))
+		{
+			var player = other.gameObject.GetComponent<Player>();
+			
+			player.DamagePlayer(Damage);
+		}
+	}
+
 	private void UpdateDirection()
 	{
 		if (Vector3.Distance(_movetarget, transform.position) < 0.01f)
@@ -185,7 +196,7 @@ public class BasicEnemy : MonoBehaviour
 		_controller.Move(_velocity* Time.deltaTime);
 	}
 
-	IEnumerator TurnAround()
+	private IEnumerator TurnAround()
 	{
 		var timer = 1.0f;
 		while (timer > .0f)

@@ -15,37 +15,37 @@ using Random = UnityEngine.Random;
 public class Player : MonoBehaviour
 {
 
-	[SerializeField] private int maxHealth = 100;
-	[SerializeField] private float secondsInvincibility = 1.5f;
+	[SerializeField] private int _maxHealth = 100;
+	[SerializeField] private float _secondsInvincibility = 1.5f;
 
-	[SerializeField] private int killBounceEnergy = 15;
+	[SerializeField] private int _killBounceEnergy = 15;
 	
-	[SerializeField] private float shotSpeed;
-	[SerializeField] private float shotCoolDown = 1.0f;
-	[SerializeField] private float maxShotRange;
+	[SerializeField] private float _shotSpeed;
+	[SerializeField] private float _shotCoolDown = 1.0f;
+	[SerializeField] private float _maxShotRange;
 	
-	[SerializeField] private float minJumpHeight = 1f;
-	[SerializeField] private float maxJumpHeight = 4f;
-	[SerializeField] private float timeToJumpApex = .4f;
+	[SerializeField] private float _minJumpHeight = 1f;
+	[SerializeField] private float _maxJumpHeight = 4f;
+	[SerializeField] private float _timeToJumpApex = .4f;
 	
-	[SerializeField] private float moveSpeed = 10;
+	[SerializeField] private float _moveSpeed = 10;
 	
-	[SerializeField] private float accelerationTimeAirborne = .2f;
-	[SerializeField] private float accelerationTimeGrounded = .1f;
+	[SerializeField] private float _accelerationTimeAirborne = .2f;
+	[SerializeField] private float _accelerationTimeGrounded = .1f;
 	
-	[SerializeField] private float maxBoostTime = 2.0f;
-	[SerializeField] private float boostForce = 20f;
-	[SerializeField] private GameObject boostArrow;
-	[SerializeField] private GameObject boostTimer;
-	[SerializeField] private Image boostTimerFill;
+	[SerializeField] private float _maxBoostTime = 2.0f;
+	[SerializeField] private float _boostForce = 20f;
+	[SerializeField] private GameObject _boostArrow;
+	[SerializeField] private GameObject _boostTimer;
+	[SerializeField] private Image _boostTimerFill;
 	
 	
-	[SerializeField] private GameObject deathScreen;
-	[SerializeField] private GameObject shootParticle;
+	[SerializeField] private GameObject _deathScreen;
+	[SerializeField] private GameObject _shootParticle;
 
-	[SerializeField] private TextMeshProUGUI damageText;
+	[SerializeField] private TextMeshProUGUI _damageText;
 	
-	[SerializeField] private int currency = 100;
+	[SerializeField] private int _currency = 100;
 
 
 	public bool HasShotUpgrade = false;
@@ -65,8 +65,7 @@ public class Player : MonoBehaviour
 	
 	private CircleController2D _controller;
 
-	private Animator _animator;
-	private Animator _arrowAnimator;
+	private Animator _animator; 
 	
 	private bool _canBoost = true;
 	
@@ -78,8 +77,8 @@ public class Player : MonoBehaviour
 
 	public int Currency
 	{
-		get { return currency; }
-		set { currency = value; }
+		get { return _currency; }
+		set { _currency = value; }
 	}
 	
 	public int CurrentHealth
@@ -104,14 +103,14 @@ public class Player : MonoBehaviour
 
 	public int MaxHealth
 	{
-		get { return maxHealth; }
-		set { maxHealth = value; }
+		get { return _maxHealth; }
+		set { _maxHealth = value; }
 	}
 
 
 	IEnumerator Death()
 	{		
-		deathScreen.SetActive(true);
+		_deathScreen.SetActive(true);
 		
 		AudioManager.Instance.StopAllMusic();
 		AudioManager.Instance.SetSoundVolume(0);
@@ -123,7 +122,7 @@ public class Player : MonoBehaviour
 		{
 			PlayerPrefs.SetInt("loadgame",1);
 		}
-		deathScreen.SetActive(false);
+		_deathScreen.SetActive(false);
 		SceneManager.LoadScene(SceneManager.GetActiveScene().name);
 		
 		
@@ -136,31 +135,30 @@ public class Player : MonoBehaviour
 		_lastFacingDirection = Vector2.right;
 		AudioManager.Instance.Play("01Peaceful", isLooping: true);
 		
-		deathScreen.SetActive(false);
+		_deathScreen.SetActive(false);
 		
-		_currentHealth = maxHealth;
+		_currentHealth = _maxHealth;
 
 		_animator = GetComponent<Animator>();
 		
-		if (boostArrow)
+		if (_boostArrow)
 		{
-			boostArrow.SetActive(false);
+			_boostArrow.SetActive(false);
 		}
 
-		if (boostTimer)
+		if (_boostTimer)
 		{
-			boostTimer.SetActive(false);	
+			_boostTimer.SetActive(false);	
 		}
 
-		_arrowAnimator = boostArrow.GetComponent<Animator>();
 		_controller = GetComponent<CircleController2D>();
 
-		float gravity = -(2 * maxJumpHeight) / Mathf.Pow(timeToJumpApex, 2);
+		var gravity = -(2 * _maxJumpHeight) / Mathf.Pow(_timeToJumpApex, 2);
 	
 		Physics2D.gravity = new Vector3(gravity, 0,0);
 		
-		_maxJumpVelocity = Mathf.Abs(gravity * timeToJumpApex);
-		_minJumpVelocity = Mathf.Sqrt(2 * Mathf.Abs(gravity) * minJumpHeight);
+		_maxJumpVelocity = Mathf.Abs(gravity * _timeToJumpApex);
+		_minJumpVelocity = Mathf.Sqrt(2 * Mathf.Abs(gravity) * _minJumpHeight);
 	}
 
 
@@ -187,16 +185,16 @@ public class Player : MonoBehaviour
 	{
 		if (!HasShotUpgrade) return;
 
-		if (Input.GetButtonDown("Fire3") && shotCoolDown < _shotCoolDownTimer)
+		if (Input.GetButtonDown("Fire3") && _shotCoolDown < _shotCoolDownTimer)
 		{
 			
 			AudioManager.Instance.Play("Shot",0.7f);
 			
-			var particle = Instantiate(shootParticle, transform.position, Quaternion.identity);
+			var particle = Instantiate(_shootParticle, transform.position, Quaternion.identity);
 			
 			var shot = particle.GetComponent<Shot>();
 
-			shot.MoveSpeed = shotSpeed;
+			shot.MoveSpeed = _shotSpeed;
 			
 			shot.Direction = _isBoosting?
 				new Vector2(_lastInput.normalized.x, _lastInput.normalized.y)
@@ -204,7 +202,7 @@ public class Player : MonoBehaviour
 				new Vector2(_lastFacingDirection.x, 0);
 			
 			
-			shot.MaxRange = maxShotRange;
+			shot.MaxRange = _maxShotRange;
 
 			_shotCoolDownTimer = 0;
 			
@@ -228,7 +226,7 @@ public class Player : MonoBehaviour
 			Destroy(enemy);
 
 			_velocity.y = 0;
-			_velocity.y += killBounceEnergy;
+			_velocity.y += _killBounceEnergy;
 		}
 
 
@@ -240,33 +238,13 @@ public class Player : MonoBehaviour
 			{
 				boss.GetDamaged();
 				_velocity.y = 0;
-				_velocity.y += killBounceEnergy;
+				_velocity.y += _killBounceEnergy;
 			}		
 
 		}
 		
 	}
 	
-	// TODO : Rewrite this logic into each enemy script, rather than checking them in here
-	private void OnTriggerStay2D(Collider2D other)
-	{	
-
-		if (other.gameObject.CompareTag("Enemy"))
-		{
-			var enemy = other.gameObject.GetComponent<BasicEnemy>();
-			
-			DamagePlayer(enemy.Damage);
-		}
-		else if (other.gameObject.CompareTag("Trap"))
-		{
-			var trap = other.gameObject.GetComponent<Trap>();
-
-			
-			DamagePlayer(trap.Damage);
-			
-		}
-				
-	}
 
 	public void DamagePlayer(int damageToTake)
 	{
@@ -274,13 +252,13 @@ public class Player : MonoBehaviour
 		if (!_animator.GetBool("Damaged"))
 		{	
 			
-			damageText.text = damageToTake.ToString();
+			_damageText.text = damageToTake.ToString();
 			
 			StartCoroutine(FloatingDamage());
 			
 			StartCoroutine(PlayerDamaged());
 			
-			
+		
 			CurrentHealth -= damageToTake;
 			Debug.Log($"Took a hit, {_currentHealth} health left. ");
 		}
@@ -290,9 +268,9 @@ public class Player : MonoBehaviour
 	{
 		var timer = 0f;
 		
-		var orig = damageText.color;
+		var orig = _damageText.color;
 		orig.a = 1.0f;
-		damageText.color = orig;
+		_damageText.color = orig;
 		
 		
 		var startPos = transform.position + Vector3.up;
@@ -303,18 +281,18 @@ public class Player : MonoBehaviour
 			var t = timer / 1.0f;
 			var sint = Mathf.Sin(t * Mathf.PI * 0.5f);
 			
-			damageText.transform.position = Vector3.Lerp(startPos, endPos, timer / 1.0f);
+			_damageText.transform.position = Vector3.Lerp(startPos, endPos, timer / 1.0f);
 			
-			var c = damageText.color;
+			var c = _damageText.color;
 			c.a = Mathf.Lerp(1.0f, 0.0f, sint);
-			damageText.color = c;
+			_damageText.color = c;
 			
 			yield return null;
 		}
 
-		var end = damageText.color;
+		var end = _damageText.color;
 		end.a = 0.0f;
-		damageText.color = end;
+		_damageText.color = end;
 		
 	}
 	
@@ -325,11 +303,13 @@ public class Player : MonoBehaviour
 		_animator.SetBool("Damaged", true);
 		
 		var randomXJitter = Random.Range(-1.5f,1.5f);
-		var randomYJitter = Random.Range(0.5f, 1f); // TODO : Fix y boost not working on ground on damaged
+		var randomYJitter = Random.Range(5f, 9f);
+
+		_controller.collisions.below = false; // allows to move the play in y direction on ground
 		
 		_velocity += new Vector3(randomXJitter, randomYJitter,0);
 		
-		var timer = secondsInvincibility;
+		var timer = _secondsInvincibility;
 		while (timer > .0f)
 		{
 			timer -= Time.deltaTime;
@@ -350,7 +330,13 @@ public class Player : MonoBehaviour
 			if (!IgnoreGround)
 			{
 				_velocity.y = 0;
+				//_velocity.y = -_velocity.y; TODO : PRODUCES BOUNCING
 			}
+			else
+			{
+				_controller.collisions.below = false; // allows to move the play in y direction on ground
+			}
+			
 			
 			
 		}
@@ -360,9 +346,7 @@ public class Player : MonoBehaviour
 			_canBoost = true;
 		}
 		
-		Vector2 input = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
-		//input = new Vector2(Mathf.Round(input.x), Mathf.Round(input.y));
-		//print(input);
+		var input = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
 
 		input = ConvertToInteger(input);
 		
@@ -375,51 +359,49 @@ public class Player : MonoBehaviour
 
 		Debug.DrawRay(transform.position, input, Color.yellow);
 
-		float boostInput = Input.GetAxisRaw("Fire1");
+		var boostInput = Input.GetAxisRaw("Fire1");
 
 		if (Input.GetButtonDown("Fire1")  && !_controller.collisions.below && _canBoost)
 		{
 			AudioManager.Instance.Play("BoostCharge");
 		}
-		
 
-		
-		if (boostInput != 0  && !_controller.collisions.below && _canBoost)
+		if (Math.Abs(boostInput) > 0.01f  && !_controller.collisions.below && _canBoost)
 		{
 			
-			boostArrow.SetActive(true);
-			boostTimer.SetActive(true);
+			_boostArrow.SetActive(true);
+			_boostTimer.SetActive(true);
 
 
 			
-			if (_currentBoostTime > maxBoostTime)
+			if (_currentBoostTime > _maxBoostTime)
 			{
 				
-				boostArrow.SetActive(false);
-				boostTimer.SetActive(false);
+				_boostArrow.SetActive(false);
+				_boostTimer.SetActive(false);
 				_canBoost = false;
 				_isBoosting = false;
 				_currentBoostTime = 0.0f;
-				boostTimerFill.fillAmount = 0;
+				_boostTimerFill.fillAmount = 0;
 				return;
 			}
 			
-			float angle = Mathf.Atan2(_lastInput.y, _lastInput.x) * Mathf.Rad2Deg;
+			var angle = Mathf.Atan2(_lastInput.y, _lastInput.x) * Mathf.Rad2Deg;
 			
-			Quaternion q = Quaternion.AngleAxis(angle, Vector3.forward);
+			var q = Quaternion.AngleAxis(angle, Vector3.forward);
 
 			
 			if (!_isBoosting)
 			{
-				boostArrow.transform.rotation = q;
+				_boostArrow.transform.rotation = q;
 				_isBoosting = true;
 			}
 			else
 			{
-				boostArrow.transform.rotation = Quaternion.Slerp(boostArrow.transform.rotation, q, 8 * Time.deltaTime);
+				_boostArrow.transform.rotation = Quaternion.Slerp(_boostArrow.transform.rotation, q, 8 * Time.deltaTime);
 			}
 
-			boostTimerFill.fillAmount = (_currentBoostTime / maxBoostTime) + 0.07f;
+			_boostTimerFill.fillAmount = (_currentBoostTime / _maxBoostTime) + 0.07f;
 			
 			_currentBoostTime += Time.deltaTime;
 			
@@ -428,20 +410,20 @@ public class Player : MonoBehaviour
 		}
 
 
-		if (boostInput == 0 && !_controller.collisions.below && _canBoost && _isBoosting)
+		if (Math.Abs(boostInput) < 0.01f && !_controller.collisions.below && _canBoost && _isBoosting)
 		{
 			AudioManager.Instance.Stop("BoostCharge");
 			AudioManager.Instance.Play("BoostFinish");
 			
-			_velocity = _lastInput * boostForce ;
+			_velocity = _lastInput * _boostForce ;
 			
 			
 			_currentBoostTime = 0.0f;
 			_canBoost = false;
 			_isBoosting = false;
-			boostTimerFill.fillAmount = 0;
-			boostArrow.SetActive(false);
-			boostTimer.SetActive(false);
+			_boostTimerFill.fillAmount = 0;
+			_boostArrow.SetActive(false);
+			_boostTimer.SetActive(false);
 		}
 		
 		if (Input.GetButtonDown("Jump") && _controller.collisions.below)
@@ -459,15 +441,15 @@ public class Player : MonoBehaviour
 			
 		}
 
-		float targetVelocityX = Mathf.Round(input.x) * moveSpeed;
+		var targetVelocityX = Mathf.Round(input.x) * _moveSpeed;
 
-		_velocity.x = Mathf.SmoothDamp(_velocity.x, targetVelocityX, ref _velocityXSmoothing, (_controller.collisions.below) ? accelerationTimeGrounded : accelerationTimeAirborne);
+		_velocity.x = Mathf.SmoothDamp(_velocity.x, targetVelocityX, ref _velocityXSmoothing, (_controller.collisions.below) ? _accelerationTimeGrounded : _accelerationTimeAirborne);
 		
 		_velocity.y += Physics2D.gravity.x * Time.deltaTime;
 		_controller.Move(_velocity * Time.deltaTime);
 	}
 
-	private Vector2 ConvertToInteger(Vector2 input)
+	private static Vector2 ConvertToInteger(Vector2 input)
 	{
 
 		if (input.x < 0)
