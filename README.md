@@ -1,4 +1,6 @@
-# Ball Tale
+![BTLogo](logo/Balltale-logo-png.png)
+
+Ball Tale is a 2D action-adventure platformer.
 
 # Running the project:
 1) Download Unity(2018.1, 2017.4.1f1 and 2017.3 tested)
