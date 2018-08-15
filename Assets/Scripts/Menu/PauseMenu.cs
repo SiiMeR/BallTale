@@ -1,46 +1,43 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class PauseMenu : SimpleMenu<PauseMenu>{
+public class PauseMenu : SimpleMenu<PauseMenu>
+{
+    // Use this for initialization
+    private void Start()
+    {
+    }
 
-	// Use this for initialization
-	void Start () {
-		
-	}
+    protected override void Awake()
+    {
+        base.Awake();
+        Time.timeScale = 0;
+    }
 
-	protected override void Awake()
-	{
-		base.Awake();
-		Time.timeScale = 0;
-	}
+    protected override void OnDestroy()
+    {
+        base.OnDestroy();
+        Time.timeScale = 1;
+    }
 
-	protected override void OnDestroy()
-	{
-		base.OnDestroy();
-		Time.timeScale = 1;
-	}
+    // Update is called once per frame
+    private void Update()
+    {
+    }
 
-	// Update is called once per frame
-	void Update () {
-		
-	}
+    public void OnQuitPressed()
+    {
+        SaveGame();
+        SceneManager.LoadScene("Menu");
+    }
 
-	public void OnQuitPressed()
-	{
-		SaveGame();
-		SceneManager.LoadScene("Menu");
-	}
+    private void SaveGame()
+    {
+        SaveGameManager.Instance.CreateSaveGame();
+    }
 
-	private void SaveGame()
-	{
-		SaveGameManager.Instance.CreateSaveGame();
-	}
-
-	public void OnOptionsPressed()
-	{
-		PauseOptionsMenu.Show();
-	}
-	
+    public void OnOptionsPressed()
+    {
+        PauseOptionsMenu.Show();
+    }
 }

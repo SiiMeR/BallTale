@@ -1,57 +1,52 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
- 
+
 public class ButtonHighlighter : MonoBehaviour
 {
-	
-	public Button currentButton;
+    public Button currentButton;
 
-	void Update()
-	{
-		if (!currentButton)
-		{
-			return;
-		}
-		
-		var selectedObj = EventSystem.current.currentSelectedGameObject;
+    private void Update()
+    {
+        if (!currentButton) return;
 
-		if (selectedObj == null)
-		{
-			EventSystem.current.SetSelectedGameObject(currentButton.gameObject);
-			return;
-		}
-		var selectedAsButton = selectedObj.GetComponent<Button>();
-		if(selectedAsButton != null && selectedAsButton != currentButton)
-		{
-			if(selectedAsButton.transform.name != "PauseButton")
-				AudioManager.Instance.Play("menuselect");
-				HighlightButton(selectedAsButton);
-		}
+        var selectedObj = EventSystem.current.currentSelectedGameObject;
 
- 
-		if (currentButton != null && currentButton != selectedAsButton)
-		{
-		//	UnHighlightButton(previousButton);
-		}
-		currentButton = selectedAsButton;
-	}
-	void OnDisable()
-	{
-		if (currentButton != null) UnHighlightButton(currentButton);
-	}
- 
-	public void HighlightButton(Button butt)
-	{
-		currentButton = butt;
-		butt.Select();
-	}
- 
-	public void UnHighlightButton(Button butt)
-	{
+        if (selectedObj == null)
+        {
+            EventSystem.current.SetSelectedGameObject(currentButton.gameObject);
+            return;
+        }
 
-	}
+        var selectedAsButton = selectedObj.GetComponent<Button>();
+        if (selectedAsButton != null && selectedAsButton != currentButton)
+        {
+            if (selectedAsButton.transform.name != "PauseButton")
+                AudioManager.Instance.Play("menuselect");
+            HighlightButton(selectedAsButton);
+        }
 
+
+        if (currentButton != null && currentButton != selectedAsButton)
+        {
+            //	UnHighlightButton(previousButton);
+        }
+
+        currentButton = selectedAsButton;
+    }
+
+    private void OnDisable()
+    {
+        if (currentButton != null) UnHighlightButton(currentButton);
+    }
+
+    public void HighlightButton(Button butt)
+    {
+        currentButton = butt;
+        butt.Select();
+    }
+
+    public void UnHighlightButton(Button butt)
+    {
+    }
 }

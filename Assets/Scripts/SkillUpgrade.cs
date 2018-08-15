@@ -1,26 +1,20 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿public class SkillUpgrade : Upgrade
+{
+    // Use this for initialization
+    private void Start()
+    {
+        OnAquire.AddListener(AddShootingAbility);
+    }
 
-public class SkillUpgrade : Upgrade {
+    // Update is called once per frame
+    private void Update()
+    {
+    }
 
-	
-	
-	// Use this for initialization
-	void Start () {
-		OnAquire.AddListener(AddShootingAbility);
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
-
-	void AddShootingAbility()
-	{
-		var player = FindObjectOfType<Player>().GetComponent<Player>();
-		player.HasShotUpgrade = true;
-		player.Currency -= Price;
-	}
+    private void AddShootingAbility()
+    {
+        var player = FindObjectOfType<Player>().GetComponent<Player>();
+        player.HasShotUpgrade = true;
+        player.Currency -= Price;
+    }
 }

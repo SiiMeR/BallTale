@@ -1,53 +1,44 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using BayatGames.SaveGameFree.Types;
 using UnityEngine;
-
-using BayatGames.SaveGameFree.Types;
 
 namespace BayatGames.SaveGameFree.Examples
 {
+    public class ExampleSaveScale : MonoBehaviour
+    {
+        public string identifier = "exampleSaveScale.dat";
+        public bool loadOnStart = true;
 
-	public class ExampleSaveScale : MonoBehaviour
-	{
+        public Transform target;
 
-		public Transform target;
-		public bool loadOnStart = true;
-		public string identifier = "exampleSaveScale.dat";
+        private void Start()
+        {
+            if (loadOnStart) Load();
+        }
 
-		void Start ()
-		{
-			if ( loadOnStart )
-			{
-				Load ();
-			}
-		}
+        private void Update()
+        {
+            var scale = target.localScale;
+            scale.x += Input.GetAxis("Horizontal");
+            scale.y += Input.GetAxis("Vertical");
+            target.localScale = scale;
+        }
 
-		void Update ()
-		{
-			Vector3 scale = target.localScale;
-			scale.x += Input.GetAxis ( "Horizontal" );
-			scale.y += Input.GetAxis ( "Vertical" );
-			target.localScale = scale;
-		}
+        private void OnApplicationQuit()
+        {
+            Save();
+        }
 
-		void OnApplicationQuit ()
-		{
-			Save ();
-		}
+        public void Save()
+        {
+            SaveGame.Save<Vector3Save>(identifier, target.localScale, SerializerDropdown.Singleton.ActiveSerializer);
+        }
 
-		public void Save ()
-		{
-			SaveGame.Save<Vector3Save> ( identifier, target.localScale, SerializerDropdown.Singleton.ActiveSerializer );
-		}
-
-		public void Load ()
-		{
-			target.localScale = SaveGame.Load<Vector3Save> (
-				identifier,
-				new Vector3Save ( 1f, 1f, 1f ),
-				SerializerDropdown.Singleton.ActiveSerializer );
-		}
-
-	}
-
+        public void Load()
+        {
+            target.localScale = SaveGame.Load(
+                identifier,
+                new Vector3Save(1f, 1f, 1f),
+                SerializerDropdown.Singleton.ActiveSerializer);
+        }
+    }
 }

@@ -1,74 +1,59 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
-
+﻿using System.Collections.Generic;
 using BayatGames.SaveGameFree.Serializers;
+using UnityEngine.UI;
 
 namespace BayatGames.SaveGameFree.Examples
 {
+    public class SerializerDropdown : Dropdown
+    {
+        private static readonly ISaveGameSerializer[] m_Serializers =
+        {
+            new SaveGameXmlSerializer(),
+            new SaveGameJsonSerializer(),
+            new SaveGameBinarySerializer()
+        };
 
-	public class SerializerDropdown : Dropdown
-	{
+        protected ISaveGameSerializer m_ActiveSerializer;
 
-		private static SerializerDropdown m_Singleton;
+        public static SerializerDropdown Singleton { get; private set; }
 
-		public static SerializerDropdown Singleton
-		{
-			get
-			{
-				return m_Singleton;
-			}
-		}
+        public ISaveGameSerializer ActiveSerializer
+        {
+            get
+            {
+                if (m_ActiveSerializer == null) m_ActiveSerializer = new SaveGameJsonSerializer();
+                return m_ActiveSerializer;
+            }
+        }
 
-		private static ISaveGameSerializer[] m_Serializers = new ISaveGameSerializer[] {
-			new SaveGameXmlSerializer (),
-			new SaveGameJsonSerializer (),
-			new SaveGameBinarySerializer ()
-		};
+        protected override void Awake()
+        {
+            if (Singleton != null)
+            {
+                Destroy(gameObject);
+                return;
+            }
 
-		protected ISaveGameSerializer m_ActiveSerializer;
+            Singleton = this;
+            base.Awake();
+            options = new List<OptionData>
+            {
+                new OptionData("XML"),
+                new OptionData("JSON"),
+                new OptionData("Binary")
+            };
+            onValueChanged.AddListener(OnValueChanged);
+            value = SaveGame.Load("serializer", 0, new SaveGameJsonSerializer());
+        }
 
-		public ISaveGameSerializer ActiveSerializer
-		{
-			get
-			{
-				if ( m_ActiveSerializer == null )
-				{
-					m_ActiveSerializer = new SaveGameJsonSerializer ();
-				}
-				return m_ActiveSerializer;
-			}
-		}
+        protected virtual void OnValueChanged(int index)
+        {
+            m_ActiveSerializer = m_Serializers[index];
+        }
 
-		protected override void Awake ()
-		{
-			if ( m_Singleton != null )
-			{
-				Destroy ( gameObject );
-				return;
-			}
-			m_Singleton = this;
-			base.Awake ();
-			options = new List<OptionData> () {
-				new OptionData ( "XML" ),
-				new OptionData ( "JSON" ),
-				new OptionData ( "Binary" )
-			};
-			onValueChanged.AddListener ( OnValueChanged );
-			value = SaveGame.Load<int> ( "serializer", 0, new SaveGameJsonSerializer () );
-		}
-
-		protected virtual void OnValueChanged ( int index )
-		{
-			m_ActiveSerializer = m_Serializers [ index ];
-		}
-
-		protected virtual void OnApplicationQuit ()
-		{
-			SaveGame.Save<int> ( "serializer", value, new SaveGameJsonSerializer () );
-		}
-
-	}
-
+        protected virtual void OnApplicationQuit()
+        {
+            SaveGame.Save("serializer", value, new SaveGameJsonSerializer());
+        }
+    }
 }
