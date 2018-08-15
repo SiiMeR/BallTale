@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class BoxController2D : RayCastController
 {
+	protected const float DISTANCEBETWEENRAYS = .25f;
 
 	public int horizontalRayCount = 4;
 	public int verticalRayCount = 4;
 
-	private float horizontalRaySpacing;
-	private float verticalRaySpacing;
-	
+	private float _horizontalRaySpacing;
+	private float _verticalRaySpacing;
 	
 	public CollisionInfo collisions;
 	
@@ -21,6 +21,12 @@ public class BoxController2D : RayCastController
 		public void Reset()
 		{
 			above = below = left = right = false;
+		}
+		
+
+		public override string ToString()
+		{
+			return $"Collisions: above {above}, below {below}, left {left}, right {right}";
 		}
 	}
 
@@ -42,31 +48,31 @@ public class BoxController2D : RayCastController
 		UpdateRaycastOrigins();
 		collisions.Reset();
 
-		if (velocity.x != 0)
+		if (Mathf.Abs(velocity.x) > float.Epsilon)
 		{
 			HorizontalCollisions(ref velocity);
 		}
-
-		if (velocity.y != 0)
+		if (Mathf.Abs(velocity.y) > float.Epsilon)
 		{
 			VerticalCollisions(ref velocity);
 		}
-		
 	
 		transform.Translate(velocity);
 	}
 
 	public override void HorizontalCollisions(ref Vector3 velocity)
 	{
-		float directionX = Mathf.Sign(velocity.x);
-		float rayLength = Mathf.Abs(velocity.x) + SKINWIDTH;
-
-		for (int i = 0; i < horizontalRayCount; i++)
+		var directionX = Mathf.Sign(velocity.x);
+		var rayLength = Mathf.Abs(velocity.x) + SKINWIDTH;
+		
+	
+		for (var i = 0; i < horizontalRayCount; i++)
 		{
-			Vector2 rayOrigin = (directionX == -1) ? rayCastOrigins.bottomLeft : rayCastOrigins.bottomRight;
-			rayOrigin += Vector2.up * (horizontalRaySpacing * i);
+			var rayOrigin = (directionX == -1) ? rayCastOrigins.bottomLeft : rayCastOrigins.bottomRight;
 
-			RaycastHit2D hit = Physics2D.Raycast(rayOrigin, Vector2.right * directionX, rayLength, collisionMask);
+			rayOrigin += Vector2.up * (_horizontalRaySpacing * i);
+
+			var hit = Physics2D.Raycast(rayOrigin, Vector2.right * directionX, rayLength, collisionMask);
 
 			if (hit)
 			{
@@ -77,30 +83,30 @@ public class BoxController2D : RayCastController
 				collisions.right = directionX == 1;
 			}
 			
-			Debug.DrawRay(rayOrigin, Vector2.right * directionX * rayLength, Color.red);
+			Debug.DrawRay(rayOrigin, Vector2.right * directionX * rayLength, Color.magenta);
 			
 		}
 	}
 
 	public override void VerticalCollisions(ref Vector3 velocity)
 	{
-		float directionY = Mathf.Sign(velocity.y);
-		float rayLength = Mathf.Abs(velocity.y) + SKINWIDTH;
+		var directionY = Mathf.Sign(velocity.y);
+		var rayLength = Mathf.Abs(velocity.y) + SKINWIDTH;
 
-		for (int i = 0; i < verticalRayCount; i++)
+		for (var i = 0; i < verticalRayCount; i++)
 		{
-			Vector2 rayOrigin = (directionY == -1) ? rayCastOrigins.bottomLeft : rayCastOrigins.topLeft;
-			rayOrigin += Vector2.right * (verticalRaySpacing * i + velocity.y);
+			var rayOrigin = (directionY == -1) ? rayCastOrigins.bottomLeft : rayCastOrigins.topLeft;
+			rayOrigin += Vector2.right * (_verticalRaySpacing * i + velocity.x);
 
-			RaycastHit2D hit = Physics2D.Raycast(rayOrigin, Vector2.up * directionY, rayLength, collisionMask);
+			var hit = Physics2D.Raycast(rayOrigin, Vector2.up * directionY, rayLength, collisionMask);
 
 			if (hit)
 			{
 				velocity.y = (hit.distance - SKINWIDTH) * directionY;
 				rayLength = hit.distance;
 
-				collisions.above = directionY == -1;
-				collisions.below = directionY == 1;
+				collisions.above = directionY == 1;
+				collisions.below = directionY == -1;
 				
 			}
 			
@@ -110,7 +116,7 @@ public class BoxController2D : RayCastController
 	
 	public override void UpdateRaycastOrigins()
 	{
-		Bounds bounds = collider.bounds;
+		var bounds = collider.bounds;
 		bounds.Expand(SKINWIDTH * -2);
 		
 		rayCastOrigins.bottomLeft = new Vector2(bounds.min.x, bounds.min.y);
@@ -123,13 +129,16 @@ public class BoxController2D : RayCastController
 
 	void CalculateRaySpacing()
 	{
-		Bounds bounds = collider.bounds;
+		var bounds = collider.bounds;
 		bounds.Expand(SKINWIDTH * -2);
 
-		horizontalRayCount = Mathf.Clamp(horizontalRayCount, 2, int.MaxValue);
-		verticalRayCount = Mathf.Clamp(verticalRayCount, 2, int.MaxValue);
-
-		horizontalRaySpacing = bounds.size.y / (horizontalRayCount - 1);
-		verticalRaySpacing = bounds.size.x / (verticalRayCount - 1);
+		float boundsWidth = bounds.size.x;
+		float boundsHeight = bounds.size.y;
+		
+		horizontalRayCount = Mathf.RoundToInt (boundsHeight / DISTANCEBETWEENRAYS);
+		verticalRayCount = Mathf.RoundToInt (boundsWidth / DISTANCEBETWEENRAYS);
+		
+		_horizontalRaySpacing = bounds.size.y / (horizontalRayCount - 1);
+		_verticalRaySpacing = bounds.size.x / (verticalRayCount - 1);
 	}
 }

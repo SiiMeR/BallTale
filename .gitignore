@@ -36,5 +36,5 @@ sysinfo.txt
 # Project Rider project files
 /.idea/
 # Project Rider plugins
-Assets/Plugins/*
-Assets/Plugins.meta
+Assets/Plugins/Editor/JetBrains/*
+Assets/Plugins/Editor/JetBrains.meta
