@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using UnityEngine;
 
 [RequireComponent(typeof(BoxController2D))]
@@ -44,7 +45,11 @@ public class BasicEnemy : MonoBehaviour
 
             return _pathMiddlePos;
         }
-        private set { _pathMiddlePos = value; }
+        private set
+        {
+            Debug.Log($"{transform} new path middle pos");
+            _pathMiddlePos = value;
+        }
     }
 
     public Vector3 PathFirstPos
@@ -75,6 +80,15 @@ public class BasicEnemy : MonoBehaviour
         set { _pathLastPos = value; }
     }
 
+    public void resetWaypoints()
+    {
+        PathFirstPos = PathLastPos = Vector3.zero;
+        PathMiddlePos = transform.position;
+        _movetarget = PathFirstPos;
+        _lastmovetarget = PathMiddlePos;
+        
+    }
+
     // Use this for initialization
     private void Start()
     {
@@ -91,9 +105,36 @@ public class BasicEnemy : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        //	UpdateDirection();
-        UpdateMovement();
+        UpdateNewMovement();
+        CheckDirection();
+        CheckCollision();
     }
+
+    private void CheckCollision()
+    {
+        if (_controller.collisions.above || _controller.collisions.below || _controller.collisions.left || _controller.collisions.right )
+        {
+            _movetarget = _pathMiddlePos;
+        }
+         
+
+        
+    }
+    private void UpdateNewMovement()
+    {
+        var direction = _movetarget - transform.position;
+        
+        GetComponent<SpriteRenderer>().flipX = Math.Abs(Mathf.Sign(direction.x) - 1) < float.Epsilon; // moving right
+        
+        _velocity = direction.normalized * Mathf.Abs(moveSpeed);
+        
+        if (useGravity)
+        {
+            _velocity.y += Physics2D.gravity.x * Time.deltaTime;
+        }
+        _controller.Move(_velocity *  Time.deltaTime);
+        
+    }   
 
 
     private void OnTriggerStay2D(Collider2D other)
@@ -106,92 +147,44 @@ public class BasicEnemy : MonoBehaviour
         }
     }
 
-    private void UpdateDirection()
+    private void CheckDirection()
     {
-        if (Vector3.Distance(_movetarget, transform.position) < 0.01f)
+        
+        if (Vector2.Distance(_movetarget, transform.position) < 0.1f && !_justTurnedAround)
         {
-            if (_movetarget == PathFirstPos)
-            {
-                _lastmovetarget = _movetarget;
-                _movetarget = _pathMiddlePos;
-            }
-            else if (_movetarget == PathMiddlePos)
-            {
-                if (_lastmovetarget == PathFirstPos)
-                {
-                    _lastmovetarget = _movetarget;
-                    _movetarget = PathLastPos;
-                }
-                else if (_lastmovetarget == PathLastPos)
-                {
-                    _lastmovetarget = _movetarget;
-                    _movetarget = PathFirstPos;
-                }
-            }
-            else if (_movetarget == _pathLastPos)
-            {
-                _lastmovetarget = _movetarget;
-                _movetarget = PathMiddlePos;
-            }
+            UpdateDirection();
         }
+      
     }
 
-    protected virtual void UpdateMovement()
+    private void UpdateDirection()
     {
-        var moveDirection = Mathf.Sign(moveSpeed);
-
-
-        if (!_moveVertical)
+        StartCoroutine(TurnAround());
+        if (_movetarget == PathFirstPos)
         {
-            GetComponent<SpriteRenderer>().flipX = moveDirection == 1; // moving right
-
-            if (_controller.collisions.left || _controller.collisions.right)
-            {
-                moveSpeed = -moveSpeed;
-            }
-
-            if (_controller.collisions.above || _controller.collisions.below)
-            {
-                _velocity.y = 0;
-            }
-
-            _velocity.x = moveSpeed;
+            _lastmovetarget = PathFirstPos;
+            _movetarget = PathMiddlePos;
         }
-
-        else
+        else if (_movetarget == PathMiddlePos)
         {
-            if (_controller.collisions.above || _controller.collisions.below)
+                
+            if (_lastmovetarget == PathFirstPos)
             {
-                moveSpeed = -moveSpeed;
+                    
+                _movetarget = PathLastPos;
             }
-
-            if (_controller.collisions.left || _controller.collisions.right)
+            else if (_lastmovetarget == PathLastPos)
             {
-                moveSpeed = -moveSpeed;
+                _movetarget = PathFirstPos;
             }
-
-
-            _velocity.y = moveSpeed;
+                
+            _lastmovetarget = PathMiddlePos;
         }
-
-
-        if (Vector3.Distance(transform.position, PathMiddlePos) > _unitsToMove && _unitsToMove > 0 &&
-            !_justTurnedAround)
+        else if (_movetarget == PathLastPos)
         {
-            moveSpeed = -moveSpeed;
-            StartCoroutine(TurnAround());
+            _lastmovetarget = PathLastPos;
+            _movetarget = PathMiddlePos;
         }
-
-        //	var movingDirection = (_movetarget - transform.position).normalized;
-
-        //	_velocity += moveSpeed * movingDirection * Time.deltaTime;
-
-        if (useGravity)
-        {
-            _velocity.y += Physics2D.gravity.x * Time.deltaTime;
-        }
-
-        _controller.Move(_velocity * Time.deltaTime);
     }
 
     private IEnumerator TurnAround()

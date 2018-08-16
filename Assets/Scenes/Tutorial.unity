@@ -2061,11 +2061,11 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4418736205045970, guid: 1dc546dfa03820a4a9f0ebb76d783996, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 96.13954
+      value: 97.73
       objectReference: {fileID: 0}
     - target: {fileID: 4418736205045970, guid: 1dc546dfa03820a4a9f0ebb76d783996, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 2.4352462
+      value: 3.57
       objectReference: {fileID: 0}
     - target: {fileID: 4418736205045970, guid: 1dc546dfa03820a4a9f0ebb76d783996, type: 2}
       propertyPath: m_LocalPosition.z
@@ -2090,6 +2090,31 @@ Prefab:
     - target: {fileID: 4418736205045970, guid: 1dc546dfa03820a4a9f0ebb76d783996, type: 2}
       propertyPath: m_RootOrder
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114309150039754992, guid: 1dc546dfa03820a4a9f0ebb76d783996,
+        type: 2}
+      propertyPath: _pathLastPos.x
+      value: 103.91632
+      objectReference: {fileID: 0}
+    - target: {fileID: 114309150039754992, guid: 1dc546dfa03820a4a9f0ebb76d783996,
+        type: 2}
+      propertyPath: _pathLastPos.y
+      value: 5.52833
+      objectReference: {fileID: 0}
+    - target: {fileID: 114309150039754992, guid: 1dc546dfa03820a4a9f0ebb76d783996,
+        type: 2}
+      propertyPath: _pathFirstPos.x
+      value: 89.453255
+      objectReference: {fileID: 0}
+    - target: {fileID: 114309150039754992, guid: 1dc546dfa03820a4a9f0ebb76d783996,
+        type: 2}
+      propertyPath: _pathFirstPos.y
+      value: -2.8078647
+      objectReference: {fileID: 0}
+    - target: {fileID: 114309150039754992, guid: 1dc546dfa03820a4a9f0ebb76d783996,
+        type: 2}
+      propertyPath: moveSpeed
+      value: 4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1dc546dfa03820a4a9f0ebb76d783996, type: 2}
@@ -2541,12 +2566,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d9b5b85d88fc6b140bb55ba288670d1f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: {fileID: 319934586}
-  healthCanvas: {fileID: 537684725}
   currency: {fileID: 348875653}
   currencyCanvas: {fileID: 1682309032}
-  CurrencyFadeTime: 0.7
   CurrencyFadeCD: 3
+  CurrencyFadeTime: 0.7
+  health: {fileID: 319934586}
+  healthCanvas: {fileID: 537684725}
   Timer: 0
 --- !u!114 &1091810718
 MonoBehaviour:

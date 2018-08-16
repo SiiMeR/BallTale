@@ -135,6 +135,7 @@ public class AudioManager : Singleton<AudioManager>
         AudioClip clip;
         var succ = AudioMap.TryGetValue(audioName, out clip);
         if (succ)
+        {
             foreach (var source in sourcePool)
                 if (!source.isPlaying)
                 {
@@ -150,8 +151,13 @@ public class AudioManager : Singleton<AudioManager>
 
                     break;
                 }
-                else
-                    Debug.LogWarning("Could not find audio: ");
+        }
+
+        else
+        {
+            Debug.LogWarning("Could not find audio: " + audioName);
+        }
+                    
     }
 
     public void Play(AudioClip clip, float vol = 1f, bool isLooping = false, Vector3? position = null)

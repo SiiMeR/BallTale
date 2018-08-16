@@ -9,6 +9,18 @@ public class EnemyPathEditor : Editor
     {
     }
 
+    public override void OnInspectorGUI()
+    {
+        base.OnInspectorGUI();
+
+        var basicEnemy = (BasicEnemy) target;
+
+        if (GUILayout.Button("Reset movement waypoints"))
+        {
+            basicEnemy.resetWaypoints();
+        }
+    }
+
     // http://catlikecoding.com/unity/tutorials/curves-and-splines/
     private void OnSceneGUI()
     {
@@ -37,15 +49,6 @@ public class EnemyPathEditor : Editor
             EditorUtility.SetDirty(enemy);
             enemy.PathFirstPos = p0;
         }
-
-        /*	EditorGUI.BeginChangeCheck();
-            p1 = Handles.PositionHandle(p1, enemyRotation);
-            if (EditorGUI.EndChangeCheck())
-            {
-                Undo.RecordObject(enemy, "Move Path Point");
-                EditorUtility.SetDirty(enemy);
-                enemy.PathMiddlePos = p1;
-            }*/
 
 
         EditorGUI.BeginChangeCheck();
