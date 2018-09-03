@@ -305,7 +305,7 @@ public class Player : MonoBehaviour
             }
             else
             {
-                _controller.collisions.below = false; // allows to move the play in y direction on ground
+                _controller.collisions.below = false; // allows to move the player in y direction on ground
             }
         }
 
