@@ -113,7 +113,7 @@ public class BasicEnemy : MonoBehaviour
 
         GetComponent<SpriteRenderer>().flipX = Math.Abs(Mathf.Sign(direction.x) - 1) < float.Epsilon; // moving right
 
-
+        
         if (useGravity)
         {
             _velocity.y += Physics2D.gravity.x * Time.deltaTime;
@@ -123,17 +123,17 @@ public class BasicEnemy : MonoBehaviour
                 _velocity.x = Mathf.Sign(direction.x) * Mathf.Abs(moveSpeed);
             }
 
-            if (_controller.collisions.above || _controller.collisions.below)
-            {
-                _velocity.y = 0;
-       
-            }
-
         }
         
         else
         {
             _velocity = direction.normalized * Mathf.Abs(moveSpeed);
+        }
+        
+        if (_controller.collisions.above || _controller.collisions.below)
+        {
+            _velocity.y = 0;
+       
         }
 
         _controller.Move(_velocity * Time.deltaTime);
