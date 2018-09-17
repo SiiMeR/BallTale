@@ -1,5 +1,12 @@
 ﻿public class SkillUpgrade : Upgrade
 {
+    
+    public override string Description
+    {
+        get => _description;
+        set => _description = value;
+    }
+    
     // Use this for initialization
     private void Start()
     {

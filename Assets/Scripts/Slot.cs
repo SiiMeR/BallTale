@@ -12,7 +12,7 @@ public class Slot : MonoBehaviour
 
     public Upgrade Upgrade
     {
-        get { return _upgrade; }
+        get => _upgrade;
         set
         {
             _upgrade = value;
@@ -38,18 +38,14 @@ public class Slot : MonoBehaviour
         }
     }
 
+
     public bool IsEmpty()
     {
         return Upgrade == null;
     }
 
-    // Use this for initialization
-    private void Start()
+    public override string ToString()
     {
-    }
-
-    // Update is called once per frame
-    private void Update()
-    {
+        return $"{base.ToString()}, {nameof(_priceText)}: {_priceText}, {nameof(_upgrade)}: {_upgrade}";
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using BayatGames.SaveGameFree;
 using BayatGames.SaveGameFree.Types;
 using UnityEngine;
@@ -24,14 +25,17 @@ public struct PlayerData
 }
 
 
+public struct ShopData
+{
+    public Sprite sprite;
+}
+
 public class SaveGameManager : Singleton<SaveGameManager>
 {
     public GameObject playerPrefab;
 
     private void Start()
     {
-        //	PlayerPrefs.SetInt("loadgame",0);
-
         if (PlayerPrefs.GetInt("loadgame") == 1) LoadGame();
 
         PlayerPrefs.SetInt("loadgame", 0);
@@ -40,6 +44,8 @@ public class SaveGameManager : Singleton<SaveGameManager>
 
     public void CreateSaveGame()
     {
+        SaveGame.Delete("shop.txt");
+        
         var player = FindObjectOfType<Player>();
 
         var playerSave = new PlayerData(player);
@@ -48,17 +54,17 @@ public class SaveGameManager : Singleton<SaveGameManager>
 
         var shop = FindObjectOfType<Shop>();
 
+        var upgrades = shop._saleQueue.ToList();
 
-        var upgrades = shop._saleQueue.ToArray();
-
-        foreach (var shopSlot in shop._slots)
+        foreach (var shopSlot in shop.Slots)
+        {
             if (shopSlot.Upgrade != null)
             {
-                print(shopSlot.Upgrade);
-                upgrades.Append(shopSlot.Upgrade);
+                upgrades.Add(shopSlot.Upgrade);
             }
-
-        SaveGame.Save("shop.txt", upgrades);
+        }
+      //  Debug.Log($"{upgrades.Count}");
+        SaveGame.Save("shop.txt", upgrades.ToArray());
     }
 
     public void LoadGame()
@@ -78,6 +84,29 @@ public class SaveGameManager : Singleton<SaveGameManager>
 
         var upgrades = SaveGame.Load<Upgrade[]>("shop.txt");
 
-        shop.RefillSlots(upgrades);
+        var instantiatedUpgrades = RecreateUpgrades(upgrades);
+        shop.RefillSlots(instantiatedUpgrades);
+    }
+
+    private List<Upgrade> RecreateUpgrades(Upgrade[] upgrades)
+    {
+        var realUpgrades = new List<Upgrade>();
+
+        foreach (var upgrade in upgrades)
+        {
+            switch (upgrade.GetType().ToString())
+            {
+                    case "SkillUpgrade":
+                        realUpgrades.Add(UpgradeBuilder.Instance.GetShotUpgrade(upgrade.Price, upgrade.Description)); // TODO UGLY AND DOES NOT WORK WITH OTHER TYPES
+                        break;
+                    
+                    case "HealthUpgrade":
+                        var healthUp = (HealthUpgrade) upgrade;
+                        realUpgrades.Add(UpgradeBuilder.Instance.GetHealthUpgrade(healthUp.HealthBonus,healthUp.Price)); // TODO UGLY AND DOES NOT WORK WITH OTHER TYPES
+                        break;
+            }
+        }
+        
+        return realUpgrades;
     }
 }
