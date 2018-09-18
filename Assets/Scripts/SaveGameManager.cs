@@ -24,12 +24,6 @@ public struct PlayerData
     }
 }
 
-
-public struct ShopData
-{
-    public Sprite sprite;
-}
-
 public class SaveGameManager : Singleton<SaveGameManager>
 {
     public GameObject playerPrefab;
@@ -94,16 +88,21 @@ public class SaveGameManager : Singleton<SaveGameManager>
 
         foreach (var upgrade in upgrades)
         {
-            switch (upgrade.GetType().ToString())
-            {
-                    case "SkillUpgrade":
-                        realUpgrades.Add(UpgradeBuilder.Instance.GetShotUpgrade(upgrade.Price, upgrade.Description)); // TODO UGLY AND DOES NOT WORK WITH OTHER TYPES
-                        break;
-                    
+            switch (upgrade.GetType().ToString()) 
+            {                
                     case "HealthUpgrade":
                         var healthUp = (HealthUpgrade) upgrade;
-                        realUpgrades.Add(UpgradeBuilder.Instance.GetHealthUpgrade(healthUp.HealthBonus,healthUp.Price)); // TODO UGLY AND DOES NOT WORK WITH OTHER TYPES
+                        realUpgrades.Add(UpgradeBuilder.Instance.GetHealthUpgrade(healthUp.HealthBonus,healthUp.Price));
                         break;
+                    
+                    case "ShootingUpgrade":
+                        realUpgrades.Add(UpgradeBuilder.Instance.GetShotUpgrade(upgrade.Price, upgrade.Description)); 
+                        break;
+                    
+                    default:
+                        Debug.Log($"Upgrade not defined in loading script: {upgrade.GetType()}");
+                        break;
+                       
             }
         }
         

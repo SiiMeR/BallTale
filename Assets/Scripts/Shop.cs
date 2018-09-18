@@ -11,12 +11,12 @@ public class Shop : Interactable
     private int _currentSelectionSlot;
     [SerializeField] private TextMeshProUGUI _descriptionText;
 
-    [SerializeField] private List<Upgrade> _itemsOnSale;
-
     private bool _justBoughtShootingUpgrade;
 
     private bool _moveAxisInUse;
+    
     public Queue<Upgrade> _saleQueue; // holds items that are not yet on sale
+    
     [SerializeField] private GameObject _selectionFrame;
 
 
@@ -32,7 +32,7 @@ public class Shop : Interactable
     {
         if (_ui) _ui.KeepOpen = false;
     }
-
+    
     // Use this for initialization
     protected void Awake()
     {
@@ -85,6 +85,12 @@ public class Shop : Interactable
 
         _ui.KeepOpen = !_ui.KeepOpen;
 
+        if (_selectionFrame.activeInHierarchy)
+        {
+            var slot = Slots[_currentSelectionSlot];
+            _descriptionText.text = slot.IsEmpty() ?  "" : slot.Upgrade.Description;
+        }
+        
         if (_justBoughtShootingUpgrade)
         {
             StartCoroutine(ShowShootingHelpText());
@@ -160,19 +166,22 @@ public class Shop : Interactable
             if (Input.GetButtonDown("Fire3") && !Slots[_currentSelectionSlot].IsEmpty())
             {
                 var slot = Slots[_currentSelectionSlot];
-
-                if (slot.Upgrade.Price <= FindObjectOfType<Player>().Currency)
+                
+                var upgradePrice = slot.Upgrade.Price;
+                var player = FindObjectOfType<Player>();
+                
+                if (upgradePrice <= player.Currency)
                 {
-                    if (slot.Upgrade is SkillUpgrade) _justBoughtShootingUpgrade = true;
+                    if (slot.Upgrade is ShootingUpgrade) _justBoughtShootingUpgrade = true; // TODO doesn't work when I will add more upgrades
 
-                    AudioManager.Instance.Play("Buy", 6f);
+                    AudioManager.Instance.Play("Buy", 5f);
 
                     slot
                         .Upgrade
                         .GetComponent<Upgrade>()
-                        .OnAquire
-                        .Invoke();
+                        .AddUpgrade();
 
+                    player.Currency -= upgradePrice;
                     slot.Upgrade = null;
                     _descriptionText.text = "";
 
@@ -189,8 +198,8 @@ public class Shop : Interactable
         var startPos = Slots[_currentSelectionSlot].transform.position;
 
         _currentSelectionSlot = moveLeft
-            ? (int) Mathf.Repeat(++_currentSelectionSlot, Slots.Count)
-            : (int) Mathf.Repeat(--_currentSelectionSlot, Slots.Count);
+            ? (int) Mathf.Repeat(--_currentSelectionSlot, Slots.Count)
+            : (int) Mathf.Repeat(++_currentSelectionSlot, Slots.Count);
 
         var endPos = Slots[_currentSelectionSlot].transform.position;
 
@@ -225,8 +234,8 @@ public class Shop : Interactable
         else
         {
             slot.Upgrade = null;
-            _descriptionText.text = 
-                Slots.Find(sl => sl.Upgrade != null).Upgrade.Description; // find first slotted upgrade and use that desc. instead
+            _descriptionText.text = "";
+                ///Slots.Find(sl => sl.Upgrade != null).Upgrade.Description; // find first slotted upgrade and use that desc. instead
         }
     }
 }

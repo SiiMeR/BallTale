@@ -4,27 +4,18 @@ public class UpgradeBuilder : Singleton<UpgradeBuilder>
 {
     [SerializeField] private GameObject _healthPrefab;
     [SerializeField] private GameObject _shotUpgradePrefab;
-
+    
     protected UpgradeBuilder()
     {
     } // no instantiation from other classes
 
-    // Use this for initialization
-    private void Start()
-    {
-    }
-
-    // Update is called once per frame
-    private void Update()
-    {
-    }
 
     public Upgrade GetHealthUpgrade(int health, int price)
     {
         var huGo = Instantiate(_healthPrefab);
 
         var healthUpgrade = huGo.GetComponent<HealthUpgrade>();
-
+        
         healthUpgrade.HealthBonus = health;
         healthUpgrade.Price = price;
         healthUpgrade.Sprite = huGo.GetComponent<SpriteRenderer>().sprite;
@@ -37,7 +28,7 @@ public class UpgradeBuilder : Singleton<UpgradeBuilder>
     {
         var huGo = Instantiate(_shotUpgradePrefab);
 
-        var skillUpgrade = huGo.GetComponent<SkillUpgrade>();
+        var skillUpgrade = huGo.GetComponent<ShootingUpgrade>();
 
         skillUpgrade.Price = price;
         skillUpgrade.Description = description;
