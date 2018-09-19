@@ -11,11 +11,15 @@ public class SavePoint : Interactable
     
     public override void Interact()
     {
+        if (!_notice.activeInHierarchy) return;
+        
         SaveGameManager.Instance.CreateSaveGame();
-
+    
         if(_displayTextCoroutine != null) StopCoroutine(_displayTextCoroutine);
         
         _displayTextCoroutine = StartCoroutine(DisplaySaveGameText());
+        
+        _notice.SetActive(false);
     }
 
     private IEnumerator DisplaySaveGameText()
@@ -26,8 +30,7 @@ public class SavePoint : Interactable
         originalTextColor.a = 1.0f;
         _saveText.color = originalTextColor;
 
-
-        var startPos = transform.position + Vector3.up * 0.7f;
+        var startPos = transform.position + Vector3.up;
         var endPos = startPos + Vector3.up * 2;
 
         while ((timer += Time.deltaTime) < 1.0f)
