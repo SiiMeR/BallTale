@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using BayatGames.SaveGameFree;
 using BayatGames.SaveGameFree.Types;
@@ -82,7 +83,7 @@ public class SaveGameManager : Singleton<SaveGameManager>
         shop.RefillSlots(instantiatedUpgrades);
     }
 
-    private List<Upgrade> RecreateUpgrades(Upgrade[] upgrades)
+    private List<Upgrade> RecreateUpgrades(IEnumerable<Upgrade> upgrades)
     {
         var realUpgrades = new List<Upgrade>();
 

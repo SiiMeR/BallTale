@@ -87,14 +87,19 @@ public class AudioManager : Singleton<AudioManager>
         AudioClip clip;
         var succ = AudioMap.TryGetValue(audioName, out clip);
         if (succ)
+        {
             foreach (var source in sourcePool)
                 if (source.clip == clip)
                 {
                     source.Stop();
                     return;
                 }
-                else
-                    Debug.LogWarning("Could not find audio: " + audioName);
+        }
+        else
+        {
+            Debug.LogWarning("Could not find audio: " + audioName);
+        }
+
     }
 
     public IEnumerator FadeToNextMusic(string nextMusicName, float time = 2.0f)

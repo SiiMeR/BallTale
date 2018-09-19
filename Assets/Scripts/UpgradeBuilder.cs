@@ -1,19 +1,20 @@
-﻿using UnityEngine;
+﻿using System;
+using System.Linq;
+using System.Reflection;
+using UnityEngine;
 
 public class UpgradeBuilder : Singleton<UpgradeBuilder>
 {
-    [SerializeField] private GameObject _healthPrefab;
-    [SerializeField] private GameObject _shotUpgradePrefab;
+    public GameObject _healthPrefab;
+    public GameObject _shotUpgradePrefab;
     
     protected UpgradeBuilder()
     {
     } // no instantiation from other classes
-
-
+    
     public Upgrade GetHealthUpgrade(int health, int price)
     {
         var huGo = Instantiate(_healthPrefab);
-
         var healthUpgrade = huGo.GetComponent<HealthUpgrade>();
         
         healthUpgrade.HealthBonus = health;

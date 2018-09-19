@@ -79,9 +79,9 @@ public class Shop : Interactable
         }
     }
 
-    public override void FlipDialogue()
+    public override void Interact()
     {
-        base.FlipDialogue();
+        base.Interact();
 
         _ui.KeepOpen = !_ui.KeepOpen;
 

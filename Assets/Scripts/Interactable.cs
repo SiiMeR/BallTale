@@ -19,10 +19,10 @@ public abstract class Interactable : MonoBehaviour
     // Update is called once per frame	
     protected virtual void Update()
     {
-        if (Input.GetButtonDown("Fire2") && _isCollidingWPlayer) FlipDialogue();
+        if (Input.GetButtonDown("Fire2") && _isCollidingWPlayer) Interact();
     }
 
-    public virtual void FlipDialogue()
+    public virtual void Interact()
     {
         if (_pauseOnInteract) Time.timeScale = _panel.activeInHierarchy ? 1.0f : 0.0f;
         _panel.SetActive(!_panel.activeInHierarchy);

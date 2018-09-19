@@ -27,13 +27,7 @@ public class PauseMenu : SimpleMenu<PauseMenu>
 
     public void OnQuitPressed()
     {
-        SaveGame();
         SceneManager.LoadScene("Menu");
-    }
-
-    private void SaveGame()
-    {
-        SaveGameManager.Instance.CreateSaveGame();
     }
 
     public void OnOptionsPressed()
