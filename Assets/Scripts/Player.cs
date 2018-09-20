@@ -1,83 +1,68 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using BayatGames.SaveGameFree;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
 [RequireComponent(typeof(CircleController2D))]
 public class Player : MonoBehaviour
 {
+    
+    [FormerlySerializedAs("_velocity")] public Vector3 Velocity;
+    public bool IgnoreGround;
+
     [SerializeField] private float _accelerationTimeAirborne = .2f;
     [SerializeField] private float _accelerationTimeGrounded = .1f;
-
-    private Animator _animator;
     [SerializeField] private GameObject _boostArrow;
     [SerializeField] private float _boostForce = 20f;
     [SerializeField] private GameObject _boostTimer;
     [SerializeField] private Image _boostTimerFill;
-
-    private bool _canBoost = true;
-
-    private CircleController2D _controller;
-
-    [SerializeField] private int _currency = 100;
-
-    private float _currentBoostTime;
-
-    private int _currentHealth;
-
     [SerializeField] private TextMeshProUGUI _damageText;
-
-
     [SerializeField] private GameObject _deathScreen;
-    private bool _isBoosting;
-
     [SerializeField] private int _killBounceEnergy = 15;
-
-    private Vector2 _lastFacingDirection;
-    private Vector3 _lastInput;
-
     [SerializeField] private float _maxBoostTime = 2.0f;
-
+    [SerializeField] private int _currency = 100;
     [SerializeField] private int _maxHealth = 100;
     [SerializeField] private float _maxJumpHeight = 4f;
-
-
-    private float _maxJumpVelocity;
-    [SerializeField] private float _maxShotRange;
-
-    [SerializeField] private float _minJumpHeight = 1f;
-    private float _minJumpVelocity;
-
     [SerializeField] private float _moveSpeed = 10;
     [SerializeField] private float _secondsInvincibility = 1.5f;
     [SerializeField] private GameObject _shootParticle;
     [SerializeField] private float _shotCoolDown = 1.0f;
-    private double _shotCoolDownTimer;
-
+    [SerializeField] private float _maxShotRange;
+    [SerializeField] private float _minJumpHeight = 1f;
     [SerializeField] private float _shotSpeed;
     [SerializeField] private float _timeToJumpApex = .4f;
 
-    public Vector3 _velocity;
+    private bool _canBoost = true;
+    private CircleController2D _controller;
+    private float _currentBoostTime;
+    private Animator _animator;
+    private int _currentHealth;
+    private bool _isBoosting;
+    private Vector2 _lastFacingDirection;
+    private Vector3 _lastInput;
+    private float _maxJumpVelocity;
+    private float _minJumpVelocity;
+    private double _shotCoolDownTimer;
     private float _velocityXSmoothing;
 
-
-    public bool HasShotUpgrade;
-    public bool IgnoreGround;
-
+    public List<Upgrade> Upgrades { get; set; }
 
     public int Currency
     {
-        get { return _currency; }
-        set { _currency = value; }
+        get => _currency;
+        set => _currency = value;
     }
 
     public int CurrentHealth
     {
-        get { return _currentHealth; }
+        get => _currentHealth;
         set
         {
             if (value < 1) // dead
@@ -93,10 +78,9 @@ public class Player : MonoBehaviour
 
     public int MaxHealth
     {
-        get { return _maxHealth; }
-        set { _maxHealth = value; }
+        get => _maxHealth;
+        set => _maxHealth = value;
     }
-
 
     private IEnumerator Death()
     {
@@ -116,7 +100,20 @@ public class Player : MonoBehaviour
         _deathScreen.SetActive(false);
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
+    
+    /// <summary>
+    /// An expression bodied method to check if the player's upgrade list Upgrades contains a specific upgrade.
+    /// Since every upgrade except HealthUpgrade has it's own class,
+    /// it is trivial. 
+    /// </summary>
+    /// <typeparam name="TUpgrade">The type of the upgrade that the method will check</typeparam>
+    /// <returns>True if the player has the upgrade specified by the type <typeparamref name="TUpgrade"/></returns>
+    public bool HasUpgrade<TUpgrade>() where TUpgrade : Upgrade => Upgrades.OfType<TUpgrade>().Any();
 
+    private void Awake()
+    {
+        Upgrades = new List<Upgrade>();
+    }
 
     // Use this for initialization
     private void Start()
@@ -150,7 +147,6 @@ public class Player : MonoBehaviour
         _minJumpVelocity = Mathf.Sqrt(2 * Mathf.Abs(gravity) * _minJumpHeight);
     }
 
-
     // Update is called once per frame
     private void Update()
     {
@@ -159,16 +155,17 @@ public class Player : MonoBehaviour
             UpdateMovement();
             CheckShooting();
 
-            if (Math.Abs(_velocity.x) > .01f)
+            if (Math.Abs(Velocity.x) > .01f)
             {
-                _lastFacingDirection = ConvertToInteger(new Vector2(_velocity.x, _velocity.y));
+                _lastFacingDirection = ConvertToInteger(new Vector2(Velocity.x, Velocity.y));
             }
         }
     }
 
     private void CheckShooting()
     {
-        if (!HasShotUpgrade) return;
+        
+        if (!HasUpgrade<ShootingUpgrade>()) return;
 
         if (Input.GetButtonDown("Fire3") && _shotCoolDown < _shotCoolDownTimer)
         {
@@ -204,8 +201,8 @@ public class Player : MonoBehaviour
             Currency += enemy.GetComponent<BasicEnemy>().CurrencyOnKill;
             Destroy(enemy);
 
-            _velocity.y = 0;
-            _velocity.y += _killBounceEnergy;
+            Velocity.y = 0;
+            Velocity.y += _killBounceEnergy;
         }
 
 
@@ -216,12 +213,11 @@ public class Player : MonoBehaviour
             if (boss.CurrentState == BossState.VULNERABLE)
             {
                 boss.GetDamaged();
-                _velocity.y = 0;
-                _velocity.y += _killBounceEnergy;
+                Velocity.y = 0;
+                Velocity.y += _killBounceEnergy;
             }
         }
     }
-
 
     public void DamagePlayer(int damageToTake)
     {
@@ -281,7 +277,7 @@ public class Player : MonoBehaviour
 
         _controller.collisions.below = false; // allows to move the play in y direction on ground
 
-        _velocity += new Vector3(randomXJitter, randomYJitter, 0);
+        Velocity += new Vector3(randomXJitter, randomYJitter, 0);
 
         var timer = _secondsInvincibility;
         while (timer > .0f)
@@ -293,14 +289,13 @@ public class Player : MonoBehaviour
         _animator.SetBool("Damaged", false);
     }
 
-
     private void UpdateMovement()
     {
         if (_controller.collisions.above || _controller.collisions.below)
         {
             if (!IgnoreGround)
             {
-                _velocity.y = 0;
+                Velocity.y = 0;
                 //_velocity.y = -_velocity.y; TODO : PRODUCES BOUNCING
             }
             else
@@ -380,7 +375,7 @@ public class Player : MonoBehaviour
             AudioManager.Instance.Stop("BoostCharge");
             AudioManager.Instance.Play("BoostFinish");
 
-            _velocity = _lastInput * _boostForce;
+            Velocity = _lastInput * _boostForce;
 
 
             _currentBoostTime = 0.0f;
@@ -394,24 +389,24 @@ public class Player : MonoBehaviour
         if (Input.GetButtonDown("Jump") && _controller.collisions.below)
         {
             AudioManager.Instance.Play("Jump", 0.5f);
-            _velocity.y = _maxJumpVelocity;
+            Velocity.y = _maxJumpVelocity;
         }
 
         if (Input.GetButtonUp("Jump") && _canBoost)
         {
-            if (_velocity.y > _minJumpVelocity)
+            if (Velocity.y > _minJumpVelocity)
             {
-                _velocity.y = _minJumpVelocity;
+                Velocity.y = _minJumpVelocity;
             }
         }
 
         var targetVelocityX = Mathf.Round(input.x) * _moveSpeed;
 
-        _velocity.x = Mathf.SmoothDamp(_velocity.x, targetVelocityX, ref _velocityXSmoothing,
+        Velocity.x = Mathf.SmoothDamp(Velocity.x, targetVelocityX, ref _velocityXSmoothing,
             _controller.collisions.below ? _accelerationTimeGrounded : _accelerationTimeAirborne);
 
-        _velocity.y += Physics2D.gravity.x * Time.deltaTime;
-        _controller.Move(_velocity * Time.deltaTime);
+        Velocity.y += Physics2D.gravity.x * Time.deltaTime;
+        _controller.Move(Velocity * Time.deltaTime);
     }
 
     private static Vector2 ConvertToInteger(Vector2 input)
@@ -438,4 +433,6 @@ public class Player : MonoBehaviour
 
         return input;
     }
+
+
 }

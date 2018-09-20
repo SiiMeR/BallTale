@@ -1,10 +1,8 @@
-﻿using UnityEngine.Events;
-
-public class ShootingUpgrade : Upgrade
+﻿public class ShootingUpgrade : Upgrade
 {
-    public override void AddUpgrade()
+    public override void Apply()
     {
         var player = FindObjectOfType<Player>();
-        player.HasShotUpgrade = true;
+        player.Upgrades.Add(this);
     }
 }

@@ -6,18 +6,8 @@ public class Trap : MonoBehaviour
 
     public int Damage
     {
-        get { return _damage; }
-        set { _damage = value; }
-    }
-
-    // Use this for initialization
-    private void Start()
-    {
-    }
-
-    // Update is called once per frame
-    private void Update()
-    {
+        get => _damage;
+        set => _damage = value;
     }
 
     private void OnTriggerStay2D(Collider2D other)

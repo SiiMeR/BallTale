@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Experimental.UIElements;
 
 public class CircleController2D : RayCastController
 {
@@ -33,14 +30,6 @@ public class CircleController2D : RayCastController
 		public Vector2 top, left, right, bottom, center;
 	}
 
-
-	public override void Awake()
-	{
-		base.Awake();
-		
-		// something else
-	}
-
 	public void Move(Vector3 velocity)
 	{
 		UpdateRaycastOrigins();
@@ -68,14 +57,14 @@ public class CircleController2D : RayCastController
 
 	public override void HorizontalCollisions(ref Vector3 velocity)
 	{
-		float directionX = Mathf.Sign(velocity.x);
-		float rayLength = Mathf.Abs(velocity.x) + SKINWIDTH;
+		var directionX = Mathf.Sign(velocity.x);
+		var rayLength = Mathf.Abs(velocity.x) + SKINWIDTH;
 
-		Vector2 rayOrigin = rayCastOrigins.center;
+		var rayOrigin = rayCastOrigins.center;
 		
-		float radius = Vector2.Distance(rayCastOrigins.center, rayCastOrigins.right);
+		var radius = Vector2.Distance(rayCastOrigins.center, rayCastOrigins.right);
 		
-		RaycastHit2D hit = Physics2D.CircleCast(rayOrigin, radius, Vector2.right * directionX, rayLength, collisionMask);
+		var hit = Physics2D.CircleCast(rayOrigin, radius, Vector2.right * directionX, rayLength, collisionMask);
 		
 		if (hit)
 		{
@@ -112,7 +101,7 @@ public class CircleController2D : RayCastController
 
 		for (var i = 0; i < 3; i++)
 		{
-			var b = collider.bounds;
+			var b = _collider.bounds;
 			b.Expand(SKINWIDTH * -2);
 
 
@@ -168,11 +157,11 @@ public class CircleController2D : RayCastController
 
 	private void EdgeMove(ref Vector3 velocity)
 	{
-		int leftCollision = bToInt(collisions.edgecheck[0]);
-		int middleCollision = bToInt(collisions.edgecheck[1]);
-		int rightCollision = bToInt(collisions.edgecheck[2]);
+		var leftCollision = bToInt(collisions.edgecheck[0]);
+		var middleCollision = bToInt(collisions.edgecheck[1]);
+		var rightCollision = bToInt(collisions.edgecheck[2]);
 
-		int sum = leftCollision * 1 + middleCollision * 2 + rightCollision * 4;
+		var sum = leftCollision * 1 + middleCollision * 2 + rightCollision * 4;
 
 		switch (sum)
 		{
@@ -207,7 +196,7 @@ public class CircleController2D : RayCastController
 
 	public override void UpdateRaycastOrigins()
 	{
-		var bounds = collider.bounds;
+		var bounds = _collider.bounds;
 		bounds.Expand(SKINWIDTH * -2);
 		
 		rayCastOrigins.left = new Vector2(bounds.min.x, bounds.center.y);

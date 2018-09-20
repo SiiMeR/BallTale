@@ -84,8 +84,7 @@ public class AudioManager : Singleton<AudioManager>
     public void Stop(string audioName)
     {
         if (string.IsNullOrEmpty(audioName)) return;
-        AudioClip clip;
-        var succ = AudioMap.TryGetValue(audioName, out clip);
+        var succ = AudioMap.TryGetValue(audioName, out var clip);
         if (succ)
         {
             foreach (var source in sourcePool)
@@ -136,9 +135,8 @@ public class AudioManager : Singleton<AudioManager>
 
     public void Play(string audioName, float vol = 1f, bool isLooping = false, Vector3? position = null)
     {
-        if (audioName == null || audioName == "") return;
-        AudioClip clip;
-        var succ = AudioMap.TryGetValue(audioName, out clip);
+        if (string.IsNullOrEmpty(audioName)) return;
+        var succ = AudioMap.TryGetValue(audioName, out var clip);
         if (succ)
         {
             foreach (var source in sourcePool)

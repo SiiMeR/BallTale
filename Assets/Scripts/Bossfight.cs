@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <inheritdoc />
 /// <summary>
 ///     Deals with all the bureaucracy behind bossfights : making camera static, blocking entrances and so on...
 /// </summary>
@@ -16,15 +17,6 @@ public class Bossfight : MonoBehaviour
     [SerializeField] private bool _takeCameraControl;
     [SerializeField] private List<GameObject> _walls;
 
-    // Use this for initialization
-    private void Start()
-    {
-    }
-
-    // Update is called once per frame
-    private void Update()
-    {
-    }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
@@ -39,7 +31,7 @@ public class Bossfight : MonoBehaviour
         if (_fightOn) return;
 
 
-        StartCoroutine(AudioManager.Instance.FadeToNextMusic("02VortexBoss", 2.0f));
+        StartCoroutine(AudioManager.Instance.FadeToNextMusic("02VortexBoss"));
         _boss.SetActive(true);
 
         if (_takeCameraControl)
@@ -63,7 +55,7 @@ public class Bossfight : MonoBehaviour
 
     private IEnumerator MoveCameraToPos(Vector3 startPos, Vector3 endPos, bool cameraFollowEnabledAfter = false)
     {
-        var secondsMove = 1.5f;
+        const float secondsMove = 1.5f;
         float timer = 0;
 
         while ((timer += Time.unscaledDeltaTime) < secondsMove)

@@ -11,7 +11,11 @@ public class SavePoint : Interactable
     
     public override void Interact()
     {
+        
         if (!_notice.activeInHierarchy) return;
+        
+        var player = FindObjectOfType<Player>();
+        player.CurrentHealth = player.MaxHealth;
         
         SaveGameManager.Instance.CreateSaveGame();
     
@@ -20,6 +24,7 @@ public class SavePoint : Interactable
         _displayTextCoroutine = StartCoroutine(DisplaySaveGameText());
         
         _notice.SetActive(false);
+
     }
 
     private IEnumerator DisplaySaveGameText()
@@ -31,7 +36,7 @@ public class SavePoint : Interactable
         _saveText.color = originalTextColor;
 
         var startPos = transform.position + Vector3.up;
-        var endPos = startPos + Vector3.up * 2;
+        var endPos = startPos + Vector3.up * 1.5f;
 
         while ((timer += Time.deltaTime) < 1.0f)
         {

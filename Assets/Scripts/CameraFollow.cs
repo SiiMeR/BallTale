@@ -25,12 +25,12 @@ public class CameraFollow : MonoBehaviour
     // Use this for initialization
     private void Start()
     {
-        focusArea = new FocusArea(target.collider.bounds, focusAreaSize);
+        focusArea = new FocusArea(target._collider.bounds, focusAreaSize);
     }
 
     private void LateUpdate()
     {
-        focusArea.Update(target.collider.bounds);
+        focusArea.Update(target._collider.bounds);
 
         var focusPosition = focusArea.centre + Vector2.up * verticalOffset;
 
@@ -52,10 +52,6 @@ public class CameraFollow : MonoBehaviour
         Gizmos.DrawCube(focusArea.centre, focusAreaSize);
     }
 
-    // Update is called once per frame
-    private void Update()
-    {
-    }
 
     private struct FocusArea
     {

@@ -21,9 +21,4 @@ public class Sign : Interactable
         _paragraphText.SetText(_text);
     }
 
-    // Update is called once per frame	
-    protected override void Update()
-    {
-        base.Update();
-    }
 }

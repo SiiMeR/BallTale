@@ -92,7 +92,7 @@ public class BoxController2D : RayCastController
 
     public override void UpdateRaycastOrigins()
     {
-        var bounds = collider.bounds;
+        var bounds = _collider.bounds;
         bounds.Expand(SKINWIDTH * -2);
 
         rayCastOrigins.bottomLeft = new Vector2(bounds.min.x, bounds.min.y);
@@ -105,7 +105,7 @@ public class BoxController2D : RayCastController
 
     private void CalculateRaySpacing()
     {
-        var bounds = collider.bounds;
+        var bounds = _collider.bounds;
         bounds.Expand(SKINWIDTH * -2);
 
         var boundsWidth = bounds.size.x;

@@ -75,7 +75,7 @@ public class UI : MonoBehaviour
         lastCurrency = player.Currency;
     }
 
-    private IEnumerator SmoothChangeValue(float start, float end, float time, TextMeshProUGUI text)
+    private IEnumerator SmoothChangeValue(float start, float end, float time, TMP_Text text)
     {
         var timer = 0f;
 

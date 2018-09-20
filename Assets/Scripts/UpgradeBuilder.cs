@@ -1,22 +1,19 @@
-﻿using System;
-using System.Linq;
-using System.Reflection;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class UpgradeBuilder : Singleton<UpgradeBuilder>
 {
     public GameObject _healthPrefab;
     public GameObject _shotUpgradePrefab;
-    
+
     protected UpgradeBuilder()
     {
     } // no instantiation from other classes
-    
+
     public Upgrade GetHealthUpgrade(int health, int price)
     {
         var huGo = Instantiate(_healthPrefab);
         var healthUpgrade = huGo.GetComponent<HealthUpgrade>();
-        
+
         healthUpgrade.HealthBonus = health;
         healthUpgrade.Price = price;
         healthUpgrade.Sprite = huGo.GetComponent<SpriteRenderer>().sprite;

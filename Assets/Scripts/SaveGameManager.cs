@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using BayatGames.SaveGameFree;
 using BayatGames.SaveGameFree.Types;
@@ -8,20 +7,14 @@ using UnityEngine;
 public struct PlayerData
 {
     public Vector3Save position;
-
     public int currency;
-    public int currentHealth;
-    public int maxHealth;
-    public bool hasShotUpgrade;
-
-
+    public Upgrade[] upgrades;
+    
     public PlayerData(Player player)
     {
         position = player.transform.position;
         currency = player.Currency;
-        maxHealth = player.MaxHealth;
-        currentHealth = player.CurrentHealth;
-        hasShotUpgrade = player.HasShotUpgrade;
+        upgrades = player.Upgrades.ToArray();
     }
 }
 
@@ -49,17 +42,17 @@ public class SaveGameManager : Singleton<SaveGameManager>
 
         var shop = FindObjectOfType<Shop>();
 
-        var upgrades = shop._saleQueue.ToList();
+        var shopUpgrades = shop._saleQueue.ToList();
 
         foreach (var shopSlot in shop.Slots)
         {
             if (shopSlot.Upgrade != null)
             {
-                upgrades.Add(shopSlot.Upgrade);
+                shopUpgrades.Add(shopSlot.Upgrade);
             }
         }
-      //  Debug.Log($"{upgrades.Count}");
-        SaveGame.Save("shop.txt", upgrades.ToArray());
+        
+        SaveGame.Save("shop.txt", shopUpgrades.ToArray());
     }
 
     public void LoadGame()
@@ -69,18 +62,15 @@ public class SaveGameManager : Singleton<SaveGameManager>
         var currentPlayer = FindObjectOfType<Player>();
 
         currentPlayer.Currency = loadedPlayer.currency;
-        currentPlayer.CurrentHealth = loadedPlayer.currentHealth;
-        currentPlayer.MaxHealth = loadedPlayer.maxHealth;
-        currentPlayer.HasShotUpgrade = loadedPlayer.hasShotUpgrade;
         currentPlayer.transform.position = loadedPlayer.position;
-
-
+        
+        loadedPlayer.upgrades.ToList().ForEach(upgrade => upgrade.Apply());
         var shop = FindObjectOfType<Shop>();
 
-        var upgrades = SaveGame.Load<Upgrade[]>("shop.txt");
-
-        var instantiatedUpgrades = RecreateUpgrades(upgrades);
-        shop.RefillSlots(instantiatedUpgrades);
+        var shopUpgrades = SaveGame.Load<Upgrade[]>("shop.txt");
+      
+        var instantiatedShopUpgrades = RecreateUpgrades(shopUpgrades);
+        shop.RefillSlots(instantiatedShopUpgrades);
     }
 
     private List<Upgrade> RecreateUpgrades(IEnumerable<Upgrade> upgrades)

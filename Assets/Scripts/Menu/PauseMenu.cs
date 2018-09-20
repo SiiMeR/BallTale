@@ -3,10 +3,6 @@ using UnityEngine.SceneManagement;
 
 public class PauseMenu : SimpleMenu<PauseMenu>
 {
-    // Use this for initialization
-    private void Start()
-    {
-    }
 
     protected override void Awake()
     {
@@ -18,11 +14,6 @@ public class PauseMenu : SimpleMenu<PauseMenu>
     {
         base.OnDestroy();
         Time.timeScale = 1;
-    }
-
-    // Update is called once per frame
-    private void Update()
-    {
     }
 
     public void OnQuitPressed()

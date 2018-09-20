@@ -66,6 +66,7 @@ public class BasicEnemy : MonoBehaviour
         set { _pathLastPos = value; }
     }
 
+    #if UNITY_EDITOR
     public void resetWaypoints()
     {
         PathLastPos = transform.position + Vector3.right * 3;
@@ -76,6 +77,7 @@ public class BasicEnemy : MonoBehaviour
 
         EditorUtility.SetDirty(this);
     }
+    #endif
 
     // Use this for initialization
     private void Start()

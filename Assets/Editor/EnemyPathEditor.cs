@@ -4,11 +4,6 @@ using UnityEngine;
 [CustomEditor(typeof(BasicEnemy))]
 public class EnemyPathEditor : Editor
 {
-    // Use this for initialization
-    private void Start()
-    {
-    }
-
     public override void OnInspectorGUI()
     {
         base.OnInspectorGUI();
@@ -27,8 +22,10 @@ public class EnemyPathEditor : Editor
         var enemy = target as BasicEnemy;
 
 
-        var enemyTransform = enemy.transform;
+        var enemyTransform = enemy?.transform;
 
+        if (enemyTransform == null) return;
+        
         var enemyRotation = Tools.pivotRotation == PivotRotation.Local ? enemyTransform.rotation : Quaternion.identity;
 
         var p0 = enemy.PathFirstPos;
@@ -61,8 +58,4 @@ public class EnemyPathEditor : Editor
         }
     }
 
-    // Update is called once per frame
-    private void Update()
-    {
-    }
 }

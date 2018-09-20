@@ -26,8 +26,8 @@ public class MenuManager : MonoBehaviour
 
     public static MenuManager Instance
     {
-        get { return _instance; }
-        private set { }
+        get => _instance;
+        private set => _instance = value;
     }
 
     public void OpenMenu(Menu instance)
@@ -55,7 +55,7 @@ public class MenuManager : MonoBehaviour
         _menuStack.Push(instance);
     }
 
-    private void SelectFirstButton(Menu instance)
+    private void SelectFirstButton(Component instance)
     {
         var firstButton = instance.gameObject.GetComponentInChildren<Button>(true);
         _buttonHighlighter.HighlightButton(firstButton);

@@ -61,7 +61,7 @@ public class Shop : Interactable
 
         var powerUpgrade = UpgradeBuilder.Instance.GetShotUpgrade(50, "Gives the ability to shoot fireballs");
 
-        var initialUpgrades = new List<Upgrade>(){healthUpgrade,healthUpgrade2,healthUpgrade3,healthUpgrade4,powerUpgrade};
+        var initialUpgrades = new List<Upgrade>{healthUpgrade,healthUpgrade2,healthUpgrade3,healthUpgrade4,powerUpgrade};
         
         RefillSlots(initialUpgrades);    
     }
@@ -101,7 +101,7 @@ public class Shop : Interactable
     private IEnumerator ShowShootingHelpText()
     {
         var timer = 0f;    
-        var totalTime = 4f;
+        const float totalTime = 4f;
 
         while ((timer += Time.deltaTime) < 0.75f)
         {
@@ -179,7 +179,7 @@ public class Shop : Interactable
                     slot
                         .Upgrade
                         .GetComponent<Upgrade>()
-                        .AddUpgrade();
+                        .Apply();
 
                     player.Currency -= upgradePrice;
                     slot.Upgrade = null;
@@ -235,7 +235,6 @@ public class Shop : Interactable
         {
             slot.Upgrade = null;
             _descriptionText.text = "";
-                ///Slots.Find(sl => sl.Upgrade != null).Upgrade.Description; // find first slotted upgrade and use that desc. instead
         }
     }
 }

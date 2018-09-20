@@ -141,7 +141,7 @@ public class Boss : MonoBehaviour
         {
             var dirToVortex = transform.position - player.transform.position;
 
-            player._velocity += dirToVortex.normalized * (Time.deltaTime * timer);
+            player.Velocity += dirToVortex.normalized * (Time.deltaTime * timer);
 
             _animator.speed += Mathf.Sqrt(Time.deltaTime * timer) / 10.0f;
 
@@ -209,7 +209,7 @@ public class Boss : MonoBehaviour
         var startPos = transform.position;
         var endPos = new Vector3(240, 0, 0);
 
-        var secondsMove = 1.0f;
+        const float secondsMove = 1.0f;
         float timer = 0;
 
         while ((timer += Time.deltaTime) < secondsMove)
@@ -224,18 +224,20 @@ public class Boss : MonoBehaviour
     {
         _timeInState += Time.deltaTime;
 
-        if (CurrentState == BossState.VULNERABLE)
+        switch (CurrentState)
         {
-            if (!(_timeInState > _secondsVulnerable)) return;
-
-            NextState();
-        }
-
-        else if (CurrentState == BossState.MOVE)
-        {
-            if (!(_timeInState > _secondsMove)) return;
-
-            NextState();
+            case BossState.VULNERABLE when !(_timeInState > _secondsVulnerable):
+                return;
+            case BossState.VULNERABLE:
+                NextState();
+                break;
+            case BossState.MOVE when !(_timeInState > _secondsMove):
+                return;
+            case BossState.MOVE:
+                NextState();
+                break;
+            case BossState.VORTEX:
+                break;
         }
     }
 
