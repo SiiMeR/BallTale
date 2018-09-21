@@ -22,7 +22,7 @@ public class UpgradeBuilder : Singleton<UpgradeBuilder>
         return healthUpgrade;
     }
 
-    public Upgrade GetShotUpgrade(int price, string description)
+    public Upgrade GetShootingUpgrade(int price, string description)
     {
         var huGo = Instantiate(_shotUpgradePrefab);
 

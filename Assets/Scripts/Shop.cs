@@ -59,7 +59,7 @@ public class Shop : Interactable
         var healthUpgrade3 = UpgradeBuilder.Instance.GetHealthUpgrade(50, 500);
         var healthUpgrade4 = UpgradeBuilder.Instance.GetHealthUpgrade(100, 1000);
 
-        var powerUpgrade = UpgradeBuilder.Instance.GetShotUpgrade(50, "Gives the ability to shoot fireballs");
+        var powerUpgrade = UpgradeBuilder.Instance.GetShootingUpgrade(50, "Gives the ability to shoot fireballs");
 
         var initialUpgrades = new List<Upgrade>{healthUpgrade,healthUpgrade2,healthUpgrade3,healthUpgrade4,powerUpgrade};
         

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using BayatGames.SaveGameFree;
 using BayatGames.SaveGameFree.Types;
 using UnityEngine;
@@ -75,28 +76,28 @@ public class SaveGameManager : Singleton<SaveGameManager>
 
     private List<Upgrade> RecreateUpgrades(IEnumerable<Upgrade> upgrades)
     {
-        var realUpgrades = new List<Upgrade>();
-
+       
+        var instantiatedUpgrades = new List<Upgrade>();
+        
         foreach (var upgrade in upgrades)
         {
-            switch (upgrade.GetType().ToString()) 
+            switch (upgrade) 
             {                
-                    case "HealthUpgrade":
-                        var healthUp = (HealthUpgrade) upgrade;
-                        realUpgrades.Add(UpgradeBuilder.Instance.GetHealthUpgrade(healthUp.HealthBonus,healthUp.Price));
+                    case HealthUpgrade healthUpgrade:
+                        instantiatedUpgrades.Add(UpgradeBuilder.Instance.GetHealthUpgrade(healthUpgrade.HealthBonus,healthUpgrade.Price));
                         break;
                     
-                    case "ShootingUpgrade":
-                        realUpgrades.Add(UpgradeBuilder.Instance.GetShotUpgrade(upgrade.Price, upgrade.Description)); 
+                    case ShootingUpgrade shootingUpgrade:
+                        instantiatedUpgrades.Add(UpgradeBuilder.Instance.GetShootingUpgrade(shootingUpgrade.Price, shootingUpgrade.Description)); 
                         break;
                     
                     default:
-                        Debug.Log($"Upgrade not defined in loading script: {upgrade.GetType()}");
+                        Debug.Log($"Upgrade not defined in savegame loading script: {upgrade.GetType()}");
                         break;
                        
             }
         }
         
-        return realUpgrades;
+        return instantiatedUpgrades;
     }
 }

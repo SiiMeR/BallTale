@@ -12,7 +12,7 @@ public class EnemyPathEditor : Editor
 
         if (GUILayout.Button("Reset movement waypoints"))
         {
-            basicEnemy.resetWaypoints();
+            basicEnemy.ResetWaypoints();
         }
     }
 

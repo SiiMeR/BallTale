@@ -110,10 +110,7 @@ public class Player : MonoBehaviour
     /// <returns>True if the player has the upgrade specified by the type <typeparamref name="TUpgrade"/></returns>
     public bool HasUpgrade<TUpgrade>() where TUpgrade : Upgrade => Upgrades.OfType<TUpgrade>().Any();
 
-    private void Awake()
-    {
-        Upgrades = new List<Upgrade>();
-    }
+    private void Awake() => Upgrades = new List<Upgrade>();
 
     // Use this for initialization
     private void Start()

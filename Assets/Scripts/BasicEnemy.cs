@@ -67,7 +67,7 @@ public class BasicEnemy : MonoBehaviour
     }
 
     #if UNITY_EDITOR
-    public void resetWaypoints()
+    public void ResetWaypoints()
     {
         PathLastPos = transform.position + Vector3.right * 3;
         PathFirstPos = transform.position + Vector3.left * 3;
