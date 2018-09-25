@@ -1,47 +1,43 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public class CameraFollow : MonoBehaviour
 {
-    private float currentLookAheadX;
+    private float _currentLookAheadX;
+    private FocusArea _focusArea;
+    private float _lookAheadDirX;
+    private float _smoothLookVelocityX;
+    private float _smoothVelocityY;
+    private float _targetLookAheadX;
 
-
-    private FocusArea focusArea;
 
     public Vector2 focusAreaSize;
-    private float lookAheadDirX;
     public float lookAheadDstX;
     public float lookSmoothTimeX;
-    private float smoothLookVelocityX;
-    private float smoothVelocityY;
-
-
     public CircleController2D target;
-    private float targetLookAheadX;
-
     public float verticalOffset;
-
     public float verticalSmoothTime;
 
     // Use this for initialization
     private void Start()
     {
-        focusArea = new FocusArea(target._collider.bounds, focusAreaSize);
+        _focusArea = new FocusArea(target._collider.bounds, focusAreaSize);
     }
 
     private void LateUpdate()
     {
-        focusArea.Update(target._collider.bounds);
+        _focusArea.Update(target._collider.bounds);
 
-        var focusPosition = focusArea.centre + Vector2.up * verticalOffset;
+        var focusPosition = _focusArea.centre + Vector2.up * verticalOffset;
 
-        if (focusArea.velocity.x != 0) lookAheadDirX = Mathf.Sign(focusArea.velocity.x);
+        if (Math.Abs(_focusArea.velocity.x) > float.Epsilon) _lookAheadDirX = Mathf.Sign(_focusArea.velocity.x);
 
-        targetLookAheadX = lookAheadDirX * lookAheadDstX;
+        _targetLookAheadX = _lookAheadDirX * lookAheadDstX;
 
-        currentLookAheadX =
-            Mathf.SmoothDamp(currentLookAheadX, targetLookAheadX, ref smoothLookVelocityX, lookSmoothTimeX);
+        _currentLookAheadX =
+            Mathf.SmoothDamp(_currentLookAheadX, _targetLookAheadX, ref _smoothLookVelocityX, lookSmoothTimeX);
 
-        focusPosition += Vector2.right * currentLookAheadX;
+        focusPosition += Vector2.right * _currentLookAheadX;
 
         transform.position = (Vector3) focusPosition + Vector3.forward * -10;
     }
@@ -49,7 +45,7 @@ public class CameraFollow : MonoBehaviour
     private void OnDrawGizmos()
     {
         Gizmos.color = new Color(1, 0, 0, 0.5f);
-        Gizmos.DrawCube(focusArea.centre, focusAreaSize);
+        Gizmos.DrawCube(_focusArea.centre, focusAreaSize);
     }
 
 
@@ -72,14 +68,14 @@ public class CameraFollow : MonoBehaviour
 
         public void Update(Bounds targetBounds)
         {
-            float shiftX = 0;
+            var shiftX = 0f;
             if (targetBounds.min.x < left)
                 shiftX = targetBounds.min.x - left;
             else if (targetBounds.max.x > right) shiftX = targetBounds.max.x - right;
             left += shiftX;
             right += shiftX;
 
-            float shiftY = 0;
+            var shiftY = 0f;
             if (targetBounds.min.y < bottom)
                 shiftY = targetBounds.min.y - bottom;
             else if (targetBounds.max.y > top) shiftY = targetBounds.max.y - top;

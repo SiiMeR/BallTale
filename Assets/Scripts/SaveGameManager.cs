@@ -65,7 +65,7 @@ public class SaveGameManager : Singleton<SaveGameManager>
         currentPlayer.Currency = loadedPlayer.currency;
         currentPlayer.transform.position = loadedPlayer.position;
         
-        loadedPlayer.upgrades.ToList().ForEach(upgrade => upgrade.Apply());
+        loadedPlayer.upgrades.ToList().ForEach(upgrade => upgrade.Apply(currentPlayer));
         var shop = FindObjectOfType<Shop>();
 
         var shopUpgrades = SaveGame.Load<Upgrade[]>("shop.txt");

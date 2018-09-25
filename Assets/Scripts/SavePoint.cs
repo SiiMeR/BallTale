@@ -11,20 +11,18 @@ public class SavePoint : Interactable
     
     public override void Interact()
     {
-        
         if (!_notice.activeInHierarchy) return;
         
         var player = FindObjectOfType<Player>();
         player.CurrentHealth = player.MaxHealth;
         
-        SaveGameManager.Instance.CreateSaveGame();
-    
         if(_displayTextCoroutine != null) StopCoroutine(_displayTextCoroutine);
         
         _displayTextCoroutine = StartCoroutine(DisplaySaveGameText());
         
+        SaveGameManager.Instance.CreateSaveGame();
+        
         _notice.SetActive(false);
-
     }
 
     private IEnumerator DisplaySaveGameText()

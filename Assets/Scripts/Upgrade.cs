@@ -7,7 +7,7 @@ public abstract class Upgrade : MonoBehaviour
     public virtual string Description { get; set; } = "IMPLEMENT DESCRIPTION FOR THIS OBJECT";
     public Sprite Sprite { get; set; }
 
-    public abstract void Apply();
+    public abstract void Apply(Player player);
 
     public override string ToString()
     {

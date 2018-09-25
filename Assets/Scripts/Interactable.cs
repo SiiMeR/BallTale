@@ -5,7 +5,7 @@ public abstract class Interactable : MonoBehaviour
     private bool _isCollidingWPlayer;
 
     [SerializeField] protected GameObject _notice;
-    [SerializeField] private GameObject _panel;
+    [SerializeField] protected GameObject _panel;
     [SerializeField] private bool _pauseOnInteract;
 
 

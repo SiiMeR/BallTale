@@ -4,9 +4,9 @@
 
     public int HealthBonus { get; set; }
     
-    public override void Apply()
+    public override void Apply(Player player)
     {
-        var player = FindObjectOfType<Player>();
+        player.CurrentHealth += HealthBonus;
         player.MaxHealth += HealthBonus;
         player.Upgrades.Add(this);
     }

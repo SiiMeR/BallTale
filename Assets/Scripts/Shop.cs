@@ -19,14 +19,15 @@ public class Shop : Interactable
     
     [SerializeField] private GameObject _selectionFrame;
 
-
     [SerializeField] private TextMeshProUGUI _shootingText;
 
-    [FormerlySerializedAs("_slots")] public List<Slot> Slots;
+    public List<Slot> Slots;
     
     public float FrameMoveTime = 1.0f;
 
     private UI _ui;
+
+    private Player _player;
     
     private void OnDisable()
     {
@@ -42,6 +43,8 @@ public class Shop : Interactable
         _saleQueue = new Queue<Upgrade>();
         Slots = GetComponentsInChildren<Slot>(true).ToList();
 
+        _player = FindObjectOfType<Player>();
+        
         if (PlayerPrefs.GetInt("loadgame") == 0)
         {
             InitShopInventory();
@@ -147,47 +150,52 @@ public class Shop : Interactable
     {
         base.Update();
 
-        if (Math.Abs(Time.timeScale) < 0.01f)
+        if (Math.Abs(Time.timeScale) < 0.01f && _panel.activeInHierarchy) // paused
         {
-            var input = Input.GetAxisRaw("Horizontal");
+            CheckFrameMovement();
+            CheckBuying();
+        }
+    }
+   
+    private void CheckBuying()
+    {
+        if (!Input.GetButtonDown("Fire3") || Slots[_currentSelectionSlot].IsEmpty()) return;
+        
+        var slot = Slots[_currentSelectionSlot];
 
-            if (input > 0.1 && !_moveAxisInUse)
-            {
-                _moveAxisInUse = true;
-                StartCoroutine(MoveFrame(false));
-            }
-            else if (input < -0.1 && !_moveAxisInUse)
-            {
-                _moveAxisInUse = true;
-                StartCoroutine(MoveFrame(true));
-            }
+        var upgradePrice = slot.Upgrade.Price;
 
+        if (upgradePrice > _player.Currency) return;
+        
+        if (slot.Upgrade is ShootingUpgrade) _justBoughtShootingUpgrade = true; // TODO doesn't work when I will add more upgrades
 
-            if (Input.GetButtonDown("Fire3") && !Slots[_currentSelectionSlot].IsEmpty())
-            {
-                var slot = Slots[_currentSelectionSlot];
-                
-                var upgradePrice = slot.Upgrade.Price;
-                var player = FindObjectOfType<Player>();
-                
-                if (upgradePrice <= player.Currency)
-                {
-                    if (slot.Upgrade is ShootingUpgrade) _justBoughtShootingUpgrade = true; // TODO doesn't work when I will add more upgrades
+        AudioManager.Instance.Play("Buy", 5f);
 
-                    AudioManager.Instance.Play("Buy", 5f);
+        slot
+            .Upgrade
+            .GetComponent<Upgrade>()
+            .Apply(_player);
 
-                    slot
-                        .Upgrade
-                        .GetComponent<Upgrade>()
-                        .Apply();
+        _player.Currency -= upgradePrice;
+        slot.Upgrade = null;
+        _descriptionText.text = "";
 
-                    player.Currency -= upgradePrice;
-                    slot.Upgrade = null;
-                    _descriptionText.text = "";
+        FillSlotWithNewItem(slot);
+    }
 
-                    FillSlotWithNewItem(slot);
-                }
-            }
+    private void CheckFrameMovement()
+    {
+        var input = Input.GetAxisRaw("Horizontal");
+
+        if (input > 0.1 && !_moveAxisInUse)
+        {
+            _moveAxisInUse = true;
+            StartCoroutine(MoveFrame(false));
+        }
+        else if (input < -0.1 && !_moveAxisInUse)
+        {
+            _moveAxisInUse = true;
+            StartCoroutine(MoveFrame(true));
         }
     }
 
