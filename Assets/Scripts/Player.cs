@@ -274,7 +274,7 @@ public class Player : MonoBehaviour
         var randomXJitter = Random.Range(-1.5f, 1.5f);
         var randomYJitter = Random.Range(5f, 9f);
 
-        _controller.collisions.below = false; // allows to move the play in y direction on ground
+        _controller.collisions.below = false; // allows to move the player in y direction on ground
 
         Velocity += new Vector3(randomXJitter, randomYJitter, 0);
 

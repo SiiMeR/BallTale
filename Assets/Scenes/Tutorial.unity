@@ -1315,6 +1315,10 @@ PrefabInstance:
       propertyPath: _killBounceEnergy
       value: 20
       objectReference: {fileID: 0}
+    - target: {fileID: 1231417571871360, guid: 7333fc2108db98b4094d16889aec8418, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7333fc2108db98b4094d16889aec8418, type: 3}
 --- !u!1 &537684721
