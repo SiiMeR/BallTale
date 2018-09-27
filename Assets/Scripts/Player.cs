@@ -89,9 +89,11 @@ public class Player : MonoBehaviour
         AudioManager.Instance.StopAllMusic();
         AudioManager.Instance.SetSoundVolume(0);
 
+        Time.timeScale = 0.0f;
+        
         yield return new WaitUntil(() => Input.GetButtonDown("Submit"));
 
-
+        Time.timeScale = 1.0f;
         if (SaveGame.Exists("player.txt"))
         {
             PlayerPrefs.SetInt("loadgame", 1);
