@@ -66,7 +66,7 @@ public class BasicEnemy : MonoBehaviour
         set { _pathLastPos = value; }
     }
 
-    #if UNITY_EDITOR
+#if UNITY_EDITOR
     public void ResetWaypoints()
     {
         PathLastPos = transform.position + Vector3.right * 3;
@@ -77,7 +77,7 @@ public class BasicEnemy : MonoBehaviour
 
         EditorUtility.SetDirty(this);
     }
-    #endif
+#endif
 
     // Use this for initialization
     private void Start()
@@ -90,6 +90,7 @@ public class BasicEnemy : MonoBehaviour
 
         _controller = GetComponent<BoxController2D>();
     }
+    
 
 
     // Update is called once per frame
