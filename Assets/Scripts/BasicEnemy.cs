@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using UnityEditor;
 using UnityEngine;
 
@@ -25,7 +24,8 @@ public class BasicEnemy : MonoBehaviour
     [SerializeField] private int currencyOnKill = 10;
     [SerializeField] private int damage = 5;
     [SerializeField] private float moveSpeed = 10;
-    [SerializeField] private bool useGravity = true;
+    [SerializeField] private bool _useGravity = true;
+    [SerializeField] private bool _useWaypointMovement = true;
 
     public int Damage { get; set; }
 
@@ -47,11 +47,8 @@ public class BasicEnemy : MonoBehaviour
 
             return _pathMiddlePos;
         }
-        private set
-        {
-            Debug.Log($"{transform} new path middle pos");
-            _pathMiddlePos = value;
-        }
+        
+        private set => _pathMiddlePos = value;
     }
 
     public Vector3 PathFirstPos
@@ -89,54 +86,90 @@ public class BasicEnemy : MonoBehaviour
         Damage = damage;
 
         _controller = GetComponent<BoxController2D>();
+
+        _velocity.x = moveSpeed;
     }
-    
 
 
     // Update is called once per frame
     private void Update()
     {
-        UpdateNewMovement();
-        CheckDirection();
-        CheckCollision();
+        if (_useWaypointMovement)
+        {
+            UpdateNewMovement();
+            CheckDirection();
+            CheckCollision();
+        }
+        else
+        {
+            UpdateMovementDumb();
+            UpdateDirectionDumb();
+        }
+    }
+
+    private void UpdateDirectionDumb()
+    {
+        if (_controller.collisions.left ||
+            _controller.collisions.right)
+        {
+            _velocity.x = -_velocity.x;
+        }
     }
 
     private void CheckCollision()
     {
-        if (_controller.collisions.above || _controller.collisions.below || _controller.collisions.left ||
-            _controller.collisions.right)
+        if (_controller.collisions.left ||
+            _controller.collisions.right ||
+            _controller.collisions.above ||
+            _controller.collisions.below)
         {
             UpdateDirection();
         }
     }
 
+
+    private void UpdateMovementDumb()
+    {
+        GetComponent<SpriteRenderer>().flipX = Mathf.Sign(_velocity.x) < float.Epsilon; // moving right
+
+        if (_useGravity)
+        {
+            _velocity.y += Physics2D.gravity.x * Time.deltaTime;
+        }
+
+        if (_controller.collisions.above || _controller.collisions.below)
+        {
+            _velocity.y = 0;
+        }
+
+        _controller.Move(_velocity * Time.deltaTime);
+    }
+
+
     private void UpdateNewMovement()
     {
         var direction = _movetarget - transform.position;
 
-        GetComponent<SpriteRenderer>().flipX = Math.Abs(Mathf.Sign(direction.x) - 1) < float.Epsilon; // moving right
 
-        
-        if (useGravity)
+        GetComponent<SpriteRenderer>().flipX = Mathf.Abs(Mathf.Sign(direction.x) - 1) < float.Epsilon; // moving right
+
+        if (_useGravity)
         {
             _velocity.y += Physics2D.gravity.x * Time.deltaTime;
-            
+
             if (!_justTurnedAround)
             {
                 _velocity.x = Mathf.Sign(direction.x) * Mathf.Abs(moveSpeed);
             }
-
         }
-        
         else
         {
             _velocity = direction.normalized * Mathf.Abs(moveSpeed);
         }
-        
+
         if (_controller.collisions.above || _controller.collisions.below)
         {
             _velocity.y = 0;
-       
         }
 
         _controller.Move(_velocity * Time.deltaTime);
@@ -198,7 +231,6 @@ public class BasicEnemy : MonoBehaviour
             timer -= Time.deltaTime;
             yield return null;
         }
-
 
         _justTurnedAround = false;
     }

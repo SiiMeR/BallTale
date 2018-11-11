@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public class BoxController2D : RayCastController
 {
@@ -17,6 +18,7 @@ public class BoxController2D : RayCastController
     public override void Awake()
     {
         base.Awake();
+        _collider = _collider as BoxCollider2D;
         CalculateRaySpacing();
     }
 

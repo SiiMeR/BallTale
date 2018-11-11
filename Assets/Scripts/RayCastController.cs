@@ -8,7 +8,7 @@ public abstract class RayCastController : MonoBehaviour
 
     public LayerMask collisionMask;
 
-    [FormerlySerializedAs("collider")] [HideInInspector]
+    [HideInInspector]
     public Collider2D _collider;
 
     // Use this for initialization
