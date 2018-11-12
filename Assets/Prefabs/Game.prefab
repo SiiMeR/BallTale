@@ -1,25 +1,17 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1001 &100100000
-Prefab:
-  m_ObjectHideFlags: 1
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications: []
-    m_RemovedComponents: []
-  m_ParentPrefab: {fileID: 0}
-  m_RootGameObject: {fileID: 1679125419195426}
-  m_IsPrefabParent: 1
 --- !u!1 &1679125419195426
 GameObject:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 5
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
   m_Component:
   - component: {fileID: 4250589575772836}
   - component: {fileID: 114654476412711332}
+  - component: {fileID: 1343735496}
+  - component: {fileID: 1343735498}
   m_Layer: 0
   m_Name: Game
   m_TagString: Untagged
@@ -29,9 +21,10 @@ GameObject:
   m_IsActive: 1
 --- !u!4 &4250589575772836
 Transform:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1679125419195426}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 172.87885, y: -1.435317, z: 9.487005}
@@ -42,9 +35,10 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &114654476412711332
 MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1679125419195426}
   m_Enabled: 1
   m_EditorHideFlags: 0
@@ -52,6 +46,37 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _healthPrefab: {fileID: 1431302033089800, guid: ac3a98a93ace121479d9af409ec3b87d,
-    type: 2}
-  _upgradePrefab: {fileID: 1824589529149580, guid: d23dd7744915a524db35bbdb26d25268,
-    type: 2}
+    type: 3}
+  _shotUpgradePrefab: {fileID: 1824589529149580, guid: d23dd7744915a524db35bbdb26d25268,
+    type: 3}
+--- !u!114 &1343735496
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1679125419195426}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f58ac4a5792e7d043a6c4605a780ef23, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MainTilemap: {fileID: 0}
+  FGTilemap: {fileID: 0}
+  Tile: {fileID: 11400000, guid: ffb35e1cb5f43744e9ddf52baac05fc6, type: 2}
+  Undergrass: {fileID: 11400000, guid: 38f1c7d044c43b64f80ecef2b3b1ea7e, type: 2}
+  Overgrass: {fileID: 11400000, guid: 486680ed3e2d4e044ba13d665477228e, type: 2}
+  SidegrassRight: {fileID: 11400000, guid: 8ba74cb31e7878e429d4618947b49ba3, type: 2}
+  SidegrassLeft: {fileID: 11400000, guid: dd3582aae639ec4418afce53774fe667, type: 2}
+--- !u!114 &1343735498
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1679125419195426}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dca3e18ae5cf5384f85f955f674993e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

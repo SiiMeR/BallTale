@@ -24,7 +24,6 @@ public class Player : MonoBehaviour
     [SerializeField] private GameObject _boostTimer;
     [SerializeField] private Image _boostTimerFill;
     [SerializeField] private TextMeshProUGUI _damageText;
-    [SerializeField] private GameObject _deathScreen;
     [SerializeField] private int _killBounceEnergy = 15;
     [SerializeField] private float _maxBoostTime = 2.0f;
     [SerializeField] private int _currency = 100;
@@ -39,6 +38,7 @@ public class Player : MonoBehaviour
     [SerializeField] private float _shotSpeed;
     [SerializeField] private float _timeToJumpApex = .4f;
 
+    private DeathScreen _deathScreen;
     private bool _canBoost = true;
     private CircleController2D _controller;
     private float _currentBoostTime;
@@ -67,7 +67,7 @@ public class Player : MonoBehaviour
         {
             if (value < 1) // dead
             {
-                StartCoroutine(Death());
+                StartCoroutine(_deathScreen.Death());
             }
             else
             {
@@ -82,27 +82,14 @@ public class Player : MonoBehaviour
         set => _maxHealth = value;
     }
 
-    private IEnumerator Death()
+
+
+    private void Awake()
     {
-        _deathScreen.SetActive(true);
-
-        AudioManager.Instance.StopAllMusic();
-        AudioManager.Instance.SetSoundVolume(0);
-
-        Time.timeScale = 0.0f;
-        
-        yield return new WaitUntil(() => Input.GetButtonDown("Submit"));
-
-        Time.timeScale = 1.0f;
-        if (SaveGame.Exists("player.txt"))
-        {
-            PlayerPrefs.SetInt("loadgame", 1);
-        }
-
-        _deathScreen.SetActive(false);
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        _deathScreen = FindObjectOfType<DeathScreen>();
+        Upgrades = new List<Upgrade>();
     }
-    
+
     /// <summary>
     /// An expression bodied method to check if the player's upgrade list Upgrades contains a specific upgrade.
     /// Since every upgrade except HealthUpgrade has it's own class,
@@ -112,15 +99,11 @@ public class Player : MonoBehaviour
     /// <returns>True if the player has the upgrade specified by the type <typeparamref name="TUpgrade"/></returns>
     public bool HasUpgrade<TUpgrade>() where TUpgrade : Upgrade => Upgrades.OfType<TUpgrade>().Any();
 
-    private void Awake() => Upgrades = new List<Upgrade>();
-
     // Use this for initialization
     private void Start()
     {
         _lastFacingDirection = Vector2.right;
         AudioManager.Instance.Play("01Peaceful", isLooping: true);
-
-        _deathScreen.SetActive(false);
 
         _currentHealth = _maxHealth;
 
