@@ -200,7 +200,7 @@ public class Boss : MonoBehaviour
 
         yield return new WaitForSecondsRealtime(3.0f);
 
-        SceneManager.LoadScene("Menu");
+        SceneManager.LoadScene("Town");
     }
 
 

@@ -2390,7 +2390,7 @@ PrefabInstance:
     - target: {fileID: 114226398384701254, guid: dacd53bebce7a2e4ab492aaf5e9697de,
         type: 3}
       propertyPath: _maxHealth
-      value: 250
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 114226398384701254, guid: dacd53bebce7a2e4ab492aaf5e9697de,
         type: 3}
@@ -5593,6 +5593,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Grid
+      objectReference: {fileID: 0}
+    - target: {fileID: 1694264561338353957, guid: 789406cbc5181bd41b93d54cc77f912b,
+        type: 3}
+      propertyPath: m_ChunkCullingBounds.y
+      value: 0.046875
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 789406cbc5181bd41b93d54cc77f912b, type: 3}
