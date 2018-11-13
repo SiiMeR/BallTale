@@ -45,6 +45,9 @@ public class MainMenu : SimpleMenu<MainMenu>
     public void OnContinuePressed()
     {
         PlayerPrefs.SetInt("loadgame", 1);
+        
+        // TODO : load the scene last played
+        
         SceneManager.LoadScene("Tutorial");
     }
 

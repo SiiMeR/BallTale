@@ -32,7 +32,15 @@ public class SaveGameManager : Singleton<SaveGameManager>
 
     public void CreateSaveGame()
     {
-        SaveGame.Delete("shop.txt");
+
+        
+        SavePlayer();
+        SaveShop();
+
+    }
+
+    private void SavePlayer()
+    {
         
         var player = FindObjectOfType<Player>();
 
@@ -40,8 +48,17 @@ public class SaveGameManager : Singleton<SaveGameManager>
 
         SaveGame.Save("player.txt", playerSave);
 
+    }
+
+    private void SaveShop()
+    {
+        
+        SaveGame.Delete("shop.txt");
+        
         var shop = FindObjectOfType<Shop>();
 
+        if (!shop) return;
+        
         var shopUpgrades = shop._saleQueue.ToList();
 
         foreach (var shopSlot in shop.Slots)
@@ -75,8 +92,9 @@ public class SaveGameManager : Singleton<SaveGameManager>
 
     private List<Upgrade> RecreateUpgrades(IEnumerable<Upgrade> upgrades)
     {
-       
         var instantiatedUpgrades = new List<Upgrade>();
+
+        if (upgrades == null) return instantiatedUpgrades; // TODO not permanent
         
         foreach (var upgrade in upgrades)
         {
