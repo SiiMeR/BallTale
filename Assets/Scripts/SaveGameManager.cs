@@ -94,7 +94,7 @@ public class SaveGameManager : Singleton<SaveGameManager>
     {
         var instantiatedUpgrades = new List<Upgrade>();
 
-        if (upgrades == null) return instantiatedUpgrades; // TODO not permanent
+        if (upgrades == null) return instantiatedUpgrades; // TODO hack
         
         foreach (var upgrade in upgrades)
         {

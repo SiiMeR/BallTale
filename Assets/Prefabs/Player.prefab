@@ -53,14 +53,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Velocity: {x: -1e-45, y: -1.7700598, z: 0}
   IgnoreGround: 0
-  _accelerationTimeAirborne: 0.2
+  _accelerationTimeAirborne: 0.18
   _accelerationTimeGrounded: 0.1
   _boostArrow: {fileID: 1231417571871360}
   _boostForce: 20
   _boostTimer: {fileID: 1709276808021058}
   _boostTimerFill: {fileID: 114740821294598218}
   _damageText: {fileID: 114896664719031728}
-  _deathScreen: {fileID: 0}
   _killBounceEnergy: 20
   _maxBoostTime: 2
   _currency: 25000
@@ -103,11 +102,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d2b4bc33aa23d14aaf91e6e64171be4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  collisionMask:
+  CollisionMask:
     serializedVersion: 2
     m_Bits: 512
-  _collider: {fileID: 0}
-  EdgePushStrength: 0.02
+  _edgePushStrength: 0.01
 --- !u!212 &212293388885712598
 SpriteRenderer:
   m_ObjectHideFlags: 0

@@ -1,4 +1,5 @@
 ﻿using System;
+using RaycastEngine2D;
 using UnityEngine;
 
 public class CameraFollow : MonoBehaviour
@@ -14,19 +15,19 @@ public class CameraFollow : MonoBehaviour
     public Vector2 focusAreaSize;
     public float lookAheadDstX;
     public float lookSmoothTimeX;
-    public CircleController2D target;
+    public Collider2D target;
     public float verticalOffset;
     public float verticalSmoothTime;
 
     // Use this for initialization
     private void Start()
     {
-        _focusArea = new FocusArea(target._collider.bounds, focusAreaSize);
+        _focusArea = new FocusArea(target.bounds, focusAreaSize);
     }
 
     private void LateUpdate()
     {
-        _focusArea.Update(target._collider.bounds);
+        _focusArea.Update(target.bounds);
 
         var focusPosition = _focusArea.centre + Vector2.up * verticalOffset;
 

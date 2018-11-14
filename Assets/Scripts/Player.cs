@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using BayatGames.SaveGameFree;
+using RaycastEngine2D;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -14,7 +15,7 @@ using Random = UnityEngine.Random;
 public class Player : MonoBehaviour
 {
     
-    [FormerlySerializedAs("_velocity")] public Vector3 Velocity;
+    public Vector3 Velocity;
     public bool IgnoreGround;
 
     [SerializeField] private float _accelerationTimeAirborne = .2f;
@@ -123,8 +124,8 @@ public class Player : MonoBehaviour
 
         var gravity = -(2 * _maxJumpHeight) / Mathf.Pow(_timeToJumpApex, 2);
 
-        Physics2D.gravity = new Vector3(gravity, 0, 0);
-
+        Constants.GRAVITY = gravity;
+        
         _maxJumpVelocity = Mathf.Abs(gravity * _timeToJumpApex);
         _minJumpVelocity = Mathf.Sqrt(2 * Mathf.Abs(gravity) * _minJumpHeight);
     }
@@ -257,7 +258,7 @@ public class Player : MonoBehaviour
         var randomXJitter = Random.Range(-1.5f, 1.5f);
         var randomYJitter = Random.Range(5f, 9f);
 
-        _controller.collisions.below = false; // allows to move the player in y direction on ground
+        _controller.Collisions.Below = false; // allows to move the player in y direction on ground
 
         Velocity += new Vector3(randomXJitter, randomYJitter, 0);
 
@@ -273,7 +274,7 @@ public class Player : MonoBehaviour
 
     private void UpdateMovement()
     {
-        if (_controller.collisions.above || _controller.collisions.below)
+        if (_controller.Collisions.Above || _controller.Collisions.Below)
         {
             if (!IgnoreGround)
             {
@@ -282,11 +283,11 @@ public class Player : MonoBehaviour
             }
             else
             {
-                _controller.collisions.below = false; // allows to move the player in y direction on ground
+                _controller.Collisions.Below = false; // allows to move the player in y direction on ground
             }
         }
 
-        if (_controller.collisions.below)
+        if (_controller.Collisions.Below)
         {
             _canBoost = true;
         }
@@ -305,12 +306,12 @@ public class Player : MonoBehaviour
 
         var boostInput = Input.GetAxisRaw("Fire1");
 
-        if (Input.GetButtonDown("Fire1") && !_controller.collisions.below && _canBoost)
+        if (Input.GetButtonDown("Fire1") && !_controller.Collisions.Below && _canBoost)
         {
             AudioManager.Instance.Play("BoostCharge");
         }
 
-        if (Math.Abs(boostInput) > 0.01f && !_controller.collisions.below && _canBoost)
+        if (Math.Abs(boostInput) > 0.01f && !_controller.Collisions.Below && _canBoost)
         {
             _boostArrow.SetActive(true);
             _boostTimer.SetActive(true);
@@ -352,7 +353,7 @@ public class Player : MonoBehaviour
         }
 
 
-        if (Math.Abs(boostInput) < 0.01f && !_controller.collisions.below && _canBoost && _isBoosting)
+        if (Math.Abs(boostInput) < 0.01f && !_controller.Collisions.Below && _canBoost && _isBoosting)
         {
             AudioManager.Instance.Stop("BoostCharge");
             AudioManager.Instance.Play("BoostFinish");
@@ -368,7 +369,7 @@ public class Player : MonoBehaviour
             _boostTimer.SetActive(false);
         }
 
-        if (Input.GetButtonDown("Jump") && _controller.collisions.below)
+        if (Input.GetButtonDown("Jump") && _controller.Collisions.Below)
         {
             AudioManager.Instance.Play("Jump", 0.5f);
             Velocity.y = _maxJumpVelocity;
@@ -385,9 +386,10 @@ public class Player : MonoBehaviour
         var targetVelocityX = Mathf.Round(input.x) * _moveSpeed;
 
         Velocity.x = Mathf.SmoothDamp(Velocity.x, targetVelocityX, ref _velocityXSmoothing,
-            _controller.collisions.below ? _accelerationTimeGrounded : _accelerationTimeAirborne);
+            _controller.Collisions.Below ? _accelerationTimeGrounded : _accelerationTimeAirborne);
 
-        Velocity.y += Physics2D.gravity.x * Time.deltaTime;
+        Velocity.y += Constants.GRAVITY * Time.deltaTime;
+        
         _controller.Move(Velocity * Time.deltaTime);
     }
 

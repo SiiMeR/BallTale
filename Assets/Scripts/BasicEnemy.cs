@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using RaycastEngine2D;
 using UnityEditor;
 using UnityEngine;
 
@@ -109,8 +110,8 @@ public class BasicEnemy : MonoBehaviour
 
     private void UpdateDirectionDumb()
     {
-        if (_controller.collisions.left ||
-            _controller.collisions.right)
+        if (_controller.Collisions.Left ||
+            _controller.Collisions.Right)
         {
             _velocity.x = -_velocity.x;
         }
@@ -118,10 +119,10 @@ public class BasicEnemy : MonoBehaviour
 
     private void CheckCollision()
     {
-        if (_controller.collisions.left ||
-            _controller.collisions.right ||
-            _controller.collisions.above ||
-            _controller.collisions.below)
+        if (_controller.Collisions.Left ||
+            _controller.Collisions.Right ||
+            _controller.Collisions.Above ||
+            _controller.Collisions.Below)
         {
             UpdateDirection();
         }
@@ -134,10 +135,10 @@ public class BasicEnemy : MonoBehaviour
 
         if (_useGravity)
         {
-            _velocity.y += Physics2D.gravity.x * Time.deltaTime;
+            _velocity.y += Constants.GRAVITY * Time.deltaTime;
         }
 
-        if (_controller.collisions.above || _controller.collisions.below)
+        if (_controller.Collisions.Above || _controller.Collisions.Below)
         {
             _velocity.y = 0;
         }
@@ -155,7 +156,7 @@ public class BasicEnemy : MonoBehaviour
 
         if (_useGravity)
         {
-            _velocity.y += Physics2D.gravity.x * Time.deltaTime;
+            _velocity.y += Constants.GRAVITY * Time.deltaTime;
 
             if (!_justTurnedAround)
             {
@@ -167,7 +168,7 @@ public class BasicEnemy : MonoBehaviour
             _velocity = direction.normalized * Mathf.Abs(moveSpeed);
         }
 
-        if (_controller.collisions.above || _controller.collisions.below)
+        if (_controller.Collisions.Above || _controller.Collisions.Below)
         {
             _velocity.y = 0;
         }

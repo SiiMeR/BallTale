@@ -177,25 +177,18 @@ PrefabInstance:
       propertyPath: m_isInputParsingRequired
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 114822414754692254, guid: 7333fc2108db98b4094d16889aec8418,
+    - target: {fileID: 114505464928479366, guid: 7333fc2108db98b4094d16889aec8418,
         type: 3}
-      propertyPath: _deathScreen
-      value: 
-      objectReference: {fileID: 320785621}
+      propertyPath: CollisionMask.m_Bits
+      value: 512
+      objectReference: {fileID: 0}
+    - target: {fileID: 114505464928479366, guid: 7333fc2108db98b4094d16889aec8418,
+        type: 3}
+      propertyPath: _edgePushStrength
+      value: 0.02
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7333fc2108db98b4094d16889aec8418, type: 3}
---- !u!114 &7213329 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 114505464928479366, guid: 7333fc2108db98b4094d16889aec8418,
-    type: 3}
-  m_PrefabInstance: {fileID: 7213328}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5d2b4bc33aa23d14aaf91e6e64171be4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &239827628 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1679125419195426, guid: 708cae83bc7d4d744893dff5740f805d,
@@ -280,32 +273,7 @@ PrefabInstance:
         type: 3}
       propertyPath: target
       value: 
-      objectReference: {fileID: 7213329}
-    - target: {fileID: 20796915304097284, guid: 63ce5d67ea1193c46a927a1e9653e3af,
-        type: 3}
-      propertyPath: m_BackGroundColor.r
-      value: 0.1012371
-      objectReference: {fileID: 0}
-    - target: {fileID: 20796915304097284, guid: 63ce5d67ea1193c46a927a1e9653e3af,
-        type: 3}
-      propertyPath: m_BackGroundColor.g
-      value: 0.21702875
-      objectReference: {fileID: 0}
-    - target: {fileID: 20796915304097284, guid: 63ce5d67ea1193c46a927a1e9653e3af,
-        type: 3}
-      propertyPath: m_BackGroundColor.b
-      value: 0.3301887
-      objectReference: {fileID: 0}
-    - target: {fileID: 20796915304097284, guid: 63ce5d67ea1193c46a927a1e9653e3af,
-        type: 3}
-      propertyPath: orthographic size
-      value: 9
-      objectReference: {fileID: 0}
-    - target: {fileID: 20796915304097284, guid: 63ce5d67ea1193c46a927a1e9653e3af,
-        type: 3}
-      propertyPath: m_ClearFlags
-      value: 2
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1345450849}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 63ce5d67ea1193c46a927a1e9653e3af, type: 3}
 --- !u!1001 &320785620
@@ -457,12 +425,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 15d9c0fd7f158d64699763472e527372, type: 3}
---- !u!1 &320785621 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 9135539074655192844, guid: 15d9c0fd7f158d64699763472e527372,
-    type: 3}
-  m_PrefabInstance: {fileID: 320785620}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &635448139
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -520,6 +482,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4fc6ccb8fbf534f45bfbd0b22d565d59, type: 3}
+--- !u!58 &1345450849 stripped
+CircleCollider2D:
+  m_CorrespondingSourceObject: {fileID: 58115952689056196, guid: 7333fc2108db98b4094d16889aec8418,
+    type: 3}
+  m_PrefabInstance: {fileID: 7213328}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1418965903
 PrefabInstance:
   m_ObjectHideFlags: 0

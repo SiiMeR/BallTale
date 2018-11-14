@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using RaycastEngine2D;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -271,22 +272,22 @@ public class Boss : MonoBehaviour
         if (!_justCollided)
         {
             // reflect
-            if (_controller.collisions.left)
+            if (_controller.Collisions.Left)
             {
                 _velocity = Vector3.Reflect(_velocity, Vector3.right);
                 StartCoroutine(Collided());
             }
-            else if (_controller.collisions.right)
+            else if (_controller.Collisions.Right)
             {
                 _velocity = Vector3.Reflect(_velocity, Vector3.left);
                 StartCoroutine(Collided());
             }
-            else if (_controller.collisions.above)
+            else if (_controller.Collisions.Above)
             {
                 _velocity = Vector3.Reflect(_velocity, Vector3.down);
                 StartCoroutine(Collided());
             }
-            else if (_controller.collisions.below)
+            else if (_controller.Collisions.Below)
             {
                 _velocity = Vector3.Reflect(_velocity, Vector3.up);
                 StartCoroutine(Collided());
@@ -296,7 +297,7 @@ public class Boss : MonoBehaviour
 
         if (_useGravity)
         {
-            _velocity.y += Physics2D.gravity.x * Time.deltaTime;
+            _velocity.y += Constants.GRAVITY * Time.deltaTime;
         }
 
         _controller.Move(_velocity * Time.deltaTime);

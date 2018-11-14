@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using RaycastEngine2D;
 using UnityEngine;
 
 [RequireComponent(typeof(CircleController2D))]
@@ -71,10 +72,10 @@ public class Shot : MonoBehaviour
     private void Move()
     {
         // any collision is death for the shot
-        if (_controller.collisions.right ||
-            _controller.collisions.left ||
-            _controller.collisions.above ||
-            _controller.collisions.below)
+        if (_controller.Collisions.Right ||
+            _controller.Collisions.Left ||
+            _controller.Collisions.Above ||
+            _controller.Collisions.Below)
         {
             StartCoroutine(DestroyShot());
         }
