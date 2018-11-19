@@ -4617,6 +4617,21 @@ PrefabInstance:
       propertyPath: focusAreaSize.y
       value: 7
       objectReference: {fileID: 0}
+    - target: {fileID: 20796915304097284, guid: 63ce5d67ea1193c46a927a1e9653e3af,
+        type: 3}
+      propertyPath: m_BackGroundColor.r
+      value: 0.40583837
+      objectReference: {fileID: 0}
+    - target: {fileID: 20796915304097284, guid: 63ce5d67ea1193c46a927a1e9653e3af,
+        type: 3}
+      propertyPath: m_BackGroundColor.g
+      value: 0.6538416
+      objectReference: {fileID: 0}
+    - target: {fileID: 20796915304097284, guid: 63ce5d67ea1193c46a927a1e9653e3af,
+        type: 3}
+      propertyPath: m_BackGroundColor.b
+      value: 0.9056604
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 114291158699655834, guid: 63ce5d67ea1193c46a927a1e9653e3af, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 63ce5d67ea1193c46a927a1e9653e3af, type: 3}

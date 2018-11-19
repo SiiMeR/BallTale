@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using BayatGames.SaveGameFree;
 using BayatGames.SaveGameFree.Types;
 using UnityEngine;
@@ -32,22 +33,17 @@ public class SaveGameManager : Singleton<SaveGameManager>
 
     public void CreateSaveGame()
     {
-
-        
         SavePlayer();
         SaveShop();
-
     }
 
     private void SavePlayer()
     {
-        
         var player = FindObjectOfType<Player>();
 
         var playerSave = new PlayerData(player);
 
         SaveGame.Save("player.txt", playerSave);
-
     }
 
     private void SaveShop()
