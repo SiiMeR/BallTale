@@ -3,6 +3,7 @@ using UnityEngine;
 
 namespace RaycastEngine2D
 {
+    [RequireComponent(typeof(CircleCollider2D))]
     public class CircleController2D : RayCastController
     {
         [HideInInspector] public CollisionInfo Collisions;
@@ -51,8 +52,8 @@ namespace RaycastEngine2D
             if (hit)
             {
                 velocity.x = (hit.distance - SKINWIDTH) * directionX;
-                Collisions.Left = Math.Abs(directionX - (-1)) < float.Epsilon;
-                Collisions.Right = Math.Abs(directionX - 1) < float.Epsilon;
+                Collisions.Left = Mathf.Abs(directionX - (-1)) < float.Epsilon;
+                Collisions.Right = Mathf.Abs(directionX - 1) < float.Epsilon;
             }
 
 
@@ -76,8 +77,8 @@ namespace RaycastEngine2D
             {
                 velocity.y = (hit.distance - SKINWIDTH) * directionY;
 
-                Collisions.Below = Math.Abs(directionY - (-1)) < float.Epsilon;
-                Collisions.Above = Math.Abs(directionY - 1) < float.Epsilon;
+                Collisions.Below = Mathf.Abs(directionY - (-1)) < float.Epsilon;
+                Collisions.Above = Mathf.Abs(directionY - 1) < float.Epsilon;
             }
 
             for (var i = 0; i < 3; i++)

@@ -4866,88 +4866,21 @@ PrefabInstance:
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 114883902540651594, guid: 9d820979489850443bc51955d06c689a,
-        type: 3}
-      propertyPath: _pathLastPos.x
-      value: 76.19875
-      objectReference: {fileID: 0}
-    - target: {fileID: 114883902540651594, guid: 9d820979489850443bc51955d06c689a,
-        type: 3}
-      propertyPath: _pathFirstPos.x
-      value: 65.665535
-      objectReference: {fileID: 0}
-    - target: {fileID: 114883902540651594, guid: 9d820979489850443bc51955d06c689a,
-        type: 3}
-      propertyPath: _pathFirstPos.y
-      value: -0.2721963
-      objectReference: {fileID: 0}
-    - target: {fileID: 114883902540651594, guid: 9d820979489850443bc51955d06c689a,
-        type: 3}
-      propertyPath: _pathLastPos.y
-      value: -0.3621447
-      objectReference: {fileID: 0}
-    - target: {fileID: 114883902540651594, guid: 9d820979489850443bc51955d06c689a,
-        type: 3}
-      propertyPath: _movetarget.x
-      value: 64.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 114883902540651594, guid: 9d820979489850443bc51955d06c689a,
-        type: 3}
-      propertyPath: _movetarget.y
-      value: -0.029999971
-      objectReference: {fileID: 0}
-    - target: {fileID: 114883902540651594, guid: 9d820979489850443bc51955d06c689a,
-        type: 3}
-      propertyPath: _movetarget.z
-      value: -0.080078125
-      objectReference: {fileID: 0}
-    - target: {fileID: 114883902540651594, guid: 9d820979489850443bc51955d06c689a,
-        type: 3}
-      propertyPath: _lastmovetarget.x
-      value: 67.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 114883902540651594, guid: 9d820979489850443bc51955d06c689a,
-        type: 3}
-      propertyPath: _lastmovetarget.y
-      value: -0.029999971
-      objectReference: {fileID: 0}
-    - target: {fileID: 114883902540651594, guid: 9d820979489850443bc51955d06c689a,
-        type: 3}
-      propertyPath: _lastmovetarget.z
-      value: -0.080078125
-      objectReference: {fileID: 0}
-    - target: {fileID: 114883902540651594, guid: 9d820979489850443bc51955d06c689a,
-        type: 3}
-      propertyPath: _pathMiddlePos.x
-      value: 67.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 114883902540651594, guid: 9d820979489850443bc51955d06c689a,
-        type: 3}
-      propertyPath: _pathMiddlePos.y
-      value: -0.029999971
-      objectReference: {fileID: 0}
-    - target: {fileID: 114883902540651594, guid: 9d820979489850443bc51955d06c689a,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1471922103519594, guid: 9d820979489850443bc51955d06c689a, type: 3}
-      propertyPath: m_TagString
-      value: Enemy
-      objectReference: {fileID: 0}
-    - target: {fileID: 1471922103519594, guid: 9d820979489850443bc51955d06c689a, type: 3}
-      propertyPath: m_Layer
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 114883902540651594, guid: 9d820979489850443bc51955d06c689a,
-        type: 3}
-      propertyPath: useGravity
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114883902540651594, guid: 9d820979489850443bc51955d06c689a,
-        type: 3}
-      propertyPath: _useWaypointMovement
+    - target: {fileID: 4348169087951320, guid: 9d820979489850443bc51955d06c689a, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4348169087951320, guid: 9d820979489850443bc51955d06c689a, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4348169087951320, guid: 9d820979489850443bc51955d06c689a, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1471922103519594, guid: 9d820979489850443bc51955d06c689a, type: 3}
+      propertyPath: m_Name
+      value: BasicGroundEnemy
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9d820979489850443bc51955d06c689a, type: 3}
