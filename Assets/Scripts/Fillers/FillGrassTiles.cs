@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Tilemaps;
@@ -30,9 +31,9 @@ public class FillGrassTiles : MonoBehaviour
         
         var positionsInDirection = MainTilemap.GetEmptyAdjacentTilesInDirection<Tile>(direction);
         
-        foreach (var position in positionsInDirection)
+        foreach (var (position, nearbySum) in positionsInDirection.Select(x => (x.Key, x.Value)))
         {
-            var tilePos =  position + direction;
+            var tilePos = position + direction;
             
             var tile = MainTilemap.GetTile(position);
 

@@ -14,10 +14,7 @@ public class FillDirtTilesEditor : Editor
 
         if (GUILayout.Button("Fill world with dirt!"))
         {
-            fillDirtTiles.FillWithDirt(Vector3Int.left);
-            fillDirtTiles.FillWithDirt(Vector3Int.right);
-            fillDirtTiles.FillWithDirt(Vector3Int.up);
-            fillDirtTiles.FillWithDirt(Vector3Int.down);
+            fillDirtTiles.FillAllWithDirt();
         } 
         if (GUILayout.Button("Fill right side of tiles with dirt"))
         {

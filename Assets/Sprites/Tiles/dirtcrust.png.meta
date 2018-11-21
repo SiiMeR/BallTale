@@ -6,6 +6,10 @@ TextureImporter:
     21300002: dirtcrust_1
     21300004: dirtcrust_2
     21300006: dirtcrust_3
+    21300008: dirtcrust_4
+    21300010: dirtcrust_5
+    21300012: dirtcrust_6
+    21300014: dirtcrust_7
   externalObjects: {}
   serializedVersion: 7
   mipmaps:
@@ -91,18 +95,18 @@ TextureImporter:
       name: dirtcrust_0
       rect:
         serializedVersion: 2
-        x: 70
-        y: 0
+        x: 68
+        y: 66
         width: 64
         height: 64
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e5adf4fe11a10f648a2c219f9bb06390
+      spriteID: 3222ea4fce090134c87a59fbf7f52202
       vertices: []
       indices: 
       edges: []
@@ -111,18 +115,18 @@ TextureImporter:
       name: dirtcrust_1
       rect:
         serializedVersion: 2
-        x: 131
-        y: 0
+        x: 139
+        y: 66
         width: 64
         height: 64
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 80db8042f90706542a8f25677c8e0502
+      spriteID: fcf031dfbd7db3f4cb7a9443e590a47b
       vertices: []
       indices: 
       edges: []
@@ -131,18 +135,18 @@ TextureImporter:
       name: dirtcrust_2
       rect:
         serializedVersion: 2
-        x: 196
-        y: 0
+        x: 206
+        y: 66
         width: 64
         height: 64
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f39d2c1e3ce9d6048bd7443a5660c9f6
+      spriteID: 56880d426b76997408cc2eb01afaf498
       vertices: []
       indices: 
       edges: []
@@ -152,17 +156,97 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 0
+        y: 66
         width: 64
         height: 64
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 048e75e10a006da469391aa1590f6e8a
+      spriteID: a7a97e3de460baf46a90b6921f341907
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: dirtcrust_4
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2d7ec53cef2870b48bb38c4a56c2add8
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: dirtcrust_5
+      rect:
+        serializedVersion: 2
+        x: 68
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 606755c8bb28c94428dd1f64c4f60bb7
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: dirtcrust_6
+      rect:
+        serializedVersion: 2
+        x: 139
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c9ff5341922d75446b014b4cfeb31285
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: dirtcrust_7
+      rect:
+        serializedVersion: 2
+        x: 206
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cfe1b0f281a680c4d86cdb0c738ada2d
       vertices: []
       indices: 
       edges: []
@@ -170,7 +254,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: e936608d7d4d4be48aacd31387922f1c
+    spriteID: 
     vertices: []
     indices: 
     edges: []
