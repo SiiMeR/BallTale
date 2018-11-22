@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 114654476412711332}
   - component: {fileID: 1343735496}
   - component: {fileID: 1343735498}
+  - component: {fileID: 239827629}
   m_Layer: 0
   m_Name: Game
   m_TagString: Untagged
@@ -80,3 +81,36 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dca3e18ae5cf5384f85f955f674993e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &239827629
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1679125419195426}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0bb1568fe2b58a545aca762362ef7128, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MainTilemap: {fileID: 0}
+  FGTilemap: {fileID: 0}
+  Tile: {fileID: 11400000, guid: ce3d3773132226f479682e973fd7b3dc, type: 2}
+  Tiles:
+  - {fileID: 11400000, guid: 46734fc1ce099bc4cb04dfb5853e9e8b, type: 2}
+  - {fileID: 11400000, guid: a74c2a50afe770747bd9edecbb7a0d22, type: 2}
+  - {fileID: 11400000, guid: e968ad5f12190d74e9cac15004f22cbf, type: 2}
+  - {fileID: 11400000, guid: 9c896118ece35ad49a2265d324ba1f38, type: 2}
+  - {fileID: 11400000, guid: 4f548da928170ac43a2ca61273a9e568, type: 2}
+  - {fileID: 11400000, guid: b63a8162ada1eab4cb769016228677fa, type: 2}
+  - {fileID: 11400000, guid: 3932ece2ec67a5646b32a94f7c1d872c, type: 2}
+  - {fileID: 11400000, guid: d42ed973f2e7f68459660c257d895bd4, type: 2}
+  - {fileID: 11400000, guid: 54f21b1666f742f4ebaba67dbe1b604c, type: 2}
+  - {fileID: 11400000, guid: 3e83970b8f1ceb54b95cb143e4b5c8be, type: 2}
+  - {fileID: 11400000, guid: f6d15816faf816547a6d1d4ceb4f2b37, type: 2}
+  - {fileID: 11400000, guid: f67c4713a6825b146b2e026075c26c12, type: 2}
+  - {fileID: 11400000, guid: 1ee743d0d884ad545bcba44c25304749, type: 2}
+  - {fileID: 11400000, guid: c5803051073ffc747896dcf7fdebc028, type: 2}
+  - {fileID: 11400000, guid: 486530469d004ef40b00aa315f013465, type: 2}
+  - {fileID: 11400000, guid: 165a3ebacdaf2254285e3866bc61499f, type: 2}
+  - {fileID: 11400000, guid: 81c70ab7377f99a438acb156c312e92e, type: 2}

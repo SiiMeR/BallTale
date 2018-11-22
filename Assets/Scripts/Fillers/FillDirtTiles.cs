@@ -14,15 +14,9 @@ public class FillDirtTiles : MonoBehaviour
     public Tilemap FGTilemap;
 
     public Tile Tile;
-    public Tile Underdirt;
-    public Tile Overdirt;
-    public Tile SidedirtRight;
-    public Tile SidedirtLeft;
-
-    public Tile SWDirt;
-    public Tile SEDirt;
-    public Tile NWDirt;
-    public Tile NEDirt;
+    // down, left, up, right, sw, nw, ne, se, edgesw, edgenw, edgene, edgese,  all, ldr, lur, tld, trd  -- tiles in this order
+    //    0,    1,  2,     3,  4,  5,  6,  7,      8,      9,     10,     11,  12 ,  13,  14,  15,  16
+    public Tile[] Tiles;
     
 
 #if UNITY_EDITOR
@@ -30,91 +24,153 @@ public class FillDirtTiles : MonoBehaviour
     /// <summary>
     /// Fill all nearby tiles with crust tiles depending if they are empty
     /// </summary>
-    /// TODO: CHECK EVERY EMPTY BLOCK FOR NEARBY DIRT BLOCKS, NOT THE OTHER WAY AROUND. THIS DOESNT WORK lol
+    /// 
     public void FillAllWithDirt()
     {
-        var allPositions = MainTilemap.GetEmptyAdjacentTilesInAllDirections<Tile>();
+        var allPositions = MainTilemap.GetTileOfTypeInAllDirections<Tile>(Tile);
 
         foreach (var (position, nearbySum) in allPositions.Select(x => (x.Key, x.Value)))
         {
             var tile = ScriptableObject.CreateInstance<Tile>();
-            var tilePos = Vector3Int.zero;
             
             switch (nearbySum)
             {
                 case 0: // no empty
                     continue;
                 case 1: // down only
-                    tile = Underdirt;
-                    tilePos = Vector3Int.down;
+                case 129:
+                    tile = Tiles[0];
                     break;
                 case 2: // left only
-                    tile = SidedirtLeft;
-                    tilePos = Vector3Int.left;
+                case 50: // sw nw l
+                case 18: // sw l    
+                case 34: // l nw
+                    tile = Tiles[1];
                     break;
                 case 3: // d + l
-                    tile = SWDirt;
-                    tilePos = Vector3Int.down + Vector3Int.left;
+                    tile = Tiles[4];
                     break;
+                
+                
                 case 4: // up only
-                    tile = Overdirt;
-                    tilePos = Vector3Int.up;
+                case 100: // nw u ne
+                case 36: // nw u
+                case 68: // u ne
+                    tile = Tiles[2];
                     break;
                 case 5: // u + d
-                    tile = Underdirt;
-                    tilePos = Vector3Int.up; 
+                    
                     break;
                 case 6: // u + l
-                    tile = NWDirt;
-                    tilePos = Vector3Int.up + Vector3Int.left;
+                    tile = Tiles[5];
                     break;
                 case 7: // u + d + l
-                    tile = Underdirt;
-                    tilePos = Vector3Int.down;
+
                     break;
                 case 8: // right only
-                    tile = SidedirtRight;
-                    tilePos = Vector3Int.right;
+                case 40:
+                case 72:
+                case 136:
+                case 200:    
+                    tile = Tiles[3];
                     break;
+                
                 case 9: // r + d
-                    tile = SEDirt;
-                    tilePos = Vector3Int.right + Vector3Int.down;
+                
+                case 153:  
+                case 217:
+                case 137:
+                case 201:
+                    tile = Tiles[7];
                     break;
                 case 10: // r + l
-                    tile = Underdirt;
-                    tilePos = Vector3Int.down;
+
                     break;
                 case 11: // r + d + l
-                    tile = Underdirt;
-                    tilePos = Vector3Int.down;
+
                     break;
                 case 12: // r + u
-                    tile = NEDirt;
-                    tilePos = Vector3Int.right + Vector3Int.up;
+                case 76:
+                case 108:
+                case 236:
+                case 204:
+                    
+                    tile = Tiles[6];
                     break;
                 case 13: // r + u + d
-                    tile = Underdirt;
-                    tilePos = Vector3Int.down;
+
                     break;
                 case 14: // r + u + l
-                    tile = Underdirt;
-                    tilePos = Vector3Int.down;
+
                     break;
                 case 15: // r + u + d + l
-                    tile = Underdirt;
-                    tilePos = Vector3Int.down;
+
                     break;
+                case 16: // sw
+                    tile = Tiles[8];
+                    break;
+                
+                case 17: // sw d
+                    tile = Tiles[0];
+                    break;
+                case 32: // nw
+                    tile = Tiles[9];
+                    break;
+                case 64: // ne
+                case 96:
+                    tile = Tiles[10];
+                    break;
+                case 128: // se
+                    tile = Tiles[11];
+                    break;
+                
+                case 145: // sw se d
+                    tile = Tiles[0];
+                    break;
+                
+                case 147: // l sw d se
+                case 19:    
+                case 51:
+                    tile = Tiles[4];
+                    break;
+                case 255:
+                    tile = Tiles[12];
+                    break;
+                
+                case 54: // sw l nw u
+                case 118: // sw l nw u ne
+                case 38: // l nw u
+                case 102: // l nw u ne   
+                    tile = Tiles[5];
+                    break;
+                
+                
+                
+                // ldr
+                case 155:
+                    tile = Tiles[13];
+                    break;
+                // lur
+                case 110: 
+                case 254:
+                    tile = Tiles[14];
+                    break;
+                
+                // tld
+                case 247:
+                    tile = Tiles[15];
+                    break;
+                
+                // trd
+                case 253:
+                    tile = Tiles[16];
+                    break;
+                
             }
 
-
-            tilePos += position;
+            Debug.Log($"setting tile {tile.name} to {position} with {nearbySum}");
+            FGTilemap.SetTile(position, tile);
             
-            var tilemapTile = MainTilemap.GetTile(position);
-
-            if (tilemapTile && tilemapTile.name.Equals(Tile.name))
-            {    
-                FGTilemap.SetTile(tilePos, tile);
-            }
         }
 
     }
@@ -122,10 +178,10 @@ public class FillDirtTiles : MonoBehaviour
     
     public void FillWithDirt(Vector3Int direction)
     {
-        var tileType = direction == Vector3Int.down ? Underdirt    :
-                       direction == Vector3Int.up   ? Overdirt     :
-                       direction == Vector3Int.left ? SidedirtRight:
-                                                      SidedirtLeft ;
+        var tileType = direction == Vector3Int.down ? Tiles[0]    :
+                       direction == Vector3Int.up   ? Tiles[2]     :
+                       direction == Vector3Int.left ? Tiles[1]:
+                                                      Tiles[3] ;
         
         
         var positionsInDirection = MainTilemap.GetEmptyAdjacentTilesInDirection<Tile>(direction);
@@ -146,10 +202,10 @@ public class FillDirtTiles : MonoBehaviour
     
     public void RemoveAllDirt()
     {
-        FGTilemap.RemoveTileOfTypeFromTilemap<Tile>(Underdirt);
-        FGTilemap.RemoveTileOfTypeFromTilemap<Tile>(Overdirt);
-        FGTilemap.RemoveTileOfTypeFromTilemap<Tile>(SidedirtLeft);
-        FGTilemap.RemoveTileOfTypeFromTilemap<Tile>(SidedirtRight);
+        foreach (var tile in Tiles)
+        {
+            FGTilemap.RemoveTileOfTypeFromTilemap<Tile>(tile);
+        }      
     }
     
 #endif

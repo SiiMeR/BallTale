@@ -2,14 +2,30 @@ fileFormatVersion: 2
 guid: d97029fbdb667f846980f7c0ba6137a5
 TextureImporter:
   fileIDToRecycleName:
-    21300000: dirtcrust_0
-    21300002: dirtcrust_1
-    21300004: dirtcrust_2
-    21300006: dirtcrust_3
+    21300000: edge se
+    21300002: edge ne
+    21300004: edge nw
+    21300006: all
     21300008: dirtcrust_4
     21300010: dirtcrust_5
     21300012: dirtcrust_6
     21300014: dirtcrust_7
+    21300016: leftup
+    21300018: upright
+    21300020: rightdown
+    21300022: leftdown
+    21300024: leftdownright
+    21300026: topleftdown
+    21300028: toprightdown
+    21300030: leftupright
+    21300032: dirtcrust_16
+    21300034: dirtcrust_17
+    21300036: dirtcrust_18
+    21300038: left
+    21300040: right
+    21300042: up
+    21300044: down
+    21300046: edge sw
   externalObjects: {}
   serializedVersion: 7
   mipmaps:
@@ -92,161 +108,341 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: dirtcrust_0
+      name: edge se
       rect:
         serializedVersion: 2
-        x: 68
-        y: 66
+        x: 71
+        y: 80
         width: 64
         height: 64
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3222ea4fce090134c87a59fbf7f52202
+      spriteID: 2c2f7a3e02023b9409f76b5fb6be7d3f
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: dirtcrust_1
+      name: edge ne
       rect:
         serializedVersion: 2
-        x: 139
-        y: 66
+        x: 136
+        y: 80
         width: 64
         height: 64
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: fcf031dfbd7db3f4cb7a9443e590a47b
+      spriteID: d18511b06847f2e48ab9b089885cac44
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: dirtcrust_2
+      name: edge nw
       rect:
         serializedVersion: 2
         x: 206
-        y: 66
+        y: 80
         width: 64
         height: 64
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 56880d426b76997408cc2eb01afaf498
+      spriteID: 5e364803f8b1c8046aa8c787875929c3
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: dirtcrust_3
+      name: all
       rect:
         serializedVersion: 2
         x: 0
-        y: 66
+        y: 80
         width: 64
         height: 64
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a7a97e3de460baf46a90b6921f341907
+      spriteID: 13a9653debf418940993e48ed62355a3
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: dirtcrust_4
+      name: leftup
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
+        x: 71
+        y: 220
         width: 64
         height: 64
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2d7ec53cef2870b48bb38c4a56c2add8
+      spriteID: d9d20007727e3df4daf90e90bf31fa8d
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: dirtcrust_5
+      name: upright
       rect:
         serializedVersion: 2
-        x: 68
-        y: 0
+        x: 135
+        y: 220
         width: 64
         height: 64
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 606755c8bb28c94428dd1f64c4f60bb7
+      spriteID: 5432adff99c79b648991978146183a8a
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: dirtcrust_6
-      rect:
-        serializedVersion: 2
-        x: 139
-        y: 0
-        width: 64
-        height: 64
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: c9ff5341922d75446b014b4cfeb31285
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: dirtcrust_7
+      name: rightdown
       rect:
         serializedVersion: 2
         x: 206
-        y: 0
+        y: 220
         width: 64
         height: 64
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: cfe1b0f281a680c4d86cdb0c738ada2d
+      spriteID: 84427ce141c796347a8b2e4f1384ce4c
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: leftdown
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 220
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9a81cebc05f078e419683dc29b150b62
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: leftdownright
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 150
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c253432d2e3423a4ab634dfe5afea484
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: topleftdown
+      rect:
+        serializedVersion: 2
+        x: 71
+        y: 150
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 38a32c5710749d04d9eb626d14e1e4f9
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: toprightdown
+      rect:
+        serializedVersion: 2
+        x: 136
+        y: 150
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5358e792c18f13a4ebf301c0c3391003
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: leftupright
+      rect:
+        serializedVersion: 2
+        x: 206
+        y: 150
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fe88c2be4fa448c4b91f48e491766b9c
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: left
+      rect:
+        serializedVersion: 2
+        x: 71
+        y: 286
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7d7dd5ee0a3385e44aca7e16bf842b3e
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: right
+      rect:
+        serializedVersion: 2
+        x: 136
+        y: 286
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ee74f95520d282d4bb44e70f151eb343
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: up
+      rect:
+        serializedVersion: 2
+        x: 206
+        y: 286
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6fdec45e5021049428e1ef1944ca35f2
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: down
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 286
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 38a06b1ac7e3ccf4aa39dd0834909a2f
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: edge sw
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 15
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1395f88faed489240807545ff879e865
       vertices: []
       indices: 
       edges: []
@@ -254,7 +450,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 3efc1b537513d97449963a5a9757a504
     vertices: []
     indices: 
     edges: []
