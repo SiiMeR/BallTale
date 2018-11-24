@@ -144,9 +144,7 @@ public class FillDirtTiles : MonoBehaviour
                 case 102: // l nw u ne   
                     tile = Tiles[5];
                     break;
-                
-                
-                
+                           
                 // ldr
                 case 155:
                     tile = Tiles[13];
@@ -185,9 +183,9 @@ public class FillDirtTiles : MonoBehaviour
     
     public void FillWithDirt(Vector3Int direction)
     {
-        var tileType = direction == Vector3Int.down ? Tiles[0]    :
-                       direction == Vector3Int.up   ? Tiles[2]     :
-                       direction == Vector3Int.left ? Tiles[1]:
+        var tileType = direction == Vector3Int.down ? Tiles[0] :
+                       direction == Vector3Int.left ? Tiles[1] :
+                       direction == Vector3Int.up   ? Tiles[2] :
                                                       Tiles[3] ;
         
         

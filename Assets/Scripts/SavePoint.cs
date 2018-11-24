@@ -6,6 +6,7 @@ public class SavePoint : Interactable
 {
 
     [SerializeField] private TextMeshProUGUI _saveText;
+    [SerializeField] private ParticleSystem _particleSystem;
     
     private Coroutine _displayTextCoroutine;
     
@@ -21,6 +22,10 @@ public class SavePoint : Interactable
         _displayTextCoroutine = StartCoroutine(DisplaySaveGameText());
         
         SaveGameManager.Instance.CreateSaveGame();
+        
+        AudioManager.Instance.Play("Buy");
+        
+        _particleSystem.Play();
         
         _notice.SetActive(false);
     }
