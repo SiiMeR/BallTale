@@ -26,6 +26,8 @@ TextureImporter:
     21300042: up
     21300044: down
     21300046: edge sw
+    21300048: leftright
+    21300050: updown
   externalObjects: {}
   serializedVersion: 7
   mipmaps:
@@ -447,10 +449,50 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: leftright
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 361
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b8653c1e96e524c43b2566566ac5de6b
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: updown
+      rect:
+        serializedVersion: 2
+        x: 67
+        y: 361
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4209c4e8a15c23c42beeb9f724af8883
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 3efc1b537513d97449963a5a9757a504
+    spriteID: 
     vertices: []
     indices: 
     edges: []
@@ -458,6 +500,6 @@ TextureImporter:
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
-  userData: 
+  userData: 3efc1b537513d97449963a5a9757a504
   assetBundleName: 
   assetBundleVariant: 

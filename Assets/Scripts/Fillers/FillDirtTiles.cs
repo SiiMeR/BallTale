@@ -14,8 +14,8 @@ public class FillDirtTiles : MonoBehaviour
     public Tilemap FGTilemap;
 
     public Tile Tile;
-    // down, left, up, right, sw, nw, ne, se, edgesw, edgenw, edgene, edgese,  all, ldr, lur, tld, trd  -- tiles in this order
-    //    0,    1,  2,     3,  4,  5,  6,  7,      8,      9,     10,     11,  12 ,  13,  14,  15,  16
+    // down, left, up, right, sw, nw, ne, se, edgesw, edgenw, edgene, edgese,  all, ldr, lur, tld, trd, lr, ud  -- tiles in this order
+    //    0,    1,  2,     3,  4,  5,  6,  7,      8,      9,     10,     11,  12 ,  13,  14,  15,  16, 17, 18
     public Tile[] Tiles;
     
 
@@ -39,6 +39,7 @@ public class FillDirtTiles : MonoBehaviour
                     continue;
                 case 1: // down only
                 case 129:
+                case 241:
                     tile = Tiles[0];
                     break;
                 case 2: // left only
@@ -165,14 +166,20 @@ public class FillDirtTiles : MonoBehaviour
                 case 253:
                     tile = Tiles[16];
                     break;
+                case 245:
+                case 181:
+                case 213:
+                    tile = Tiles[18];
+                    break;
                 
+                case 250:
+                    tile = Tiles[17];
+                    break;
             }
 
-            Debug.Log($"setting tile {tile.name} to {position} with {nearbySum}");
             FGTilemap.SetTile(position, tile);
             
         }
-
     }
     
     
