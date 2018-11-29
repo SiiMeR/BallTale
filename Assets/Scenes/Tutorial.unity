@@ -1286,11 +1286,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4343867861530720, guid: 7333fc2108db98b4094d16889aec8418, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -4.95
+      value: -5.03
       objectReference: {fileID: 0}
     - target: {fileID: 4343867861530720, guid: 7333fc2108db98b4094d16889aec8418, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.6
+      value: 2.67
       objectReference: {fileID: 0}
     - target: {fileID: 4343867861530720, guid: 7333fc2108db98b4094d16889aec8418, type: 3}
       propertyPath: m_LocalPosition.z
@@ -2942,6 +2942,7 @@ GameObject:
   - component: {fileID: 1091810719}
   - component: {fileID: 1091810718}
   - component: {fileID: 1091810716}
+  - component: {fileID: 1091810717}
   m_Layer: 5
   m_Name: UI
   m_TagString: Untagged
@@ -2968,6 +2969,19 @@ MonoBehaviour:
   health: {fileID: 319934586}
   healthCanvas: {fileID: 537684725}
   Timer: 0
+--- !u!114 &1091810717
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1091810715}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 05db615b93547d348aaaff7eaa4b0e20, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _deathScreen: {fileID: 1085026207}
 --- !u!114 &1091810718
 MonoBehaviour:
   m_ObjectHideFlags: 0
