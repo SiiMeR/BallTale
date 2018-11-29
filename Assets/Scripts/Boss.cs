@@ -200,6 +200,8 @@ public class Boss : MonoBehaviour
         AudioManager.Instance.SetMusicVolume(0);
 
         yield return new WaitForSecondsRealtime(3.0f);
+        Time.timeScale = 1;
+        AudioManager.Instance.SetMusicVolume(1);
 
         SceneManager.LoadScene("Town");
     }
