@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Cinemachine;
 using UnityEngine;
 
 /// <inheritdoc />
@@ -8,22 +9,22 @@ using UnityEngine;
 /// </summary>
 public class Bossfight : MonoBehaviour
 {
-    [SerializeField] private GameObject _booster;
-
     [SerializeField] private GameObject _boss;
-    [SerializeField] private Transform _cameraMiddle; // where to put the camera during the fight
-    private bool _fightOn;
 
-    [SerializeField] private bool _takeCameraControl;
+    [SerializeField]
+    private CinemachineVirtualCamera _bossFightCamera; // The virtual camera that pans the boss fight scene into view
+
+    private bool _fightOn;
     [SerializeField] private List<GameObject> _walls;
 
+    private void Awake()
+    {
+        _bossFightCamera.enabled = false;
+    }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.CompareTag("Player"))
-        {
-            StartFight();
-        }
+        if (other.gameObject.CompareTag("Player")) StartFight();
     }
 
     private void StartFight()
@@ -34,12 +35,7 @@ public class Bossfight : MonoBehaviour
         StartCoroutine(AudioManager.Instance.FadeToNextMusic("02VortexBoss"));
         _boss.SetActive(true);
 
-        if (_takeCameraControl)
-        {
-            Camera.main.GetComponent<CameraFollow>().enabled = false;
-
-            StartCoroutine(MoveCameraToPos(Camera.main.transform.position, _cameraMiddle.position));
-        }
+        _bossFightCamera.enabled = true;
 
         StartCoroutine(ActivateWalls());
         _fightOn = true;
@@ -53,33 +49,11 @@ public class Bossfight : MonoBehaviour
         _walls.ForEach(go => go.SetActive(true));
     }
 
-    private IEnumerator MoveCameraToPos(Vector3 startPos, Vector3 endPos, bool cameraFollowEnabledAfter = false)
-    {
-        const float secondsMove = 1.5f;
-        float timer = 0;
-
-        while ((timer += Time.unscaledDeltaTime) < secondsMove)
-        {
-            Camera.main.transform.position = Vector3.Lerp(startPos, endPos, timer / secondsMove);
-
-            yield return null;
-        }
-
-        if (cameraFollowEnabledAfter)
-        {
-            Camera.main.GetComponent<CameraFollow>().enabled = true;
-        }
-    }
-
     public void Endfight()
     {
         if (!_boss || _boss.GetComponent<Boss>().CurrentHealth >= 1) return;
 
-        if (_takeCameraControl)
-        {
-            StartCoroutine(MoveCameraToPos(Camera.main.transform.position, _booster.transform.position, true));
-        }
-
+        _bossFightCamera.enabled = false;
 
         // FIGHTON FALSE TODO
         //	_walls.ForEach(go => go.SetActive(false));
