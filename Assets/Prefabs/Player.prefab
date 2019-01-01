@@ -52,7 +52,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d18e6d489c632d94c99da05f48afbc52, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Velocity: {x: 120, y: -1.7700598, z: 0}
+  Velocity: {x: 0, y: -1.7700598, z: 0}
   IgnoreGround: 0
   _accelerationTimeAirborne: 0.18
   _accelerationTimeGrounded: 0.1
@@ -60,7 +60,7 @@ MonoBehaviour:
   _boostForce: 20
   _boostTimer: {fileID: 1709276808021058}
   _boostTimerFill: {fileID: 114740821294598218}
-  _damageText: {fileID: 0}
+  _damageText: {fileID: 2374663457179028563}
   _killBounceEnergy: 20
   _maxBoostTime: 2
   _currency: 25000

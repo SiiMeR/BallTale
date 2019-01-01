@@ -2,56 +2,57 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using BayatGames.SaveGameFree;
 using RaycastEngine2D;
 using TMPro;
 using UnityEngine;
-using UnityEngine.SceneManagement;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
 [RequireComponent(typeof(CircleController2D))]
 public class Player : MonoBehaviour
 {
-    
-    public Vector3 Velocity;
-    public bool IgnoreGround;
-
     [SerializeField] private float _accelerationTimeAirborne = .2f;
     [SerializeField] private float _accelerationTimeGrounded = .1f;
+    private Animator _animator;
     [SerializeField] private GameObject _boostArrow;
     [SerializeField] private float _boostForce = 20f;
     [SerializeField] private GameObject _boostTimer;
     [SerializeField] private Image _boostTimerFill;
-    [SerializeField] private TextMeshProUGUI _damageText;
-    [SerializeField] private int _killBounceEnergy = 15;
-    [SerializeField] private float _maxBoostTime = 2.0f;
+    private bool _canBoost = true;
+    private CircleController2D _controller;
     [SerializeField] private int _currency = 100;
+    private float _currentBoostTime;
+    private int _currentHealth;
+
+    [SerializeField] private TextMeshProUGUI _damageText;
+    // DEBUG
+
+    private DeathScreen _deathScreen;
+
+    // DEBUG
+    [SerializeField] private bool _DEBUGShootEnabled;
+    private bool _isBoosting;
+    [SerializeField] private int _killBounceEnergy = 15;
+    private Vector2 _lastFacingDirection;
+    private Vector3 _lastInput;
+    [SerializeField] private float _maxBoostTime = 2.0f;
     [SerializeField] private int _maxHealth = 100;
     [SerializeField] private float _maxJumpHeight = 4f;
+    private float _maxJumpVelocity;
+    [SerializeField] private float _maxShotRange;
+    [SerializeField] private float _minJumpHeight = 1f;
+    private float _minJumpVelocity;
     [SerializeField] private float _moveSpeed = 10;
     [SerializeField] private float _secondsInvincibility = 1.5f;
     [SerializeField] private GameObject _shootParticle;
     [SerializeField] private float _shotCoolDown = 1.0f;
-    [SerializeField] private float _maxShotRange;
-    [SerializeField] private float _minJumpHeight = 1f;
+    private double _shotCoolDownTimer;
     [SerializeField] private float _shotSpeed;
     [SerializeField] private float _timeToJumpApex = .4f;
-
-    private DeathScreen _deathScreen;
-    private bool _canBoost = true;
-    private CircleController2D _controller;
-    private float _currentBoostTime;
-    private Animator _animator;
-    private int _currentHealth;
-    private bool _isBoosting;
-    private Vector2 _lastFacingDirection;
-    private Vector3 _lastInput;
-    private float _maxJumpVelocity;
-    private float _minJumpVelocity;
-    private double _shotCoolDownTimer;
     private float _velocityXSmoothing;
+    public bool IgnoreGround;
+
+    public Vector3 Velocity;
 
     public List<Upgrade> Upgrades { get; set; }
 
@@ -67,13 +68,9 @@ public class Player : MonoBehaviour
         set
         {
             if (value < 1) // dead
-            {
                 StartCoroutine(_deathScreen.Death());
-            }
             else
-            {
                 _currentHealth = value;
-            }
         }
     }
 
@@ -84,21 +81,24 @@ public class Player : MonoBehaviour
     }
 
 
-
     private void Awake()
     {
         _deathScreen = FindObjectOfType<DeathScreen>();
         Upgrades = new List<Upgrade>();
+        if (_DEBUGShootEnabled) Upgrades.Add(UpgradeBuilder.Instance.GetShootingUpgrade(123, "test"));
     }
 
     /// <summary>
-    /// An expression bodied method to check if the player's upgrade list Upgrades contains a specific upgrade.
-    /// Since every upgrade except HealthUpgrade has it's own class,
-    /// it is trivial. 
+    ///     An expression bodied method to check if the player's upgrade list Upgrades contains a specific upgrade.
+    ///     Since every upgrade except HealthUpgrade has it's own class,
+    ///     it is trivial.
     /// </summary>
     /// <typeparam name="TUpgrade">The type of the upgrade that the method will check</typeparam>
-    /// <returns>True if the player has the upgrade specified by the type <typeparamref name="TUpgrade"/></returns>
-    public bool HasUpgrade<TUpgrade>() where TUpgrade : Upgrade => Upgrades.OfType<TUpgrade>().Any();
+    /// <returns>True if the player has the upgrade specified by the type <typeparamref name="TUpgrade" /></returns>
+    public bool HasUpgrade<TUpgrade>() where TUpgrade : Upgrade
+    {
+        return Upgrades.OfType<TUpgrade>().Any();
+    }
 
     // Use this for initialization
     private void Start()
@@ -110,22 +110,16 @@ public class Player : MonoBehaviour
 
         _animator = GetComponent<Animator>();
 
-        if (_boostArrow)
-        {
-            _boostArrow.SetActive(false);
-        }
+        if (_boostArrow) _boostArrow.SetActive(false);
 
-        if (_boostTimer)
-        {
-            _boostTimer.SetActive(false);
-        }
+        if (_boostTimer) _boostTimer.SetActive(false);
 
         _controller = GetComponent<CircleController2D>();
 
         var gravity = -(2 * _maxJumpHeight) / Mathf.Pow(_timeToJumpApex, 2);
 
         Constants.GRAVITY = gravity;
-        
+
         _maxJumpVelocity = Mathf.Abs(gravity * _timeToJumpApex);
         _minJumpVelocity = Mathf.Sqrt(2 * Mathf.Abs(gravity) * _minJumpHeight);
     }
@@ -139,15 +133,12 @@ public class Player : MonoBehaviour
             CheckShooting();
 
             if (Math.Abs(Velocity.x) > .01f)
-            {
                 _lastFacingDirection = ConvertToInteger(new Vector2(Velocity.x, Velocity.y));
-            }
         }
     }
 
     private void CheckShooting()
     {
-        
         if (!HasUpgrade<ShootingUpgrade>()) return;
 
         if (Input.GetButtonDown("Fire3") && _shotCoolDown < _shotCoolDownTimer)
@@ -277,39 +268,26 @@ public class Player : MonoBehaviour
         if (_controller.Collisions.Above || _controller.Collisions.Below)
         {
             if (!IgnoreGround)
-            {
                 Velocity.y = 0;
-                //_velocity.y = -_velocity.y; TODO : PRODUCES BOUNCING
-            }
             else
-            {
                 _controller.Collisions.Below = false; // allows to move the player in y direction on ground
-            }
         }
 
-        if (_controller.Collisions.Below)
-        {
-            _canBoost = true;
-        }
+        if (_controller.Collisions.Below) _canBoost = true;
 
         var input = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
 
         input = ConvertToInteger(input);
 
 
-        if (input != Vector2.zero)
-        {
-            _lastInput = input;
-        }
+        if (input != Vector2.zero) _lastInput = input;
 
         Debug.DrawRay(transform.position, input, Color.yellow);
 
         var boostInput = Input.GetAxisRaw("Fire1");
 
         if (Input.GetButtonDown("Fire1") && !_controller.Collisions.Below && _canBoost)
-        {
             AudioManager.Instance.Play("BoostCharge");
-        }
 
         if (Math.Abs(boostInput) > 0.01f && !_controller.Collisions.Below && _canBoost)
         {
@@ -376,12 +354,8 @@ public class Player : MonoBehaviour
         }
 
         if (Input.GetButtonUp("Jump") && _canBoost)
-        {
             if (Velocity.y > _minJumpVelocity)
-            {
                 Velocity.y = _minJumpVelocity;
-            }
-        }
 
         var targetVelocityX = Mathf.Round(input.x) * _moveSpeed;
 
@@ -389,34 +363,20 @@ public class Player : MonoBehaviour
             _controller.Collisions.Below ? _accelerationTimeGrounded : _accelerationTimeAirborne);
 
         Velocity.y += Constants.GRAVITY * Time.deltaTime;
-        
+
         _controller.Move(Velocity * Time.deltaTime);
     }
 
     private static Vector2 ConvertToInteger(Vector2 input)
     {
-        if (input.x < 0)
-        {
-            input.x = -1;
-        }
+        if (input.x < 0) input.x = -1;
 
-        if (input.x > 0)
-        {
-            input.x = 1;
-        }
+        if (input.x > 0) input.x = 1;
 
-        if (input.y < 0)
-        {
-            input.y = -1;
-        }
+        if (input.y < 0) input.y = -1;
 
-        if (input.y > 0)
-        {
-            input.y = 1;
-        }
+        if (input.y > 0) input.y = 1;
 
         return input;
     }
-
-
 }

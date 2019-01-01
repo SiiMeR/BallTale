@@ -5,17 +5,18 @@ using UnityEngine;
 [RequireComponent(typeof(CircleController2D))]
 public class Shot : MonoBehaviour
 {
-    [SerializeField] private LayerMask _killMask;
-
     private CircleController2D _controller;
-
-    public float MaxRange { get; set; }
 
     private Vector2 _direction;
 
+    private float _distanceCovered;
+    [SerializeField] private LayerMask _killMask;
+
+    public float MaxRange { get; set; }
+
     public Vector2 Direction
     {
-        get { return _direction; }
+        get => _direction;
         set
         {
             var angle = Mathf.Atan2(value.y, value.x) * Mathf.Rad2Deg;
@@ -30,8 +31,6 @@ public class Shot : MonoBehaviour
 
     public Vector2 CurrentVelocity { get; set; }
 
-    private float _distanceCovered;
-
     // Use this for initialization
     private void Start()
     {
@@ -43,10 +42,7 @@ public class Shot : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        if (_distanceCovered > MaxRange)
-        {
-            StartCoroutine(DestroyShot());
-        }
+        if (_distanceCovered > MaxRange) StartCoroutine(DestroyShot());
 
         _distanceCovered += Time.deltaTime * MoveSpeed;
 
@@ -55,10 +51,7 @@ public class Shot : MonoBehaviour
 
     private IEnumerator DestroyShot()
     {
-        if (GetComponentInChildren<SpriteRenderer>())
-        {
-            GetComponentInChildren<SpriteRenderer>().enabled = false;
-        }
+        if (GetComponentInChildren<SpriteRenderer>()) GetComponentInChildren<SpriteRenderer>().enabled = false;
 
         GetComponent<CapsuleCollider2D>().enabled = false;
 
@@ -76,9 +69,7 @@ public class Shot : MonoBehaviour
             _controller.Collisions.Left ||
             _controller.Collisions.Above ||
             _controller.Collisions.Below)
-        {
             StartCoroutine(DestroyShot());
-        }
 
         _controller.Move(CurrentVelocity * Time.deltaTime);
     }
@@ -99,10 +90,8 @@ public class Shot : MonoBehaviour
 
 
             if (other.gameObject.GetComponent<BasicEnemy>())
-            {
                 GameObject.FindGameObjectWithTag("Player").GetComponent<Player>().Currency +=
                     other.gameObject.GetComponent<BasicEnemy>().CurrencyOnKill;
-            }
 
 
             Destroy(other.gameObject);
