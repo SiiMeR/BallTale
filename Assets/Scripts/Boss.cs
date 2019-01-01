@@ -45,7 +45,7 @@ public class Boss : MonoBehaviour
 
     public int CurrentHealth
     {
-        get { return _currentHealth; }
+        get => _currentHealth;
         set
         {
             if (value < 1)
@@ -92,9 +92,13 @@ public class Boss : MonoBehaviour
         CurrentState = BossState.MOVE;
         _animator = GetComponent<Animator>();
         _controller = GetComponent<BoxController2D>();
-        _currentHealth = _maxHealth;
 
         _velocity = new Vector3(_moveSpeed, _moveSpeed, 0);
+    }
+
+    private void OnEnable()
+    {
+        StartCoroutine(ChangeHP(1, _maxHealth, 2.0f));
     }
 
     // Update is called once per frame
@@ -297,10 +301,7 @@ public class Boss : MonoBehaviour
         }
 
 
-        if (_useGravity)
-        {
-            _velocity.y += Constants.GRAVITY * Time.deltaTime;
-        }
+        if (_useGravity) _velocity.y += Constants.GRAVITY * Time.deltaTime;
 
         _controller.Move(_velocity * Time.deltaTime);
     }
@@ -308,19 +309,14 @@ public class Boss : MonoBehaviour
     private void OnTriggerStay2D(Collider2D other)
     {
         if (other.gameObject.CompareTag("Player") && CurrentState != BossState.VORTEX)
-        {
             other.gameObject.GetComponent<Player>().DamagePlayer(Damage);
-        }
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.gameObject.CompareTag("Shot"))
         {
-            if (CurrentState == BossState.VULNERABLE)
-            {
-                GetDamaged();
-            }
+            if (CurrentState == BossState.VULNERABLE) GetDamaged();
 
             Destroy(other.gameObject);
         }
@@ -328,13 +324,16 @@ public class Boss : MonoBehaviour
 
     private IEnumerator ChangeHP(float from, float to, float seconds)
     {
+        CurrentHealth = (int) from;
+
         var timer = 0f;
 
+        var image = _hpbar.GetComponent<Image>();
         while ((timer += Time.deltaTime) < seconds)
         {
             var currentHealth = Mathf.Lerp(from, to, timer / seconds);
 
-            _hpbar.GetComponent<Image>().fillAmount = currentHealth / _maxHealth;
+            image.fillAmount = currentHealth / _maxHealth;
 
             yield return null;
         }
