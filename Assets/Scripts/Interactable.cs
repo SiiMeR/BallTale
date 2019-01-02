@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Linq;
+using UnityEngine;
 
 public abstract class Interactable : MonoBehaviour
 {
@@ -6,7 +7,13 @@ public abstract class Interactable : MonoBehaviour
 
     [SerializeField] protected GameObject _notice;
     [SerializeField] protected GameObject _panel;
+
     [SerializeField] private bool _pauseOnInteract;
+
+    // rather expensive
+    public static bool IsAnyActive =>
+        FindObjectsOfType
+            <Interactable>().Any(interactable => interactable._panel.activeInHierarchy);
 
 
     // Use this for initialization
@@ -19,6 +26,7 @@ public abstract class Interactable : MonoBehaviour
     // Update is called once per frame	
     protected virtual void Update()
     {
+        if (Input.GetButtonDown("Cancel") && _isCollidingWPlayer && IsAnyActive) Interact();
         if (Input.GetButtonDown("Fire2") && _isCollidingWPlayer) Interact();
     }
 

@@ -3,12 +3,12 @@ using UnityEngine.SceneManagement;
 
 public class PauseMenu : SimpleMenu<PauseMenu>
 {
-
     protected override void Awake()
     {
         base.Awake();
         Time.timeScale = 0;
     }
+
 
     protected override void OnDestroy()
     {

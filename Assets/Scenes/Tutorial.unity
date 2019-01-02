@@ -2722,7 +2722,7 @@ PrefabInstance:
     - target: {fileID: 224629866060043672, guid: 6ea1a970ff86dc64dbb6b894f996dbfd,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 73.1
+      value: 73.1001
       objectReference: {fileID: 0}
     - target: {fileID: 224629866060043672, guid: 6ea1a970ff86dc64dbb6b894f996dbfd,
         type: 3}
@@ -2917,13 +2917,11 @@ PrefabInstance:
       propertyPath: m_PreserveAspect
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 114861996020650406, guid: 6ea1a970ff86dc64dbb6b894f996dbfd,
-        type: 3}
+    - target: {fileID: 0}
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 114861996020650406, guid: 6ea1a970ff86dc64dbb6b894f996dbfd, type: 3}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6ea1a970ff86dc64dbb6b894f996dbfd, type: 3}
 --- !u!1 &1085026207
 GameObject:
@@ -9581,6 +9579,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 114291158699655834, guid: 63ce5d67ea1193c46a927a1e9653e3af, type: 3}
+    - {fileID: 114463252370021462, guid: 63ce5d67ea1193c46a927a1e9653e3af, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 63ce5d67ea1193c46a927a1e9653e3af, type: 3}
 --- !u!1001 &1834473359
 PrefabInstance:

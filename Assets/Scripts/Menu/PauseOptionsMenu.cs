@@ -14,7 +14,6 @@ public class PauseOptionsMenu : SimpleMenu<PauseOptionsMenu>
     {
         base.Awake();
 
-
         UpdateSliderAndVal(soundSlider, soundSliderVal, PlayerPrefs.GetInt("SoundVolume"));
         UpdateSliderAndVal(musicSlider, musicSliderVal, PlayerPrefs.GetInt("MusicVolume"));
     }
