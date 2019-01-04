@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 71c1514a6bd24e1e882cebbe1904ce04, type: 3}
-  m_Name: gargle rg SDF
+  m_Name: gargleunderlay
   m_EditorClassIdentifier: 
-  hashCode: 948651070
-  material: {fileID: 21805847044707156}
-  materialHashCode: 1081941749
+  hashCode: 2025244262
+  material: {fileID: 21648997251676824}
+  materialHashCode: 488938797
   fontAssetType: 1
   m_fontInfo:
     Name: Gargle
@@ -38,7 +38,7 @@ MonoBehaviour:
     Padding: 5
     AtlasWidth: 512
     AtlasHeight: 512
-  atlas: {fileID: 28019920489659220}
+  atlas: {fileID: 28571222101136670}
   m_glyphInfoList:
   - id: 32
     x: 6
@@ -932,20 +932,20 @@ MonoBehaviour:
   fallbackFontAssets: []
   m_CreationSettings:
     sourceFontFileName: 
-    sourceFontFileGUID: 
+    sourceFontFileGUID: c2165da7da0122d4bb423882b19ba4a0
     pointSizeSamplingMode: 0
-    pointSize: 0
-    padding: 0
+    pointSize: 75
+    padding: 5
     packingMode: 0
-    atlasWidth: 0
-    atlasHeight: 0
+    atlasWidth: 512
+    atlasHeight: 512
     characterSetSelectionMode: 0
-    characterSequence: 
+    characterSequence: 32 - 126, 160, 8203, 8230, 9633
     referencedFontAssetGUID: 
     referencedTextAssetGUID: 
     fontStyle: 0
-    fontStyleModifier: 0
-    renderMode: 0
+    fontStyleModifier: 2
+    renderMode: 6
     includeFontFeatures: 0
   fontWeights:
   - regularTypeface: {fileID: 0}
@@ -974,16 +974,16 @@ MonoBehaviour:
   boldSpacing: 7
   italicStyle: 35
   tabSize: 10
---- !u!21 &21805847044707156
+--- !u!21 &21648997251676824
 Material:
   serializedVersion: 6
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: gargle rg SDF Material
+  m_Name: gargleunderlay Material
   m_Shader: {fileID: 4800000, guid: 68e6db2ebdc24f95958faec2be5558d6, type: 3}
-  m_ShaderKeywords: 
+  m_ShaderKeywords: UNDERLAY_ON
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -1006,7 +1006,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 28019920489659220}
+        m_Texture: {fileID: 28571222101136670}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _OutlineTex:
@@ -1028,21 +1028,21 @@ Material:
     - _FaceUVSpeedX: 0
     - _FaceUVSpeedY: 0
     - _GlowInner: 0.05
-    - _GlowOffset: 1
+    - _GlowOffset: 0
     - _GlowOuter: 0.05
     - _GlowPower: 0.75
     - _GradientScale: 6
     - _LightAngle: 3.1416
     - _MaskSoftnessX: 0
     - _MaskSoftnessY: 0
-    - _OutlineSoftness: -0
+    - _OutlineSoftness: 0
     - _OutlineUVSpeedX: 0
     - _OutlineUVSpeedY: 0
     - _OutlineWidth: 0
-    - _PerspectiveFilter: 0.74
+    - _PerspectiveFilter: 0.875
     - _Reflectivity: 10
     - _ScaleRatioA: 0.8333333
-    - _ScaleRatioB: 0.6448413
+    - _ScaleRatioB: 0.6770833
     - _ScaleRatioC: 0.6770833
     - _ScaleX: 1
     - _ScaleY: 1
@@ -1069,18 +1069,18 @@ Material:
     - _FaceColor: {r: 1, g: 1, b: 1, a: 1}
     - _GlowColor: {r: 0, g: 1, b: 0, a: 0.5}
     - _MaskCoord: {r: 0, g: 0, b: 32767, a: 32767}
-    - _OutlineColor: {r: 1, g: 1, b: 1, a: 1}
+    - _OutlineColor: {r: 0, g: 0, b: 0, a: 1}
     - _ReflectFaceColor: {r: 0, g: 0, b: 0, a: 1}
     - _ReflectOutlineColor: {r: 0, g: 0, b: 0, a: 1}
     - _SpecularColor: {r: 1, g: 1, b: 1, a: 1}
-    - _UnderlayColor: {r: 0, g: 0, b: 0, a: 0.5}
---- !u!28 &28019920489659220
+    - _UnderlayColor: {r: 0, g: 0, b: 0, a: 0.5019608}
+--- !u!28 &28571222101136670
 Texture2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: gargle rg SDF Atlas
+  m_Name: gargleunderlay Atlas
   m_ImageContentsHash:
     serializedVersion: 2
     Hash: 00000000000000000000000000000000
