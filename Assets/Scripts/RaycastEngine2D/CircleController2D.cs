@@ -1,32 +1,27 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace RaycastEngine2D
 {
     [RequireComponent(typeof(CircleCollider2D))]
     public class CircleController2D : RayCastController
     {
+        [SerializeField] private float _edgePushStrength = 0.01f;
+        [SerializeField] private float _maxClimbAngle = 45;
+        [SerializeField] private float _maxDescentAngle = 30;
         [HideInInspector] public CollisionInfo Collisions;
         [HideInInspector] public RaycastOrigins RayCastOrigins;
 
-        [SerializeField] private float _edgePushStrength = 0.01f;
-
         public void Move(Vector3 velocity)
         {
-            
             UpdateRaycastOrigins();
             Collisions.Reset();
+            Collisions.VelocityOld = velocity;
 
+            if (velocity.y < 0) DescendSlope(ref velocity);
 
-            if (Math.Abs(velocity.x) > float.Epsilon)
-            {
-                CheckHorizontalCollisions(ref velocity);
-            }
+            if (Mathf.Abs(velocity.x) > float.Epsilon) CheckHorizontalCollisions(ref velocity);
 
-            if (Math.Abs(velocity.y) > float.Epsilon)
-            {
-                CheckVerticalCollisions(ref velocity);
-            }
+            if (Mathf.Abs(velocity.y) > float.Epsilon) CheckVerticalCollisions(ref velocity);
 
             if (float.IsNaN(velocity.x) || float.IsNaN(velocity.y) || float.IsNaN(velocity.z))
             {
@@ -51,8 +46,36 @@ namespace RaycastEngine2D
 
             if (hit)
             {
+                var slopeAngle = Vector2.Angle(hit.normal, Vector2.up);
+
+                if (Mathf.Abs(slopeAngle) > float.Epsilon && slopeAngle <= _maxClimbAngle)
+                {
+                    if (Collisions.DescendingSlope)
+                    {
+                        Collisions.DescendingSlope = false;
+                        velocity = Collisions.VelocityOld;
+                    }
+
+                    var distanceToSlopeStart = 0f;
+
+                    if (Mathf.Abs(slopeAngle - Collisions.SlopeAngleOld) > float.Epsilon)
+                    {
+                        distanceToSlopeStart = hit.distance - SKINWIDTH;
+                        velocity.x -= distanceToSlopeStart * directionX;
+                    }
+
+                    ClimbSlope(ref velocity, slopeAngle);
+                    velocity.x += distanceToSlopeStart * directionX;
+                }
+
+                if (Collisions.ClimbingSlope || slopeAngle < _maxClimbAngle) return;
+
                 velocity.x = (hit.distance - SKINWIDTH) * directionX;
-                Collisions.Left = Mathf.Abs(directionX - (-1)) < float.Epsilon;
+
+                if (Collisions.ClimbingSlope)
+                    velocity.y = Mathf.Tan(Collisions.SlopeAngle * Mathf.Deg2Rad * Mathf.Abs(velocity.x));
+
+                Collisions.Left = Mathf.Abs(directionX - -1) < float.Epsilon;
                 Collisions.Right = Mathf.Abs(directionX - 1) < float.Epsilon;
             }
 
@@ -72,13 +95,36 @@ namespace RaycastEngine2D
 
             var hit = Physics2D.CircleCast(rayOrigin, radius, Vector2.up * directionY, rayLength,
                 CollisionMask);
-            
+
             if (hit)
             {
                 velocity.y = (hit.distance - SKINWIDTH) * directionY;
 
-                Collisions.Below = Mathf.Abs(directionY - (-1)) < float.Epsilon;
+                if (Collisions.ClimbingSlope)
+                    velocity.x = velocity.y / Mathf.Tan(Collisions.SlopeAngle * Mathf.Deg2Rad) * Mathf.Sign(velocity.x);
+
+                Collisions.Below = Mathf.Abs(directionY - -1) < float.Epsilon;
                 Collisions.Above = Mathf.Abs(directionY - 1) < float.Epsilon;
+            }
+
+            if (Collisions.ClimbingSlope)
+            {
+                var directionX = Mathf.Sign(velocity.x);
+                rayLength = Mathf.Abs(velocity.x) + SKINWIDTH;
+
+                hit = Physics2D.CircleCast(rayOrigin, radius, Vector2.up * directionY, rayLength,
+                    CollisionMask);
+
+                if (hit)
+                {
+                    var slopeAngle = Vector2.Angle(hit.normal, Vector2.up);
+
+                    if (Mathf.Abs(slopeAngle - Collisions.SlopeAngle) > float.Epsilon)
+                    {
+                        velocity.x = (hit.distance - SKINWIDTH) * directionX;
+                        Collisions.SlopeAngle = slopeAngle;
+                    }
+                }
             }
 
             for (var i = 0; i < 3; i++)
@@ -122,17 +168,71 @@ namespace RaycastEngine2D
                 }
             }
 
-            
+
             MoveEdge(ref velocity);
 
             Debug.DrawRay(rayOrigin, Vector2.up * 2 * directionY,
                 Collisions.Above || Collisions.Below ? Color.blue : Color.red);
         }
-        
 
         /// <summary>
-        /// Calculates the sum of the 3 rays used to check if the circle is on edge. After that, controller velocity is modified
-        /// depending on the sum.
+        ///     Calculate the new velocity taking into account the slope angle.
+        /// </summary>
+        /// <param name="velocity">The current reference velocity of the object.</param>
+        /// <param name="slopeAngle">The angle of the slope being climbed</param>
+        private void ClimbSlope(ref Vector3 velocity, float slopeAngle)
+        {
+            var moveDistance = Mathf.Abs(velocity.x);
+            var climbVelocityY = Mathf.Sin(slopeAngle * Mathf.Deg2Rad) * moveDistance;
+
+            if (velocity.y <= climbVelocityY)
+            {
+                velocity.y = climbVelocityY;
+                velocity.x = Mathf.Cos(slopeAngle * Mathf.Deg2Rad) * moveDistance * Mathf.Sign(velocity.x);
+                Collisions.Below = true;
+                Collisions.ClimbingSlope = true;
+                Collisions.SlopeAngle = slopeAngle;
+            }
+        }
+
+        /// <summary>
+        ///     Calculate the new velocity taking into account the descent angle.
+        /// </summary>
+        /// <param name="velocity">The current reference velocity of the object.</param>
+        private void DescendSlope(ref Vector3 velocity)
+        {
+            var directionX = Mathf.Sign(velocity.x);
+            var rayOrigin = RayCastOrigins.Center;
+
+            var radius = Vector2.Distance(RayCastOrigins.Center, RayCastOrigins.Bottom);
+
+            var hit = Physics2D.CircleCast(rayOrigin, radius, Vector2.down, Mathf.Infinity,
+                CollisionMask);
+
+            if (hit)
+            {
+                var slopeAngle = Vector2.Angle(hit.normal, Vector2.up);
+
+                if (Mathf.Abs(slopeAngle) > float.Epsilon && slopeAngle < _maxDescentAngle)
+                    if (Mathf.Abs(Mathf.Sign(hit.normal.x) - directionX) < float.Epsilon)
+                        if (hit.distance - SKINWIDTH <= Mathf.Tan(slopeAngle * Mathf.Deg2Rad) * Mathf.Abs(velocity.x))
+                        {
+                            var moveDistance = Mathf.Abs(velocity.x);
+                            var descendVelocityY = Mathf.Sin(slopeAngle * Mathf.Deg2Rad) * moveDistance;
+                            velocity.x = Mathf.Cos(slopeAngle * Mathf.Deg2Rad) * moveDistance * Mathf.Sign(velocity.x);
+                            velocity.y -= descendVelocityY;
+
+                            Collisions.SlopeAngle = slopeAngle;
+                            Collisions.DescendingSlope = true;
+                            Collisions.Below = true;
+                        }
+            }
+        }
+
+        /// <summary>
+        ///     Calculates the sum of the 3 rays used to check if the circle is on edge. After that, controller velocity is
+        ///     modified
+        ///     depending on the sum.
         /// </summary>
         /// <param name="velocity">The current velocity of the controller as a reference.</param>
         private void MoveEdge(ref Vector3 velocity)
@@ -203,14 +303,21 @@ namespace RaycastEngine2D
         {
             public bool Above, Below, Left, Right;
 
+            public bool ClimbingSlope, DescendingSlope;
+
+            public float SlopeAngle, SlopeAngleOld;
+
+            public Vector3 VelocityOld;
+
             internal bool[] edgecheck;
 
             public void Reset()
             {
-
                 edgecheck = new bool[3];
                 Above = Below = Left = Right = false;
-                
+                ClimbingSlope = DescendingSlope = false;
+                SlopeAngleOld = SlopeAngle;
+                SlopeAngle = 0;
             }
 
             public bool IsColliding => Above || Below || Left || Right;

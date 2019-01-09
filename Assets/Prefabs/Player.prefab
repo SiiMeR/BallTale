@@ -261,7 +261,9 @@ MonoBehaviour:
   CollisionMask:
     serializedVersion: 2
     m_Bits: 512
-  _edgePushStrength: 0.01
+  _edgePushStrength: 0.02
+  _maxClimbAngle: 45
+  _maxDescentAngle: 45
 --- !u!212 &212293388885712598
 SpriteRenderer:
   m_ObjectHideFlags: 0
