@@ -118,7 +118,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1471922103519594}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 17bc780f26440f64dae01bc9e197c106, type: 3}
+  m_Script: {fileID: 11500000, guid: b7e60b9de21983c44b5190745e1b0809, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   CollisionMask:

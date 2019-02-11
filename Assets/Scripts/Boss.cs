@@ -144,7 +144,9 @@ public class Boss : MonoBehaviour
 
         yield return new WaitUntil(() =>
         {
-            var dirToVortex = transform.position - player.transform.position;
+            var playerPos = player.transform.position;
+            var vortexPos = transform.position;
+            var dirToVortex = vortexPos - playerPos;
 
             player.Velocity += dirToVortex.normalized * (Time.deltaTime * timer);
 
@@ -152,7 +154,7 @@ public class Boss : MonoBehaviour
 
             timer += 0.1f;
 
-            var distance = Vector3.Distance(player.transform.position, transform.position);
+            var distance = Vector3.Distance(playerPos, vortexPos);
 
             var color = _vortexscreen.GetComponent<Image>().color;
 
@@ -160,7 +162,7 @@ public class Boss : MonoBehaviour
 
             _vortexscreen.GetComponent<Image>().color = color;
 
-            return distance < 0.1f;
+            return distance < 0.15f;
         });
 
         var c = _vortexscreen.GetComponent<Image>().color;
@@ -173,7 +175,6 @@ public class Boss : MonoBehaviour
         player.IgnoreGround = false;
 
         Time.timeScale = 0f;
-
 
         StartCoroutine(VortexText());
     }

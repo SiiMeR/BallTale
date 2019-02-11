@@ -167,36 +167,12 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 114505464928479366, guid: 7333fc2108db98b4094d16889aec8418,
-        type: 3}
-      propertyPath: CollisionMask.m_Bits
-      value: 512
-      objectReference: {fileID: 0}
-    - target: {fileID: 114505464928479366, guid: 7333fc2108db98b4094d16889aec8418,
-        type: 3}
-      propertyPath: _edgePushStrength
-      value: 0.02
-      objectReference: {fileID: 0}
-    - target: {fileID: 114505464928479366, guid: 7333fc2108db98b4094d16889aec8418,
-        type: 3}
-      propertyPath: _maxClimbAngle
-      value: 45
-      objectReference: {fileID: 0}
-    - target: {fileID: 114505464928479366, guid: 7333fc2108db98b4094d16889aec8418,
-        type: 3}
-      propertyPath: _maxDescentAngle
-      value: 45
-      objectReference: {fileID: 0}
-    - target: {fileID: 372382091, guid: 7333fc2108db98b4094d16889aec8418, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -0.72000015
-      objectReference: {fileID: 0}
-    - target: {fileID: 114896664719031728, guid: 7333fc2108db98b4094d16889aec8418,
+    - target: {fileID: 2374663457179028563, guid: 7333fc2108db98b4094d16889aec8418,
         type: 3}
       propertyPath: m_havePropertiesChanged
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 114896664719031728, guid: 7333fc2108db98b4094d16889aec8418,
+    - target: {fileID: 2374663457179028563, guid: 7333fc2108db98b4094d16889aec8418,
         type: 3}
       propertyPath: m_isInputParsingRequired
       value: 1

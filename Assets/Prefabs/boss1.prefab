@@ -85,7 +85,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1700365627749058}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -1.785202, y: -1.5946164, z: -0.13371415}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -156,10 +156,10 @@ MonoBehaviour:
   _currencyOnKill: 150
   _hitCollider: {fileID: 1595321589956734}
   _hpbar: {fileID: 0}
-  _maxHealth: 150
+  _maxHealth: 100
   _moveSpeed: 10
-  _secondsMove: 9
-  _secondsVulnerable: 5
+  _secondsMove: 6
+  _secondsVulnerable: 6
   _useGravity: 0
   _vortexscreen: {fileID: 0}
   _vortextext: {fileID: 0}
@@ -199,15 +199,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1700365627749058}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 17bc780f26440f64dae01bc9e197c106, type: 3}
+  m_Script: {fileID: 11500000, guid: b7e60b9de21983c44b5190745e1b0809, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  collisionMask:
+  CollisionMask:
     serializedVersion: 2
-    m_Bits: 2560
-  _collider: {fileID: 0}
-  horizontalRayCount: 4
-  verticalRayCount: 4
+    m_Bits: 512
 --- !u!95 &95734140201367064
 Animator:
   serializedVersion: 3

@@ -4773,13 +4773,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 1191552461824492}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5d2b4bc33aa23d14aaf91e6e64171be4, type: 3}
+  m_Script: {fileID: 11500000, guid: cd49b4defe00b3e499490aeb8aaed9ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   CollisionMask:
     serializedVersion: 2
     m_Bits: 512
   _edgePushStrength: 0.01
+  _maxClimbAngle: 45
+  _maxDescentAngle: 30
 --- !u!50 &50859352741068246
 Rigidbody2D:
   serializedVersion: 4

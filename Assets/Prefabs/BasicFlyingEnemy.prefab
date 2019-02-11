@@ -176,12 +176,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1767245969044858}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 17bc780f26440f64dae01bc9e197c106, type: 3}
+  m_Script: {fileID: 11500000, guid: b7e60b9de21983c44b5190745e1b0809, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   CollisionMask:
     serializedVersion: 2
-    m_Bits: 512
+    m_Bits: 0
 --- !u!114 &114309150039754992
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -204,7 +204,7 @@ MonoBehaviour:
   currencyOnKill: 10
   damage: 5
   moveSpeed: -4
-  _useGravity: 1
+  _useGravity: 0
   _useWaypointMovement: 1
 --- !u!95 &95554651409832300
 Animator:
