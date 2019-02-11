@@ -27,6 +27,7 @@ public class OptionsMenu : SimpleMenu<OptionsMenu>
 
     public void OnSoundValueChanged()
     {
+        AudioManager.Instance.Play("menuselect");
         PlayerPrefs.SetInt("SoundVolume", (int) soundSlider.value);
 
         var newVal = soundSlider.value * 10;
@@ -37,6 +38,7 @@ public class OptionsMenu : SimpleMenu<OptionsMenu>
 
     public void OnMusicValueChanged()
     {
+        AudioManager.Instance.Play("menuselect");
         PlayerPrefs.SetInt("MusicVolume", (int) musicSlider.value);
         var newVal = musicSlider.value * 10;
         musicSliderVal.text = newVal.ToString();

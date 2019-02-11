@@ -3659,8 +3659,8 @@ PrefabInstance:
     m_TransformParent: {fileID: 155843010}
     m_Modifications:
     - target: {fileID: 1700365627749058, guid: dacd53bebce7a2e4ab492aaf5e9697de, type: 3}
-      propertyPath: m_IsActive
-      value: 0
+      propertyPath: m_Name
+      value: boss1
       objectReference: {fileID: 0}
     - target: {fileID: 4635685771987002, guid: dacd53bebce7a2e4ab492aaf5e9697de, type: 3}
       propertyPath: m_LocalPosition.x
@@ -3694,6 +3694,18 @@ PrefabInstance:
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4635685771987002, guid: dacd53bebce7a2e4ab492aaf5e9697de, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4635685771987002, guid: dacd53bebce7a2e4ab492aaf5e9697de, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4635685771987002, guid: dacd53bebce7a2e4ab492aaf5e9697de, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 114226398384701254, guid: dacd53bebce7a2e4ab492aaf5e9697de,
         type: 3}
       propertyPath: _hpbar
@@ -3709,31 +3721,6 @@ PrefabInstance:
       propertyPath: _vortextext
       value: 
       objectReference: {fileID: 365719241}
-    - target: {fileID: 114226398384701254, guid: dacd53bebce7a2e4ab492aaf5e9697de,
-        type: 3}
-      propertyPath: _secondsMove
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 114226398384701254, guid: dacd53bebce7a2e4ab492aaf5e9697de,
-        type: 3}
-      propertyPath: _maxHealth
-      value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 114226398384701254, guid: dacd53bebce7a2e4ab492aaf5e9697de,
-        type: 3}
-      propertyPath: _moveSpeed
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 114226398384701254, guid: dacd53bebce7a2e4ab492aaf5e9697de,
-        type: 3}
-      propertyPath: _secondsVulnerable
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 114048721371155552, guid: dacd53bebce7a2e4ab492aaf5e9697de,
-        type: 3}
-      propertyPath: CollisionMask.m_Bits
-      value: 512
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dacd53bebce7a2e4ab492aaf5e9697de, type: 3}
 --- !u!1 &988407450 stripped
