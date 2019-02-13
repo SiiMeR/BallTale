@@ -68,15 +68,16 @@ namespace RaycastEngine2D
                     velocity.x += distanceToSlopeStart * directionX;
                 }
 
-                if (Collisions.ClimbingSlope || slopeAngle < _maxClimbAngle) return;
+                if (!Collisions.ClimbingSlope && slopeAngle > _maxClimbAngle)
+                {
+                    velocity.x = (hit.distance - SKINWIDTH) * directionX;
 
-                velocity.x = (hit.distance - SKINWIDTH) * directionX;
+                    if (Collisions.ClimbingSlope)
+                        velocity.y = Mathf.Tan(Collisions.SlopeAngle * Mathf.Deg2Rad * Mathf.Abs(velocity.x));
 
-                if (Collisions.ClimbingSlope)
-                    velocity.y = Mathf.Tan(Collisions.SlopeAngle * Mathf.Deg2Rad * Mathf.Abs(velocity.x));
-
-                Collisions.Left = Mathf.Abs(directionX - -1) < float.Epsilon;
-                Collisions.Right = Mathf.Abs(directionX - 1) < float.Epsilon;
+                    Collisions.Left = Mathf.Abs(directionX - -1) < float.Epsilon;
+                    Collisions.Right = Mathf.Abs(directionX - 1) < float.Epsilon;
+                }
             }
 
 
