@@ -13,6 +13,7 @@ public class Player : MonoBehaviour
 {
     [SerializeField] private float _accelerationTimeAirborne = .2f;
     [SerializeField] private float _accelerationTimeGrounded = .1f;
+
     private Animator _animator;
     [SerializeField] private GameObject _boostArrow;
     [SerializeField] private float _boostForce = 20f;
@@ -20,13 +21,9 @@ public class Player : MonoBehaviour
     [SerializeField] private Image _boostTimerFill;
     private bool _canBoost = true;
     private CircleController2D _controller;
-    [SerializeField] private int _currency = 100;
     private float _currentBoostTime;
     private int _currentHealth;
-
     [SerializeField] private TextMeshProUGUI _damageText;
-    // DEBUG
-
     private DeathScreen _deathScreen;
 
     // DEBUG
@@ -36,7 +33,6 @@ public class Player : MonoBehaviour
     private Vector2 _lastFacingDirection;
     private Vector3 _lastInput;
     [SerializeField] private float _maxBoostTime = 2.0f;
-    [SerializeField] private int _maxHealth = 100;
     [SerializeField] private float _maxJumpHeight = 4f;
     private float _maxJumpVelocity;
     [SerializeField] private float _maxShotRange;
@@ -50,17 +46,12 @@ public class Player : MonoBehaviour
     [SerializeField] private float _shotSpeed;
     [SerializeField] private float _timeToJumpApex = .4f;
     private float _velocityXSmoothing;
+
     public bool IgnoreGround;
-
     public Vector3 Velocity;
-
     public List<Upgrade> Upgrades { get; set; }
 
-    public int Currency
-    {
-        get => _currency;
-        set => _currency = value;
-    }
+    public int Currency { get; set; } = 100;
 
     public int CurrentHealth
     {
@@ -74,11 +65,7 @@ public class Player : MonoBehaviour
         }
     }
 
-    public int MaxHealth
-    {
-        get => _maxHealth;
-        set => _maxHealth = value;
-    }
+    public int MaxHealth { get; set; } = 100;
 
 
     private void Awake()
@@ -89,7 +76,7 @@ public class Player : MonoBehaviour
     }
 
     /// <summary>
-    ///     An expression bodied method to check if the player's upgrade list Upgrades contains a specific upgrade.
+    ///     Checks if the player's upgrade list Upgrades contains a specific upgrade.
     ///     Since every upgrade except HealthUpgrade has it's own class,
     ///     it is trivial.
     /// </summary>
@@ -106,7 +93,7 @@ public class Player : MonoBehaviour
         _lastFacingDirection = Vector2.right;
         AudioManager.Instance.Play("01Peaceful", isLooping: true);
 
-        _currentHealth = _maxHealth;
+        _currentHealth = MaxHealth;
 
         _animator = GetComponent<Animator>();
 
@@ -124,44 +111,56 @@ public class Player : MonoBehaviour
         _minJumpVelocity = Mathf.Sqrt(2 * Mathf.Abs(gravity) * _minJumpHeight);
     }
 
+
     // Update is called once per frame
     private void Update()
     {
-        if (Time.timeScale > 0.01f)
+        if (!ApplicationSettings.IsPaused())
         {
-            UpdateMovement();
-            CheckShooting();
+            _shotCoolDownTimer += Time.deltaTime;
 
-            if (Math.Abs(Velocity.x) > .01f)
-                _lastFacingDirection = ConvertToInteger(new Vector2(Velocity.x, Velocity.y));
+            UpdateMovement();
+
+            if (IsTryingToShoot() && CanShoot()) Shoot();
+            ;
+
+            if (IsMoving())
+                _lastFacingDirection = new Vector2(Velocity.x, Velocity.y).normalized;
         }
     }
 
-    private void CheckShooting()
+    private bool IsTryingToShoot()
     {
-        if (!HasUpgrade<ShootingUpgrade>()) return;
+        return Input.GetButtonDown("Fire3");
+    }
 
-        if (Input.GetButtonDown("Fire3") && _shotCoolDown < _shotCoolDownTimer)
-        {
-            AudioManager.Instance.Play("Shot", 0.7f);
+    private bool CanShoot()
+    {
+        return HasUpgrade<ShootingUpgrade>() && _shotCoolDown < _shotCoolDownTimer;
+    }
 
-            var particle = Instantiate(_shootParticle, transform.position, Quaternion.identity);
+    private bool IsMoving()
+    {
+        return Math.Abs(Velocity.x) > float.Epsilon;
+    }
 
-            var shot = particle.GetComponent<Shot>();
+    private void Shoot()
+    {
+        AudioManager.Instance.Play("Shot", 0.7f);
 
-            shot.MoveSpeed = _shotSpeed;
+        var particle = Instantiate(_shootParticle, transform.position, Quaternion.identity);
 
-            shot.Direction = _isBoosting
-                ? new Vector2(_lastInput.normalized.x, _lastInput.normalized.y)
-                : new Vector2(_lastFacingDirection.x, 0);
+        var shot = particle.GetComponent<Shot>();
+
+        shot.MoveSpeed = _shotSpeed;
+
+        shot.Direction = _isBoosting
+            ? new Vector2(_lastInput.normalized.x, _lastInput.normalized.y)
+            : new Vector2(_lastFacingDirection.x, 0);
 
 
-            shot.MaxRange = _maxShotRange;
-
-            _shotCoolDownTimer = 0;
-        }
-
-        _shotCoolDownTimer += Time.deltaTime;
+        shot.MaxRange = _maxShotRange;
+        _shotCoolDownTimer = 0;
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -180,7 +179,8 @@ public class Player : MonoBehaviour
         }
 
 
-        if (other.gameObject.CompareTag("HitCollider") && !_animator.GetBool("Damaged"))
+        if (other.gameObject.CompareTag("HitCollider") && !_animator.GetBool("Damaged")
+        ) // TODO it seems like it doesn't belong here
         {
             var boss = other.gameObject.GetComponentInParent<Boss>();
 
@@ -275,10 +275,7 @@ public class Player : MonoBehaviour
 
         if (_controller.Collisions.Below) _canBoost = true;
 
-        var input = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
-
-        input = ConvertToInteger(input);
-
+        var input = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")).normalized;
 
         if (input != Vector2.zero) _lastInput = input;
 
@@ -365,18 +362,5 @@ public class Player : MonoBehaviour
         Velocity.y += Constants.GRAVITY * Time.deltaTime;
 
         _controller.Move(Velocity * Time.deltaTime);
-    }
-
-    private static Vector2 ConvertToInteger(Vector2 input)
-    {
-        if (input.x < 0) input.x = -1;
-
-        if (input.x > 0) input.x = 1;
-
-        if (input.y < 0) input.y = -1;
-
-        if (input.y > 0) input.y = 1;
-
-        return input;
     }
 }

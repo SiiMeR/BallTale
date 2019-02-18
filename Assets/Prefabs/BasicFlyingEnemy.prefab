@@ -85,7 +85,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1767245969044858}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 89.75, y: 1.29, z: -0.080078125}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -181,7 +181,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CollisionMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 512
 --- !u!114 &114309150039754992
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -197,13 +197,13 @@ MonoBehaviour:
   _movetarget: {x: 0, y: 0, z: 0}
   _lastmovetarget: {x: 0, y: 0, z: 0}
   _moveVertical: 1
-  _pathFirstPos: {x: -4.0552535, y: 6.003848, z: -0.080078125}
-  _pathLastPos: {x: 15.81959, y: 10.88, z: -0.080078125}
+  _pathFirstPos: {x: 88.92506, y: -3.1474204, z: -0.080078125}
+  _pathLastPos: {x: 106.028244, y: 5.7927003, z: -0.080078125}
   _pathMiddlePos: {x: 5.86, y: 10.88, z: -0.080078125}
   _unitsToMove: 10
   currencyOnKill: 10
   damage: 5
-  moveSpeed: -4
+  moveSpeed: 4
   _useGravity: 0
   _useWaypointMovement: 1
 --- !u!95 &95554651409832300

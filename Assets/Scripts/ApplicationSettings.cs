@@ -2,16 +2,14 @@
 using UnityEngine;
 
 /// <summary>
-/// A general class to set various settings related to the application
+///     A general class to set various settings related to the application
 /// </summary>
 public class ApplicationSettings : MonoBehaviour
 {
     private void Awake()
     {
-        
         QualitySettings.vSyncCount = 0; // TODO : Make it possible to change vSync settings
         Application.targetFrameRate = (int) FramerateTarget.MAX_60; // TODO : Make it so you can set this in settings
-
     }
 
     private void Update() // hidden options
@@ -23,8 +21,14 @@ public class ApplicationSettings : MonoBehaviour
             var targetFrameRate = Application.targetFrameRate;
             var currentFrameRate = Array.IndexOf(enumValues, targetFrameRate) + 1;
 
-            Application.targetFrameRate = (enumValues.Length == currentFrameRate) ? enumValues[0] : enumValues[currentFrameRate];
+            Application.targetFrameRate =
+                enumValues.Length == currentFrameRate ? enumValues[0] : enumValues[currentFrameRate];
         }
+    }
+
+    public static bool IsPaused()
+    {
+        return Time.timeScale < float.Epsilon;
     }
 }
 
@@ -34,5 +38,5 @@ public enum FramerateTarget
     MAX_60 = 60,
     MAX_120 = 120,
     MAX_144 = 144,
-    UNLIMITED = 1000, // not really unlimited but basically
+    UNLIMITED = 1000 // not really unlimited but basically
 }

@@ -6,9 +6,7 @@ using UnityEngine;
 public class Shot : MonoBehaviour
 {
     private CircleController2D _controller;
-
     private Vector2 _direction;
-
     private float _distanceCovered;
     [SerializeField] private LayerMask _killMask;
 
