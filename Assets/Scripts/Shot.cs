@@ -2,6 +2,29 @@
 using RaycastEngine2D;
 using UnityEngine;
 
+public struct ShotData // TODO : This could perhaps be made into a ScriptableObject
+{
+    internal Vector2 _direction;
+    internal float _moveSpeed;
+    internal float _maxRange;
+
+    public ShotData(Vector2 direction, float moveSpeed, float maxRange)
+    {
+        _direction = direction;
+        _moveSpeed = moveSpeed;
+        _maxRange = maxRange;
+    }
+
+//    private Vector2 CalculateSpriteAngle(Vector2 direction, )
+//    {
+//        var angle = Mathf.Atan2(value.y, value.x) * Mathf.Rad2Deg;
+//        var q = Quaternion.AngleAxis(angle, Vector3.forward);
+//
+//        GetComponentInChildren<SpriteRenderer>().transform.rotation = q;
+//        _direction = value;
+//    }
+}
+
 [RequireComponent(typeof(CircleController2D))]
 public class Shot : MonoBehaviour
 {
@@ -52,6 +75,7 @@ public class Shot : MonoBehaviour
         if (GetComponentInChildren<SpriteRenderer>()) GetComponentInChildren<SpriteRenderer>().enabled = false;
 
         GetComponent<CapsuleCollider2D>().enabled = false;
+        GetComponent<CircleController2D>().enabled = false;
 
         GetComponentInChildren<ParticleSystem>()?.Stop(true, ParticleSystemStopBehavior.StopEmitting);
 

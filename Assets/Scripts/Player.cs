@@ -28,6 +28,7 @@ public class Player : MonoBehaviour
 
     // DEBUG
     [SerializeField] private bool _DEBUGShootEnabled;
+    private Firearm _firearm;
     private bool _isBoosting;
     [SerializeField] private int _killBounceEnergy = 15;
     private Vector2 _lastFacingDirection;
@@ -35,15 +36,10 @@ public class Player : MonoBehaviour
     [SerializeField] private float _maxBoostTime = 2.0f;
     [SerializeField] private float _maxJumpHeight = 4f;
     private float _maxJumpVelocity;
-    [SerializeField] private float _maxShotRange;
     [SerializeField] private float _minJumpHeight = 1f;
     private float _minJumpVelocity;
     [SerializeField] private float _moveSpeed = 10;
     [SerializeField] private float _secondsInvincibility = 1.5f;
-    [SerializeField] private GameObject _shootParticle;
-    [SerializeField] private float _shotCoolDown = 1.0f;
-    private double _shotCoolDownTimer;
-    [SerializeField] private float _shotSpeed;
     [SerializeField] private float _timeToJumpApex = .4f;
     private float _velocityXSmoothing;
 
@@ -70,6 +66,7 @@ public class Player : MonoBehaviour
 
     private void Awake()
     {
+        _firearm = GetComponent<Firearm>();
         _deathScreen = FindObjectOfType<DeathScreen>();
         Upgrades = new List<Upgrade>();
         if (_DEBUGShootEnabled) Upgrades.Add(UpgradeBuilder.Instance.GetShootingUpgrade(123, "test"));
@@ -117,15 +114,12 @@ public class Player : MonoBehaviour
     {
         if (!ApplicationSettings.IsPaused())
         {
-            _shotCoolDownTimer += Time.deltaTime;
-
             UpdateMovement();
 
-            if (IsTryingToShoot() && CanShoot()) Shoot();
-            ;
+            if (IsTryingToShoot() && CanShoot()) TryToShoot();
 
             if (IsMoving())
-                _lastFacingDirection = new Vector2(Velocity.x, Velocity.y).normalized;
+                _lastFacingDirection = Velocity.normalized.ToVector2();
         }
     }
 
@@ -136,31 +130,21 @@ public class Player : MonoBehaviour
 
     private bool CanShoot()
     {
-        return HasUpgrade<ShootingUpgrade>() && _shotCoolDown < _shotCoolDownTimer;
+        return HasUpgrade<ShootingUpgrade>();
+    }
+
+    private void TryToShoot()
+    {
+        var direction = _isBoosting
+            ? _lastInput.normalized.ToVector2()
+            : new Vector2(Mathf.Sign(_lastFacingDirection.x), 0);
+
+        _firearm.Shoot(direction);
     }
 
     private bool IsMoving()
     {
         return Math.Abs(Velocity.x) > float.Epsilon;
-    }
-
-    private void Shoot()
-    {
-        AudioManager.Instance.Play("Shot", 0.7f);
-
-        var particle = Instantiate(_shootParticle, transform.position, Quaternion.identity);
-
-        var shot = particle.GetComponent<Shot>();
-
-        shot.MoveSpeed = _shotSpeed;
-
-        shot.Direction = _isBoosting
-            ? new Vector2(_lastInput.normalized.x, _lastInput.normalized.y)
-            : new Vector2(_lastFacingDirection.x, 0);
-
-
-        shot.MaxRange = _maxShotRange;
-        _shotCoolDownTimer = 0;
     }
 
     private void OnTriggerEnter2D(Collider2D other)

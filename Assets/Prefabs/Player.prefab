@@ -168,6 +168,7 @@ GameObject:
   - component: {fileID: 212293388885712598}
   - component: {fileID: 50256793027027020}
   - component: {fileID: 95305150416264936}
+  - component: {fileID: 3358033185839534469}
   m_Layer: 8
   m_Name: Player
   m_TagString: Player
@@ -209,24 +210,17 @@ MonoBehaviour:
   _accelerationTimeAirborne: 0.18
   _accelerationTimeGrounded: 0.1
   _boostArrow: {fileID: 1231417571871360}
-  _boostForce: 20
+  _boostForce: 30
   _boostTimer: {fileID: 1709276808021058}
   _boostTimerFill: {fileID: 114740821294598218}
-  _currency: 25000
   _damageText: {fileID: 2374663457179028563}
   _DEBUGShootEnabled: 1
   _killBounceEnergy: 20
   _maxBoostTime: 2
-  _maxHealth: 100
   _maxJumpHeight: 4
-  _maxShotRange: 12
   _minJumpHeight: 1
   _moveSpeed: 10
   _secondsInvincibility: 1.5
-  _shootParticle: {fileID: 1191552461824492, guid: 4fdf3def032d30147afcc40f0202dc28,
-    type: 3}
-  _shotCoolDown: 1
-  _shotSpeed: 25
   _timeToJumpApex: 0.4
   IgnoreGround: 0
   Velocity: {x: 0, y: -1.7700598, z: 0}
@@ -352,6 +346,23 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &3358033185839534469
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1184720796421192}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e22c656860bb4945b226f1e0c3ddee5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _shotParticlePrefab: {fileID: 1191552461824492, guid: 4fdf3def032d30147afcc40f0202dc28,
+    type: 3}
+  _shotSpeed: 20
+  _maxShotRange: 10
+  _shotCoolDown: 1
 --- !u!1 &1231417571871360
 GameObject:
   m_ObjectHideFlags: 0

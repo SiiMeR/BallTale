@@ -3639,6 +3639,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: boss1
       objectReference: {fileID: 0}
+    - target: {fileID: 1700365627749058, guid: dacd53bebce7a2e4ab492aaf5e9697de, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4635685771987002, guid: dacd53bebce7a2e4ab492aaf5e9697de, type: 3}
       propertyPath: m_LocalPosition.x
       value: -1.785202
@@ -4651,6 +4655,11 @@ PrefabInstance:
         Welcome to this world. Use <sprite=4> (LEFT and RIGHT arrow keys) to move
         around.'
       objectReference: {fileID: 0}
+    - target: {fileID: 114255946860069520, guid: efbc9cad5241aa84e90d6c2c18f3fb29,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: efbc9cad5241aa84e90d6c2c18f3fb29, type: 3}
 --- !u!1 &1273928554
@@ -4686,9 +4695,9 @@ RectTransform:
   m_Father: {fileID: 1091810720}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 1}
-  m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: -405}
+  m_AnchorMin: {x: 0.5, y: 0}
+  m_AnchorMax: {x: 0.5, y: 0}
+  m_AnchoredPosition: {x: 0, y: 80}
   m_SizeDelta: {x: 1200, y: 80}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &1273928556
@@ -4950,13 +4959,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f58ac4a5792e7d043a6c4605a780ef23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MainTilemap: {fileID: 8195094281973475425}
   FGTilemap: {fileID: 8195094280525495383}
+  MainTilemap: {fileID: 8195094281973475425}
+  Overgrass: {fileID: 11400000, guid: 486680ed3e2d4e044ba13d665477228e, type: 2}
+  SidegrassLeft: {fileID: 11400000, guid: dd3582aae639ec4418afce53774fe667, type: 2}
+  SidegrassRight: {fileID: 11400000, guid: 8ba74cb31e7878e429d4618947b49ba3, type: 2}
   Tile: {fileID: 11400000, guid: ffb35e1cb5f43744e9ddf52baac05fc6, type: 2}
   Undergrass: {fileID: 11400000, guid: 38f1c7d044c43b64f80ecef2b3b1ea7e, type: 2}
-  Overgrass: {fileID: 11400000, guid: 486680ed3e2d4e044ba13d665477228e, type: 2}
-  SidegrassRight: {fileID: 11400000, guid: 8ba74cb31e7878e429d4618947b49ba3, type: 2}
-  SidegrassLeft: {fileID: 11400000, guid: dd3582aae639ec4418afce53774fe667, type: 2}
 --- !u!114 &1343735498
 MonoBehaviour:
   m_ObjectHideFlags: 0
