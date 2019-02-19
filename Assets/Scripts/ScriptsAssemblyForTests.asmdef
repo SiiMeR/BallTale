@@ -1,14 +1,12 @@
 {
-    "name": "PlaymodeTests",
+    "name": "ScriptsAssemblyForTests",
     "references": [
-        "ScriptsAssemblyForTests"
+        "Cinemachine",
+        "Unity.TextMeshPro",
+        "SaveGameFreeAsm"
     ],
-    "optionalUnityReferences": [
-        "TestAssemblies"
-    ],
-    "includePlatforms": [
-        "Editor"
-    ],
+    "optionalUnityReferences": [],
+    "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
     "overrideReferences": false,
