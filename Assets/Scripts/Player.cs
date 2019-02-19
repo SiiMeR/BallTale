@@ -19,7 +19,6 @@ public class Player : MonoBehaviour
     [SerializeField] private float _boostForce = 20f;
     [SerializeField] private GameObject _boostTimer;
     [SerializeField] private Image _boostTimerFill;
-    private bool _canBoost = true;
     private CircleController2D _controller;
     private float _currentBoostTime;
     private int _currentHealth;
@@ -124,9 +123,6 @@ public class Player : MonoBehaviour
 
                 _firearm.TryToShoot(direction);
             }
-
-            if (IsMoving()) // TODO probably could be moved into UpdateMovement
-                _lastFacingDirection = Velocity.normalized.ToVector2();
         }
     }
 
@@ -240,6 +236,17 @@ public class Player : MonoBehaviour
         _animator.SetBool("Damaged", false);
     }
 
+    private bool CanBoost(float boostInput)
+    {
+        return !_controller.Collisions.Below && _currentBoostTime < _maxBoostTime &&
+               Math.Abs(boostInput) > float.Epsilon;
+    }
+
+    private bool IsBoosting()
+    {
+        return true;
+    }
+
     private void UpdateMovement()
     {
         if (_controller.Collisions.Above || _controller.Collisions.Below)
@@ -250,8 +257,6 @@ public class Player : MonoBehaviour
                 _controller.Collisions.Below = false; // allows to move the player in y direction on ground
         }
 
-        if (_controller.Collisions.Below) _canBoost = true;
-
         var input = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")).normalized;
 
         if (input != Vector2.zero) _lastInput = input;
@@ -260,20 +265,21 @@ public class Player : MonoBehaviour
 
         var boostInput = Input.GetAxisRaw("Fire1");
 
-        if (Input.GetButtonDown("Fire1") && !_controller.Collisions.Below && _canBoost)
+        if (Input.GetButtonDown("Fire1") && CanBoost(boostInput))
             AudioManager.Instance.Play("BoostCharge");
 
-        if (Math.Abs(boostInput) > 0.01f && !_controller.Collisions.Below && _canBoost)
+        if (CanBoost(boostInput)
+        ) // TODO : this is missing a flag that checks if the player has touched the ground before boosting again
         {
             _boostArrow.SetActive(true);
             _boostTimer.SetActive(true);
 
 
-            if (_currentBoostTime > _maxBoostTime)
+            if (_currentBoostTime > _maxBoostTime) // marks the end of the boost
             {
                 _boostArrow.SetActive(false);
                 _boostTimer.SetActive(false);
-                _canBoost = false;
+                // _canBoost = false;
                 _isBoosting = false;
                 _currentBoostTime = 0.0f;
                 _boostTimerFill.fillAmount = 0;
@@ -281,7 +287,6 @@ public class Player : MonoBehaviour
             }
 
             var angle = Mathf.Atan2(_lastInput.y, _lastInput.x) * Mathf.Rad2Deg;
-
             var q = Quaternion.AngleAxis(angle, Vector3.forward);
 
 
@@ -305,21 +310,23 @@ public class Player : MonoBehaviour
         }
 
 
-        if (Math.Abs(boostInput) < 0.01f && !_controller.Collisions.Below && _canBoost && _isBoosting)
+        if (Math.Abs(boostInput) < 0.01f && _isBoosting) // let go
         {
             AudioManager.Instance.Stop("BoostCharge");
             AudioManager.Instance.Play("BoostFinish");
 
             Velocity = _lastInput * _boostForce;
 
-
             _currentBoostTime = 0.0f;
-            _canBoost = false;
             _isBoosting = false;
             _boostTimerFill.fillAmount = 0;
             _boostArrow.SetActive(false);
             _boostTimer.SetActive(false);
         }
+
+
+        // jumping and movement part 
+
 
         if (Input.GetButtonDown("Jump") && _controller.Collisions.Below)
         {
@@ -327,7 +334,7 @@ public class Player : MonoBehaviour
             Velocity.y = _maxJumpVelocity;
         }
 
-        if (Input.GetButtonUp("Jump") && _canBoost)
+        if (Input.GetButtonUp("Jump") && !_controller.Collisions.Below)
             if (Velocity.y > _minJumpVelocity)
                 Velocity.y = _minJumpVelocity;
 
@@ -339,5 +346,8 @@ public class Player : MonoBehaviour
         Velocity.y += Constants.GRAVITY * Time.deltaTime;
 
         _controller.Move(Velocity * Time.deltaTime);
+
+        if (IsMoving())
+            _lastFacingDirection = Velocity.normalized.ToVector2();
     }
 }
