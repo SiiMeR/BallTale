@@ -20,23 +20,31 @@ public class Firearm : MonoBehaviour // TODO build some contract between player 
         if (!ApplicationSettings.IsPaused()) _shotCoolDownTimer -= Time.deltaTime;
     }
 
-    public void Shoot(Vector2 direction)
-    {
-        if (_shotCoolDownTimer > 0.0f)
-            return;
 
+    public void TryToShoot(Vector2 direction)
+    {
+        if (IsOnCooldown()) return;
+
+        Shoot(direction);
+    }
+
+    private void Shoot(Vector2 direction)
+    {
         AudioManager.Instance.Play("Shot", 0.7f);
 
         var particle = Instantiate(_shotParticlePrefab, transform.position, Quaternion.identity);
 
         var shot = particle.GetComponent<Shot>();
 
-        shot.MoveSpeed = _shotSpeed;
+        var shotData = new ShotData(direction, _shotSpeed, _maxShotRange);
 
-        shot.Direction = direction;
-
-        shot.MaxRange = _maxShotRange;
+        shot.ShotData = shotData;
 
         _shotCoolDownTimer = _shotCoolDown;
+    }
+
+    private bool IsOnCooldown()
+    {
+        return _shotCoolDownTimer > .0f;
     }
 }

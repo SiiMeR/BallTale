@@ -4,9 +4,9 @@ using UnityEngine;
 
 public struct ShotData // TODO : This could perhaps be made into a ScriptableObject
 {
-    internal Vector2 _direction;
-    internal float _moveSpeed;
-    internal float _maxRange;
+    internal readonly Vector2 _direction;
+    internal readonly float _moveSpeed;
+    internal readonly float _maxRange;
 
     public ShotData(Vector2 direction, float moveSpeed, float maxRange)
     {
@@ -14,86 +14,94 @@ public struct ShotData // TODO : This could perhaps be made into a ScriptableObj
         _moveSpeed = moveSpeed;
         _maxRange = maxRange;
     }
-
-//    private Vector2 CalculateSpriteAngle(Vector2 direction, )
-//    {
-//        var angle = Mathf.Atan2(value.y, value.x) * Mathf.Rad2Deg;
-//        var q = Quaternion.AngleAxis(angle, Vector3.forward);
-//
-//        GetComponentInChildren<SpriteRenderer>().transform.rotation = q;
-//        _direction = value;
-//    }
 }
 
 [RequireComponent(typeof(CircleController2D))]
 public class Shot : MonoBehaviour
 {
+    private CapsuleCollider2D _collider;
+
     private CircleController2D _controller;
-    private Vector2 _direction;
+    private Vector2 _currentVelocity;
     private float _distanceCovered;
-    [SerializeField] private LayerMask _killMask;
+    [SerializeField] private LayerMask _killMask; // What it kills
+    private ParticleSystem _particleSystem;
 
-    public float MaxRange { get; set; }
+    private ShotData _shotData;
+    private SpriteRenderer _spriteRenderer;
 
-    public Vector2 Direction
+    public ShotData ShotData
     {
-        get => _direction;
+        private get => _shotData;
         set
         {
-            var angle = Mathf.Atan2(value.y, value.x) * Mathf.Rad2Deg;
-            var q = Quaternion.AngleAxis(angle, Vector3.forward);
-
-            GetComponentInChildren<SpriteRenderer>().transform.rotation = q;
-            _direction = value;
+            _shotData = value;
+            GetComponentInChildren<SpriteRenderer>().transform.rotation = CalculateSpriteAngle(value._direction);
         }
     }
 
-    public float MoveSpeed { get; set; }
+    protected bool IsBeingDestroyed { get; set; }
 
-    public Vector2 CurrentVelocity { get; set; }
+    private Quaternion CalculateSpriteAngle(Vector2 direction)
+    {
+        var angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+        return Quaternion.AngleAxis(angle, Vector3.forward);
+    }
 
     // Use this for initialization
     private void Start()
     {
+        _collider = GetComponent<CapsuleCollider2D>();
+        _particleSystem = GetComponentInChildren<ParticleSystem>();
+        _spriteRenderer = GetComponentInChildren<SpriteRenderer>();
         _controller = GetComponent<CircleController2D>();
-        CurrentVelocity = _direction * MoveSpeed;
-        _distanceCovered = 0;
+        _currentVelocity = ShotData._direction * ShotData._moveSpeed;
     }
 
     // Update is called once per frame
     private void Update()
     {
-        if (_distanceCovered > MaxRange) StartCoroutine(DestroyShot());
+        if (IsBeingDestroyed) return;
 
-        _distanceCovered += Time.deltaTime * MoveSpeed;
+        if (IsOverMaxRange() || IsColliding())
+            StartCoroutine(DestroyShot());
+        else
+            UpdateMovement();
+    }
 
-        Move();
+    private bool IsOverMaxRange()
+    {
+        return _distanceCovered > ShotData._maxRange;
+    }
+
+    private bool IsColliding()
+    {
+        return _controller.Collisions.IsColliding;
     }
 
     private IEnumerator DestroyShot()
     {
-        if (GetComponentInChildren<SpriteRenderer>()) GetComponentInChildren<SpriteRenderer>().enabled = false;
+        IsBeingDestroyed = true;
 
-        GetComponent<CapsuleCollider2D>().enabled = false;
-        GetComponent<CircleController2D>().enabled = false;
-
-        GetComponentInChildren<ParticleSystem>()?.Stop(true, ParticleSystemStopBehavior.StopEmitting);
+        DisableComponents();
 
         yield return new WaitForSeconds(0.5f);
 
         Destroy(gameObject);
     }
 
-    private void Move()
+    private void DisableComponents()
     {
-        // any collision is death for the shot
-        if (_controller.Collisions.Right ||
-            _controller.Collisions.Left ||
-            _controller.Collisions.Above ||
-            _controller.Collisions.Below)
-            StartCoroutine(DestroyShot());
+        _spriteRenderer.enabled = false;
+        _collider.enabled = false;
+        _controller.enabled = false;
+        _particleSystem.Stop(true, ParticleSystemStopBehavior.StopEmitting);
+    }
 
-        _controller.Move(CurrentVelocity * Time.deltaTime);
+    private void UpdateMovement()
+    {
+        _distanceCovered += ShotData._moveSpeed * Time.deltaTime;
+        _controller.Move(_currentVelocity * Time.deltaTime);
     }
 
 

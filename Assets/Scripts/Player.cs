@@ -116,30 +116,23 @@ public class Player : MonoBehaviour
         {
             UpdateMovement();
 
-            if (IsTryingToShoot() && CanShoot()) TryToShoot();
+            if (WantsToShoot())
+            {
+                var direction = _isBoosting
+                    ? _lastInput.normalized.ToVector2()
+                    : new Vector2(Mathf.Sign(_lastFacingDirection.x), 0);
 
-            if (IsMoving())
+                _firearm.TryToShoot(direction);
+            }
+
+            if (IsMoving()) // TODO probably could be moved into UpdateMovement
                 _lastFacingDirection = Velocity.normalized.ToVector2();
         }
     }
 
-    private bool IsTryingToShoot()
+    private bool WantsToShoot()
     {
-        return Input.GetButtonDown("Fire3");
-    }
-
-    private bool CanShoot()
-    {
-        return HasUpgrade<ShootingUpgrade>();
-    }
-
-    private void TryToShoot()
-    {
-        var direction = _isBoosting
-            ? _lastInput.normalized.ToVector2()
-            : new Vector2(Mathf.Sign(_lastFacingDirection.x), 0);
-
-        _firearm.Shoot(direction);
+        return Input.GetButtonDown("Fire3") && HasUpgrade<ShootingUpgrade>();
     }
 
     private bool IsMoving()
