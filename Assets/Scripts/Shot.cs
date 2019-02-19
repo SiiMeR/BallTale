@@ -40,7 +40,7 @@ public class Shot : MonoBehaviour
         }
     }
 
-    protected bool IsBeingDestroyed { get; set; }
+    public bool IsBeingDestroyed { get; set; }
 
     private Quaternion CalculateSpriteAngle(Vector2 direction)
     {
