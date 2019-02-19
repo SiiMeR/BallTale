@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using Extensions;
 using RaycastEngine2D;
 using UnityEngine;
 
@@ -107,31 +108,29 @@ public class Shot : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("HitCollider"))
-        {
-            StartCoroutine(DestroyShot());
-            return;
-        }
+        if (IsDestroyable(other.gameObject.layer))
+            DestroyOther(other);
 
+        else if (_controller.IsCollidable(other.gameObject.layer)) StartCoroutine(DestroyShot());
+    }
+
+    private void DestroyOther(Collider2D other)
+    {
         // TODO, CHECK IF IT IS A THING THAT GIVES MONEY OR NOT
-        if (_controller.IsInLayerMask(other.gameObject.layer, _killMask))
-        {
-            AudioManager.Instance.Play("MonsterHit");
 
+        AudioManager.Instance.Play("MonsterHit");
 
-            if (other.gameObject.GetComponent<BasicEnemy>())
-                GameObject.FindGameObjectWithTag("Player").GetComponent<Player>().Currency +=
-                    other.gameObject.GetComponent<BasicEnemy>().CurrencyOnKill;
+        if (other.gameObject.GetComponent<BasicEnemy>()) // TODO : This looks fishy
+            GameObject.FindGameObjectWithTag("Player").GetComponent<Player>().Currency +=
+                other.gameObject.GetComponent<BasicEnemy>().CurrencyOnKill;
 
+        Destroy(other.gameObject);
 
-            Destroy(other.gameObject);
+        StartCoroutine(DestroyShot());
+    }
 
-            StartCoroutine(DestroyShot());
-        }
-
-        else if (_controller.IsInCollisionMask(other.gameObject.layer))
-        {
-            StartCoroutine(DestroyShot());
-        }
+    private bool IsDestroyable(int layer)
+    {
+        return _killMask.ContainsLayer(layer);
     }
 }

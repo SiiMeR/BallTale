@@ -315,7 +315,7 @@ public class Boss : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.CompareTag("Shot"))
+        if (other.gameObject.GetComponent<Shot>())
         {
             if (CurrentState == BossState.VULNERABLE) GetDamaged();
 

@@ -4,8 +4,7 @@ namespace RaycastEngine2D
 {
     [RequireComponent(typeof(BoxCollider2D))]
     public class BoxController2D : RayCastController
-    {        
-
+    {
         [HideInInspector] public CollisionInfo Collisions;
         [HideInInspector] public RaycastOrigins RayCastOrigins;
 
@@ -14,15 +13,9 @@ namespace RaycastEngine2D
             UpdateRaycastOrigins();
             Collisions.Reset();
 
-            if (Mathf.Abs(velocity.x) > float.Epsilon)
-            {
-                CheckHorizontalCollisions(ref velocity);
-            }
+            if (Mathf.Abs(velocity.x) > float.Epsilon) CheckHorizontalCollisions(ref velocity);
 
-            if (Mathf.Abs(velocity.y) > float.Epsilon)
-            {
-                CheckVerticalCollisions(ref velocity);
-            }
+            if (Mathf.Abs(velocity.y) > float.Epsilon) CheckVerticalCollisions(ref velocity);
 
             transform.Translate(velocity);
             Physics2D.SyncTransforms();
@@ -34,12 +27,13 @@ namespace RaycastEngine2D
             var rayLength = Mathf.Abs(velocity.x) + SKINWIDTH;
             var directionX = Mathf.Sign(velocity.x);
 
-            var hit = Physics2D.BoxCast(rayOrigin, _collider.bounds.size, 0, Vector2.right * directionX, rayLength, CollisionMask);
+            var hit = Physics2D.BoxCast(rayOrigin, _collider.bounds.size, 0, Vector2.right * directionX, rayLength,
+                collisionMask);
 
             if (hit)
             {
                 velocity.x = (hit.distance - SKINWIDTH) * directionX;
-                Collisions.Left = Mathf.Abs(directionX - (-1)) < float.Epsilon;
+                Collisions.Left = Mathf.Abs(directionX - -1) < float.Epsilon;
                 Collisions.Right = Mathf.Abs(directionX - 1) < float.Epsilon;
             }
 
@@ -54,12 +48,13 @@ namespace RaycastEngine2D
             var rayLength = Mathf.Abs(velocity.y) + SKINWIDTH;
             var directionY = Mathf.Sign(velocity.y);
 
-            var hit = Physics2D.BoxCast(rayOrigin, _collider.bounds.size, 0, Vector2.up * directionY, rayLength, CollisionMask);
+            var hit = Physics2D.BoxCast(rayOrigin, _collider.bounds.size, 0, Vector2.up * directionY, rayLength,
+                collisionMask);
 
             if (hit)
             {
                 velocity.y = (hit.distance - SKINWIDTH) * directionY;
-                Collisions.Below = Mathf.Abs(directionY - (-1)) < float.Epsilon;
+                Collisions.Below = Mathf.Abs(directionY - -1) < float.Epsilon;
                 Collisions.Above = Mathf.Abs(directionY - 1) < float.Epsilon;
             }
 
@@ -81,8 +76,8 @@ namespace RaycastEngine2D
         }
 
 
-
         #region structs
+
         public struct CollisionInfo
         {
             public bool Above, Below, Left, Right;
@@ -93,10 +88,11 @@ namespace RaycastEngine2D
             }
 
             public bool IsColliding => Above || Below || Left || Right;
-            
+
             public override string ToString()
             {
-                return $"{nameof(Above)}: {Above}, {nameof(Below)}: {Below}, {nameof(Left)}: {Left}, {nameof(Right)}: {Right}";
+                return
+                    $"{nameof(Above)}: {Above}, {nameof(Below)}: {Below}, {nameof(Left)}: {Left}, {nameof(Right)}: {Right}";
             }
         }
 
@@ -104,7 +100,7 @@ namespace RaycastEngine2D
         {
             public Vector2 TopLeft, TopRight, BottomLeft, BottomRight, Center;
         }
-        
+
         #endregion
     }
 }

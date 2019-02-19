@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4655363163303162}
   - component: {fileID: 61029996167829944}
-  m_Layer: 10
+  m_Layer: 12
   m_Name: hitcollider
   m_TagString: HitCollider
   m_Icon: {fileID: 0}
@@ -71,7 +71,7 @@ GameObject:
   - component: {fileID: 61547993042589914}
   - component: {fileID: 114048721371155552}
   - component: {fileID: 95734140201367064}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: boss1
   m_TagString: Boss
   m_Icon: {fileID: 0}

@@ -42,7 +42,7 @@ namespace RaycastEngine2D
             var radius = Vector2.Distance(RayCastOrigins.Center, RayCastOrigins.Right);
 
             var hit = Physics2D.CircleCast(rayOrigin, radius, Vector2.right * directionX, rayLength,
-                CollisionMask);
+                collisionMask);
 
             if (hit)
             {
@@ -95,7 +95,7 @@ namespace RaycastEngine2D
             var radius = Vector2.Distance(RayCastOrigins.Center, RayCastOrigins.Bottom);
 
             var hit = Physics2D.CircleCast(rayOrigin, radius, Vector2.up * directionY, rayLength,
-                CollisionMask);
+                collisionMask);
 
             if (hit)
             {
@@ -114,7 +114,7 @@ namespace RaycastEngine2D
                 rayLength = Mathf.Abs(velocity.x) + SKINWIDTH;
 
                 hit = Physics2D.CircleCast(rayOrigin, radius, Vector2.up * directionY, rayLength,
-                    CollisionMask);
+                    collisionMask);
 
                 if (hit)
                 {
@@ -152,7 +152,7 @@ namespace RaycastEngine2D
                 }
 
 
-                var edgehit = Physics2D.Raycast(rayOg, Vector2.up * directionY, rayl, CollisionMask);
+                var edgehit = Physics2D.Raycast(rayOg, Vector2.up * directionY, rayl, collisionMask);
 
                 if (edgehit)
                 {
@@ -208,7 +208,7 @@ namespace RaycastEngine2D
             var radius = Vector2.Distance(RayCastOrigins.Center, RayCastOrigins.Bottom);
 
             var hit = Physics2D.CircleCast(rayOrigin, radius, Vector2.down, Mathf.Infinity,
-                CollisionMask);
+                collisionMask);
 
             if (hit)
             {

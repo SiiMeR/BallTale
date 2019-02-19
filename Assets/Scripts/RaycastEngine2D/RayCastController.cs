@@ -1,26 +1,25 @@
-﻿using UnityEngine;
+﻿using Extensions;
+using UnityEngine;
 
 namespace RaycastEngine2D
 {
     [RequireComponent(typeof(Collider2D))]
     public abstract class RayCastController : MonoBehaviour
     {
-        [SerializeField] internal LayerMask CollisionMask;
-        internal Collider2D _collider;
         internal readonly float SKINWIDTH = .01f;
+        internal Collider2D _collider;
+        [SerializeField] internal LayerMask collisionMask;
 
         // Use this for initialization
-        public virtual void Awake() => _collider = GetComponent<Collider2D>();
-
-        // from https://answers.unity.com/questions/1135055/how-to-get-all-layers-included-in-a-layermask.html 
-        public bool IsInCollisionMask(int layer)
+        public virtual void Awake()
         {
-            return IsInLayerMask(layer, CollisionMask);
+            _collider = GetComponent<Collider2D>();
         }
 
-        public bool IsInLayerMask(int layer, LayerMask layerMask)
+        // from https://answers.unity.com/questions/1135055/how-to-get-all-layers-included-in-a-layermask.html 
+        public bool IsCollidable(int layer)
         {
-            return layerMask == (layerMask | (1 << layer));
+            return collisionMask.ContainsLayer(layer);
         }
 
         internal abstract void CheckHorizontalCollisions(ref Vector3 velocity);

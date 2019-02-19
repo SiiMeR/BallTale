@@ -23,6 +23,7 @@ namespace Tests
             var shot = shotGameObject.GetComponent<Shot>();
             var shotData = new ShotData(Vector2.right, 10, 10);
             shot.ShotData = shotData;
+            yield return null;
             // Use the Assert class to test conditions.
             // Use yield to skip a frame.
 //            var timer = 0f;

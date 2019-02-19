@@ -2672,7 +2672,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4343867861530720, guid: 7333fc2108db98b4094d16889aec8418, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 77
+      value: 222
       objectReference: {fileID: 0}
     - target: {fileID: 4343867861530720, guid: 7333fc2108db98b4094d16889aec8418, type: 3}
       propertyPath: m_LocalPosition.y
@@ -3638,10 +3638,6 @@ PrefabInstance:
     - target: {fileID: 1700365627749058, guid: dacd53bebce7a2e4ab492aaf5e9697de, type: 3}
       propertyPath: m_Name
       value: boss1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1700365627749058, guid: dacd53bebce7a2e4ab492aaf5e9697de, type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4635685771987002, guid: dacd53bebce7a2e4ab492aaf5e9697de, type: 3}
       propertyPath: m_LocalPosition.x
@@ -5936,7 +5932,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4795030378538064, guid: 63ce5d67ea1193c46a927a1e9653e3af, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 77
+      value: 222
       objectReference: {fileID: 0}
     - target: {fileID: 4795030378538064, guid: 63ce5d67ea1193c46a927a1e9653e3af, type: 3}
       propertyPath: m_LocalPosition.y
