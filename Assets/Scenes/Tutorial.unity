@@ -2724,6 +2724,16 @@ PrefabInstance:
       propertyPath: m_isInputParsingRequired
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 114505464928479366, guid: 7333fc2108db98b4094d16889aec8418,
+        type: 3}
+      propertyPath: CollisionMask.m_Bits
+      value: 512
+      objectReference: {fileID: 0}
+    - target: {fileID: 114505464928479366, guid: 7333fc2108db98b4094d16889aec8418,
+        type: 3}
+      propertyPath: collisionMask.m_Bits
+      value: 768
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7333fc2108db98b4094d16889aec8418, type: 3}
 --- !u!1 &537684721

@@ -63,7 +63,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd49b4defe00b3e499490aeb8aaed9ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CollisionMask:
+  collisionMask:
     serializedVersion: 2
     m_Bits: 512
   _edgePushStrength: 0.01
