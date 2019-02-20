@@ -19,6 +19,7 @@ public class Player : MonoBehaviour
     [SerializeField] private float _boostForce = 20f;
     [SerializeField] private GameObject _boostTimer;
     [SerializeField] private Image _boostTimerFill;
+    private bool _canBoost;
     private CircleController2D _controller;
     private float _currentBoostTime;
     private int _currentHealth;
@@ -236,15 +237,25 @@ public class Player : MonoBehaviour
         _animator.SetBool("Damaged", false);
     }
 
-    private bool CanBoost(float boostInput)
+    private Quaternion CalculateSpriteAngle(Vector2 direction)
     {
-        return !_controller.Collisions.Below && _currentBoostTime < _maxBoostTime &&
-               Math.Abs(boostInput) > float.Epsilon;
+        var angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+        return Quaternion.AngleAxis(angle, Vector3.forward);
+    }
+
+    private bool IsSomethingBelow()
+    {
+        return _controller.Collisions.Below;
+    }
+
+    private bool CanBoost()
+    {
+        return _currentBoostTime < _maxBoostTime;
     }
 
     private bool IsBoosting()
     {
-        return true;
+        return Input.GetButton("Fire1");
     }
 
     private void UpdateMovement()
@@ -257,60 +268,27 @@ public class Player : MonoBehaviour
                 _controller.Collisions.Below = false; // allows to move the player in y direction on ground
         }
 
+
+        if (IsSomethingBelow()) _canBoost = true;
+
         var input = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")).normalized;
 
         if (input != Vector2.zero) _lastInput = input;
 
         Debug.DrawRay(transform.position, input, Color.yellow);
 
-        var boostInput = Input.GetAxisRaw("Fire1");
-
-        if (Input.GetButtonDown("Fire1") && CanBoost(boostInput))
-            AudioManager.Instance.Play("BoostCharge");
-
-        if (CanBoost(boostInput)
-        ) // TODO : this is missing a flag that checks if the player has touched the ground before boosting again
+        if (IsBoosting() && !IsSomethingBelow() && _canBoost)
         {
             _boostArrow.SetActive(true);
             _boostTimer.SetActive(true);
 
-
-            if (_currentBoostTime > _maxBoostTime) // marks the end of the boost
-            {
-                _boostArrow.SetActive(false);
-                _boostTimer.SetActive(false);
-                // _canBoost = false;
-                _isBoosting = false;
-                _currentBoostTime = 0.0f;
-                _boostTimerFill.fillAmount = 0;
-                return;
-            }
-
-            var angle = Mathf.Atan2(_lastInput.y, _lastInput.x) * Mathf.Rad2Deg;
-            var q = Quaternion.AngleAxis(angle, Vector3.forward);
-
-
-            if (!_isBoosting)
-            {
-                _boostArrow.transform.rotation = q;
-                _isBoosting = true;
-            }
-            else
-            {
-                _boostArrow.transform.rotation =
-                    Quaternion.Slerp(_boostArrow.transform.rotation, q, 8 * Time.deltaTime);
-            }
-
-            _boostTimerFill.fillAmount = _currentBoostTime / _maxBoostTime + 0.07f;
-
-            _currentBoostTime += Time.deltaTime;
-
-
-            return;
+            _boostArrow.transform.rotation = CalculateSpriteAngle(_lastInput);
+            _isBoosting = true;
+            _canBoost = false;
+            AudioManager.Instance.Play("BoostCharge");
         }
 
-
-        if (Math.Abs(boostInput) < 0.01f && _isBoosting) // let go
+        if (Input.GetButtonUp("Fire1") && _isBoosting) // let go
         {
             AudioManager.Instance.Stop("BoostCharge");
             AudioManager.Instance.Play("BoostFinish");
@@ -319,9 +297,32 @@ public class Player : MonoBehaviour
 
             _currentBoostTime = 0.0f;
             _isBoosting = false;
+            _canBoost = false;
             _boostTimerFill.fillAmount = 0;
             _boostArrow.SetActive(false);
             _boostTimer.SetActive(false);
+        }
+
+        if (IsBoosting() && !IsSomethingBelow() && _isBoosting)
+        {
+            var angle = CalculateSpriteAngle(_lastInput);
+            _boostArrow.transform.rotation =
+                Quaternion.Slerp(_boostArrow.transform.rotation, angle, 8 * Time.deltaTime);
+
+            _boostTimerFill.fillAmount = _currentBoostTime / _maxBoostTime + 0.07f;
+            _currentBoostTime += Time.deltaTime;
+            return;
+        }
+
+        if (!CanBoost()) // marks the end of the boost
+        {
+            _boostArrow.SetActive(false);
+            _boostTimer.SetActive(false);
+            _canBoost = false;
+            _isBoosting = false;
+            _currentBoostTime = 0.0f;
+            _boostTimerFill.fillAmount = 0;
+            return;
         }
 
 
