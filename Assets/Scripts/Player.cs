@@ -29,7 +29,7 @@ public class Player : MonoBehaviour
     // DEBUG
     [SerializeField] private bool _DEBUGShootEnabled;
     private Firearm _firearm;
-    private bool _isBoosting;
+    private bool _isCurrentlyBoosting;
     [SerializeField] private int _killBounceEnergy = 15;
     private Vector2 _lastFacingDirection;
     private Vector3 _lastInput;
@@ -114,17 +114,23 @@ public class Player : MonoBehaviour
     {
         if (!ApplicationSettings.IsPaused())
         {
-            UpdateMovement();
+            HandleActions();
 
             if (WantsToShoot())
             {
-                var direction = _isBoosting
+                var direction = _isCurrentlyBoosting
                     ? _lastInput.normalized.ToVector2()
                     : new Vector2(Mathf.Sign(_lastFacingDirection.x), 0);
 
                 _firearm.TryToShoot(direction);
             }
         }
+    }
+
+    private void HandleActions()
+    {
+        HandleBoosting();
+        HandleMovement();
     }
 
     private bool WantsToShoot()
@@ -243,23 +249,85 @@ public class Player : MonoBehaviour
         return Quaternion.AngleAxis(angle, Vector3.forward);
     }
 
+    private void HandleBoosting()
+    {
+        if (WantsToBoost() && CanBoost() && _canBoost)
+        {
+            _boostArrow.SetActive(true);
+            _boostTimer.SetActive(true);
+
+            _boostArrow.transform.rotation = CalculateSpriteAngle(_lastInput);
+            _isCurrentlyBoosting = true;
+            _canBoost = false;
+            AudioManager.Instance.Play("BoostCharge");
+        }
+
+        if (!IsUnderMaxBoostTime()) // marks the end of the boost
+        {
+            AudioManager.Instance.Play("PlayerDamaged");
+            _boostArrow.SetActive(false);
+            _boostTimer.SetActive(false);
+            _canBoost = false;
+            _isCurrentlyBoosting = false;
+            _currentBoostTime = 0.0f;
+            _boostTimerFill.fillAmount = 0;
+            return;
+        }
+
+        if (Input.GetButtonUp("Fire1") && _isCurrentlyBoosting) // let go
+        {
+            AudioManager.Instance.Stop("BoostCharge");
+            AudioManager.Instance.Play("BoostFinish");
+
+            Velocity = _lastInput * _boostForce;
+
+            _currentBoostTime = 0.0f;
+            _isCurrentlyBoosting = false;
+            _canBoost = false;
+            _boostTimerFill.fillAmount = 0;
+            _boostArrow.SetActive(false);
+            _boostTimer.SetActive(false);
+        }
+
+        if (WantsToBoost() && _isCurrentlyBoosting)
+        {
+            var angle = CalculateSpriteAngle(_lastInput);
+            _boostArrow.transform.rotation =
+                Quaternion.Slerp(_boostArrow.transform.rotation, angle, 8 * Time.deltaTime);
+
+            _boostTimerFill.fillAmount = _currentBoostTime / _maxBoostTime + 0.07f;
+            _currentBoostTime += Time.deltaTime;
+        }
+    }
+
     private bool IsSomethingBelow()
     {
         return _controller.Collisions.Below;
     }
 
-    private bool CanBoost()
+    private bool IsUnderMaxBoostTime()
     {
         return _currentBoostTime < _maxBoostTime;
     }
 
-    private bool IsBoosting()
+    private bool CanBoost()
+    {
+        return IsUnderMaxBoostTime() && !IsSomethingBelow();
+    }
+
+    private bool WantsToBoost()
     {
         return Input.GetButton("Fire1");
     }
 
-    private void UpdateMovement()
+    private void HandleMovement()
     {
+        var input = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")).normalized;
+
+        if (input != Vector2.zero) _lastInput = input;
+
+        if (_isCurrentlyBoosting) return;
+
         if (_controller.Collisions.Above || _controller.Collisions.Below)
         {
             if (!IgnoreGround)
@@ -268,67 +336,10 @@ public class Player : MonoBehaviour
                 _controller.Collisions.Below = false; // allows to move the player in y direction on ground
         }
 
-
         if (IsSomethingBelow()) _canBoost = true;
 
-        var input = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")).normalized;
-
-        if (input != Vector2.zero) _lastInput = input;
 
         Debug.DrawRay(transform.position, input, Color.yellow);
-
-        if (IsBoosting() && !IsSomethingBelow() && _canBoost)
-        {
-            _boostArrow.SetActive(true);
-            _boostTimer.SetActive(true);
-
-            _boostArrow.transform.rotation = CalculateSpriteAngle(_lastInput);
-            _isBoosting = true;
-            _canBoost = false;
-            AudioManager.Instance.Play("BoostCharge");
-        }
-
-        if (!CanBoost() && _isBoosting) // marks the end of the boost
-        {
-            AudioManager.Instance.Play("PlayerDamaged");
-            _boostArrow.SetActive(false);
-            _boostTimer.SetActive(false);
-            _canBoost = false;
-            _isBoosting = false;
-            _currentBoostTime = 0.0f;
-            _boostTimerFill.fillAmount = 0;
-            return;
-        }
-
-        if (Input.GetButtonUp("Fire1") && _isBoosting) // let go
-        {
-            AudioManager.Instance.Stop("BoostCharge");
-            AudioManager.Instance.Play("BoostFinish");
-
-            Velocity = _lastInput * _boostForce;
-
-            _currentBoostTime = 0.0f;
-            _isBoosting = false;
-            _canBoost = false;
-            _boostTimerFill.fillAmount = 0;
-            _boostArrow.SetActive(false);
-            _boostTimer.SetActive(false);
-        }
-
-        if (IsBoosting() && !IsSomethingBelow() && _isBoosting)
-        {
-            var angle = CalculateSpriteAngle(_lastInput);
-            _boostArrow.transform.rotation =
-                Quaternion.Slerp(_boostArrow.transform.rotation, angle, 8 * Time.deltaTime);
-
-            _boostTimerFill.fillAmount = _currentBoostTime / _maxBoostTime + 0.07f;
-            _currentBoostTime += Time.deltaTime;
-            return;
-        }
-
-
-        // jumping and movement part 
-
 
         if (Input.GetButtonDown("Jump") && _controller.Collisions.Below)
         {
