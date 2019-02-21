@@ -288,6 +288,18 @@ public class Player : MonoBehaviour
             AudioManager.Instance.Play("BoostCharge");
         }
 
+        if (!CanBoost() && _isBoosting) // marks the end of the boost
+        {
+            AudioManager.Instance.Play("PlayerDamaged");
+            _boostArrow.SetActive(false);
+            _boostTimer.SetActive(false);
+            _canBoost = false;
+            _isBoosting = false;
+            _currentBoostTime = 0.0f;
+            _boostTimerFill.fillAmount = 0;
+            return;
+        }
+
         if (Input.GetButtonUp("Fire1") && _isBoosting) // let go
         {
             AudioManager.Instance.Stop("BoostCharge");
@@ -311,17 +323,6 @@ public class Player : MonoBehaviour
 
             _boostTimerFill.fillAmount = _currentBoostTime / _maxBoostTime + 0.07f;
             _currentBoostTime += Time.deltaTime;
-            return;
-        }
-
-        if (!CanBoost()) // marks the end of the boost
-        {
-            _boostArrow.SetActive(false);
-            _boostTimer.SetActive(false);
-            _canBoost = false;
-            _isBoosting = false;
-            _currentBoostTime = 0.0f;
-            _boostTimerFill.fillAmount = 0;
             return;
         }
 
