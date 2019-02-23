@@ -31,7 +31,11 @@ namespace RaycastEngine2D
 
             transform.Translate(velocity);
         }
-
+        
+        public bool IsSomethingBelow()
+        {
+            return Collisions.Below;
+        }
 
         internal override void CheckHorizontalCollisions(ref Vector3 velocity)
         {

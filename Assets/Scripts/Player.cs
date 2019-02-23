@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using RaycastEngine2D;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using Random = UnityEngine.Random;
 
 [RequireComponent(typeof(CircleController2D))]
 public class Player : MonoBehaviour
@@ -88,6 +85,7 @@ public class Player : MonoBehaviour
     private void Start()
     {
         _lastFacingDirection = Vector2.right;
+        
         AudioManager.Instance.Play("01Peaceful", isLooping: true);
 
         _currentHealth = MaxHealth;
@@ -114,64 +112,49 @@ public class Player : MonoBehaviour
     {
         if (!ApplicationSettings.IsPaused())
         {
-            HandleActions();
-
-            if (WantsToShoot())
-            {
-                var direction = _isCurrentlyBoosting
-                    ? _lastInput.normalized.ToVector2()
-                    : new Vector2(Mathf.Sign(_lastFacingDirection.x), 0);
-
-                _firearm.TryToShoot(direction);
-            }
+            HandleActions();   
         }
     }
 
     private void HandleActions()
     {
+        HandleShooting();
         HandleBoosting();
         HandleMovement();
     }
 
+    private void HandleShooting()
+    {
+        if (!WantsToShoot() || !CanShoot()) return;
+        
+        var direction = GetShootingDirection();
+
+        _firearm.TryToShoot(direction);
+    }
+
+    private Vector2 GetShootingDirection() =>
+        _isCurrentlyBoosting
+            ? _lastInput.normalized.ToVector2()
+            : new Vector2(Mathf.Sign(_lastFacingDirection.x), 0);
+
+
     private bool WantsToShoot()
     {
-        return Input.GetButtonDown("Fire3") && HasUpgrade<ShootingUpgrade>();
+        return Input.GetButtonDown("Fire3");
     }
+
+    private bool CanShoot()
+    {
+        return HasUpgrade<ShootingUpgrade>();
+    }
+
 
     private bool IsMoving()
     {
-        return Math.Abs(Velocity.x) > float.Epsilon;
+        return Mathf.Abs(Velocity.x) > float.Epsilon;
     }
 
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        if (other.gameObject.CompareTag("Killcollider") && !_animator.GetBool("Damaged"))
-        {
-            AudioManager.Instance.Play("MonsterHit");
 
-            var enemy = other.transform.parent.gameObject;
-
-            Currency += enemy.GetComponent<BasicEnemy>().CurrencyOnKill;
-            Destroy(enemy);
-
-            Velocity.y = 0;
-            Velocity.y += _killBounceEnergy;
-        }
-
-
-        if (other.gameObject.CompareTag("HitCollider") && !_animator.GetBool("Damaged")
-        ) // TODO it seems like it doesn't belong here
-        {
-            var boss = other.gameObject.GetComponentInParent<Boss>();
-
-            if (boss.CurrentState == BossState.VULNERABLE)
-            {
-                boss.GetDamaged();
-                Velocity.y = 0;
-                Velocity.y += _killBounceEnergy;
-            }
-        }
-    }
 
     public void DamagePlayer(int damageToTake)
     {
@@ -250,8 +233,10 @@ public class Player : MonoBehaviour
     }
 
     private void HandleBoosting()
-    {
-        if (WantsToBoost() && CanBoost() && _canBoost)
+    {      
+        if (_controller.IsSomethingBelow()) _canBoost = true;
+        
+        if (WantsToBoost() && CanBoost())
         {
             _boostArrow.SetActive(true);
             _boostTimer.SetActive(true);
@@ -262,15 +247,10 @@ public class Player : MonoBehaviour
             AudioManager.Instance.Play("BoostCharge");
         }
 
-        if (!IsUnderMaxBoostTime()) // marks the end of the boost
+        if (IsOverMaxBoostTime()) // marks the end of the boost
         {
             AudioManager.Instance.Play("PlayerDamaged");
-            _boostArrow.SetActive(false);
-            _boostTimer.SetActive(false);
-            _canBoost = false;
-            _isCurrentlyBoosting = false;
-            _currentBoostTime = 0.0f;
-            _boostTimerFill.fillAmount = 0;
+            ResetBoost();
             return;
         }
 
@@ -281,12 +261,7 @@ public class Player : MonoBehaviour
 
             Velocity = _lastInput * _boostForce;
 
-            _currentBoostTime = 0.0f;
-            _isCurrentlyBoosting = false;
-            _canBoost = false;
-            _boostTimerFill.fillAmount = 0;
-            _boostArrow.SetActive(false);
-            _boostTimer.SetActive(false);
+            ResetBoost();
         }
 
         if (WantsToBoost() && _isCurrentlyBoosting)
@@ -300,25 +275,21 @@ public class Player : MonoBehaviour
         }
     }
 
-    private bool IsSomethingBelow()
+    private void ResetBoost()
     {
-        return _controller.Collisions.Below;
+        _currentBoostTime = 0.0f;
+        _isCurrentlyBoosting = false;
+        _canBoost = false;
+        _boostTimerFill.fillAmount = 0;
+        _boostArrow.SetActive(false);
+        _boostTimer.SetActive(false);
     }
 
-    private bool IsUnderMaxBoostTime()
-    {
-        return _currentBoostTime < _maxBoostTime;
-    }
+    private bool IsOverMaxBoostTime() => _currentBoostTime > _maxBoostTime;
 
-    private bool CanBoost()
-    {
-        return IsUnderMaxBoostTime() && !IsSomethingBelow();
-    }
+    private bool CanBoost() => !IsOverMaxBoostTime() && !_controller.IsSomethingBelow() && _canBoost;
 
-    private bool WantsToBoost()
-    {
-        return Input.GetButton("Fire1");
-    }
+    private bool WantsToBoost() => Input.GetButton("Fire1");
 
     private void HandleMovement()
     {
@@ -336,18 +307,15 @@ public class Player : MonoBehaviour
                 _controller.Collisions.Below = false; // allows to move the player in y direction on ground
         }
 
-        if (IsSomethingBelow()) _canBoost = true;
+        Debug.DrawRay(transform.position, input, Color.yellow); // TODO> this debug could also be separated from the main logic
 
-
-        Debug.DrawRay(transform.position, input, Color.yellow);
-
-        if (Input.GetButtonDown("Jump") && _controller.Collisions.Below)
+        if (Input.GetButtonDown("Jump") && _controller.IsSomethingBelow())
         {
             AudioManager.Instance.Play("Jump", 0.5f);
             Velocity.y = _maxJumpVelocity;
         }
 
-        if (Input.GetButtonUp("Jump") && !_controller.Collisions.Below)
+        if (Input.GetButtonUp("Jump") && !_controller.IsSomethingBelow())
             if (Velocity.y > _minJumpVelocity)
                 Velocity.y = _minJumpVelocity;
 
@@ -362,5 +330,35 @@ public class Player : MonoBehaviour
 
         if (IsMoving())
             _lastFacingDirection = Velocity.normalized.ToVector2();
+    }
+    
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.gameObject.CompareTag("Killcollider") && !_animator.GetBool("Damaged"))
+        {
+            AudioManager.Instance.Play("MonsterHit");
+
+            var enemy = other.transform.parent.gameObject;
+
+            Currency += enemy.GetComponent<BasicEnemy>().CurrencyOnKill;
+            Destroy(enemy);
+
+            Velocity.y = 0;
+            Velocity.y += _killBounceEnergy;
+        }
+
+
+        if (other.gameObject.CompareTag("HitCollider") && !_animator.GetBool("Damaged")
+        ) // TODO it seems like it doesn't belong here
+        {
+            var boss = other.gameObject.GetComponentInParent<Boss>();
+
+            if (boss.CurrentState == BossState.VULNERABLE)
+            {
+                boss.GetDamaged();
+                Velocity.y = 0;
+                Velocity.y += _killBounceEnergy;
+            }
+        }
     }
 }

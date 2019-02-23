@@ -252,7 +252,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd49b4defe00b3e499490aeb8aaed9ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CollisionMask:
+  collisionMask:
     serializedVersion: 2
     m_Bits: 512
   _edgePushStrength: 0.01
@@ -358,11 +358,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e22c656860bb4945b226f1e0c3ddee5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _maxShotRange: 10
+  _shotCoolDown: 1
   _shotParticlePrefab: {fileID: 1191552461824492, guid: 4fdf3def032d30147afcc40f0202dc28,
     type: 3}
   _shotSpeed: 20
-  _maxShotRange: 10
-  _shotCoolDown: 1
 --- !u!1 &1231417571871360
 GameObject:
   m_ObjectHideFlags: 0
