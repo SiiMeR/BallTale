@@ -1,18 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class AudioManager : Singleton<AudioManager>
 {
-    //  public static AudioManager instance;
-
-
-    public List<AudioClip> audioClips;
-
-
     private Dictionary<string, AudioClip> audioMap;
 
-    public int maxAudios = 16;
+    public int maxAudios = 32;
 
     public float musicVolume = 1;
     public float soundVolume = 1;
@@ -26,17 +21,20 @@ public class AudioManager : Singleton<AudioManager>
 
             return audioMap;
         }
-        set { audioMap = value; }
+        set => audioMap = value;
     }
 
 
     private void CreateAudioMap()
     {
-        audioMap = new Dictionary<string, AudioClip>();
+        var audioClips = GetAssetsFromResources("Sounds").Concat(GetAssetsFromResources("Music"));
 
         AudioMap = new Dictionary<string, AudioClip>();
 
-        foreach (var clip in audioClips) AudioMap.Add(clip.name, clip);
+        foreach (var audioClip in audioClips)
+        {
+            AudioMap.Add(audioClip.name, audioClip);
+        }
 
         sourcePool = new List<AudioSource>();
         var parent = new GameObject("Audios");
@@ -52,6 +50,8 @@ public class AudioManager : Singleton<AudioManager>
         SetMusicVolume(PlayerPrefs.GetInt("MusicVolume") / 10f);
         SetSoundVolume(PlayerPrefs.GetInt("SoundVolume") / 10f);
     }
+
+    public AudioClip[] GetAssetsFromResources(string path) => Resources.LoadAll<AudioClip>(path);
 
     public void SetMusicVolume(float volume)
     {
@@ -98,7 +98,6 @@ public class AudioManager : Singleton<AudioManager>
         {
             Debug.LogWarning("Could not find audio: " + audioName);
         }
-
     }
 
     public IEnumerator FadeToNextMusic(string nextMusicName, float time = 2.0f)
@@ -160,7 +159,6 @@ public class AudioManager : Singleton<AudioManager>
         {
             Debug.LogWarning("Could not find audio: " + audioName);
         }
-                    
     }
 
     public void Play(AudioClip clip, float vol = 1f, bool isLooping = false, Vector3? position = null)

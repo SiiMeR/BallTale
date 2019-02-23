@@ -4962,18 +4962,6 @@ MonoBehaviour:
   SidegrassRight: {fileID: 11400000, guid: 8ba74cb31e7878e429d4618947b49ba3, type: 2}
   Tile: {fileID: 11400000, guid: ffb35e1cb5f43744e9ddf52baac05fc6, type: 2}
   Undergrass: {fileID: 11400000, guid: 38f1c7d044c43b64f80ecef2b3b1ea7e, type: 2}
---- !u!114 &1343735498
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1343735495}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dca3e18ae5cf5384f85f955f674993e9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1346116229
 GameObject:
   m_ObjectHideFlags: 0
@@ -5779,6 +5767,11 @@ PrefabInstance:
     - target: {fileID: 4826669667055816, guid: 4fc6ccb8fbf534f45bfbd0b22d565d59, type: 3}
       propertyPath: m_RootOrder
       value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 114200885645069592, guid: 4fc6ccb8fbf534f45bfbd0b22d565d59,
+        type: 3}
+      propertyPath: maxAudios
+      value: 32
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4fc6ccb8fbf534f45bfbd0b22d565d59, type: 3}
