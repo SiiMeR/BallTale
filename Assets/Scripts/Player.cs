@@ -9,6 +9,8 @@ using UnityEngine.UI;
 [RequireComponent(typeof(CircleController2D))]
 public class Player : MonoBehaviour
 {
+    private const float BOOST_MARGIN = 0.07f;
+    
     [SerializeField] private float _accelerationTimeAirborne = .2f;
     [SerializeField] private float _accelerationTimeGrounded = .1f;
 
@@ -23,6 +25,7 @@ public class Player : MonoBehaviour
     private int _currentHealth;
     [SerializeField] private TextMeshProUGUI _damageText;
     private DeathScreen _deathScreen;
+
 
     // DEBUG
     [SerializeField] private bool _DEBUGShootEnabled;
@@ -181,10 +184,9 @@ public class Player : MonoBehaviour
         orig.a = 1.0f;
         _damageText.color = orig;
 
-
         var startPos = transform.position + Vector3.up;
         var endPos = startPos + Vector3.up * 2;
-
+        
         while ((timer += Time.deltaTime) < 1.0f)
         {
             var t = timer / 1.0f;
@@ -236,48 +238,65 @@ public class Player : MonoBehaviour
     private void HandleBoosting()
     {      
         if (_controller.IsSomethingBelow()) _canBoost = true;
-        
+
         if (WantsToBoost() && CanBoost())
-        {
-            _boostArrow.SetActive(true);
-            _boostTimer.SetActive(true);
+            ActivateBoostArrow();
 
-            _boostArrow.transform.rotation = CalculateSpriteAngle(_lastInput);
-            _isCurrentlyBoosting = true;
-            _canBoost = false;
-            AudioManager.Instance.Play("BoostCharge");
-        }
-
-        if (IsOverMaxBoostTime()) // marks the end of the boost
+        else if (IsOverMaxBoostTime()) // marks the end of the boost
         {
             AudioManager.Instance.Play("PlayerDamaged");
-            ResetBoost();
-            return;
+            ResetBoostState();
         }
 
-        if (Input.GetButtonUp("Fire1") && _isCurrentlyBoosting) // let go
+        else if (Input.GetButtonUp("Fire1") && _isCurrentlyBoosting) // let go
         {
-            AudioManager.Instance.Stop("BoostCharge");
-            AudioManager.Instance.Play("BoostFinish");
-
-            Velocity = _lastInput * _boostForce;
-
-            ResetBoost();
+            Boost();
+            ResetBoostState();
         }
 
-        if (WantsToBoost() && _isCurrentlyBoosting)
+        else if (WantsToBoost() && _isCurrentlyBoosting)
         {
-            var angle = CalculateSpriteAngle(_lastInput);
-            _boostArrow.transform.rotation =
-                Quaternion.Slerp(_boostArrow.transform.rotation, angle, 8 * Time.deltaTime);
-
-            _boostTimerFill.fillAmount = _currentBoostTime / _maxBoostTime + 0.07f;
+            RotateBoostArrow();
+            UpdateBoostFillAmount();
+            
             _currentBoostTime += Time.deltaTime;
         }
     }
 
-    private void ResetBoost()
+    private void Boost()
     {
+        AudioManager.Instance.Play("BoostFinish");
+        Velocity = _lastInput * _boostForce;
+    }
+
+    private void ActivateBoostArrow()
+    {
+        _boostArrow.SetActive(true);
+        _boostTimer.SetActive(true);
+
+        _boostArrow.transform.rotation = CalculateSpriteAngle(_lastInput);
+        _isCurrentlyBoosting = true;
+        _canBoost = false;
+        AudioManager.Instance.Play("BoostCharge");
+    }
+
+    private void UpdateBoostFillAmount()
+    {
+        _boostTimerFill.fillAmount = _currentBoostTime / _maxBoostTime + BOOST_MARGIN;
+    }
+
+
+
+    private void RotateBoostArrow()
+    {
+        var angle = CalculateSpriteAngle(_lastInput);
+        _boostArrow.transform.rotation =
+            Quaternion.Slerp(_boostArrow.transform.rotation, angle, 8 * Time.deltaTime);
+    }
+
+    private void ResetBoostState()
+    {
+        AudioManager.Instance.Stop("BoostCharge");
         _currentBoostTime = 0.0f;
         _isCurrentlyBoosting = false;
         _canBoost = false;
