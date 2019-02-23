@@ -159,7 +159,6 @@ public class Player : MonoBehaviour
     }
 
 
-
     public void DamagePlayer(int damageToTake)
     {
         if (!_animator.GetBool("Damaged"))
@@ -168,7 +167,7 @@ public class Player : MonoBehaviour
 
             StartCoroutine(FloatingDamage());
 
-            StartCoroutine(PlayerDamaged());
+            StartCoroutine(Invulnerability());
 
 
             CurrentHealth -= damageToTake;
@@ -206,7 +205,7 @@ public class Player : MonoBehaviour
         _damageText.color = end;
     }
 
-    public IEnumerator PlayerDamaged()
+    public IEnumerator Invulnerability()
     {
         AudioManager.Instance.Play("PlayerDamaged");
 

@@ -4,47 +4,38 @@ using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 public class Shop : Interactable
 {
-    private int _currentSelectionSlot;
     [SerializeField] private TextMeshProUGUI _descriptionText;
-
-    private bool _justBoughtShootingUpgrade;
-
-    private bool _moveAxisInUse;
-    
-    public Queue<Upgrade> _saleQueue; // holds items that are not yet on sale
-    
     [SerializeField] private GameObject _selectionFrame;
-
     [SerializeField] private TextMeshProUGUI _shootingText;
 
     public List<Slot> Slots;
-    
     public float FrameMoveTime = 1.0f;
+    public Queue<Upgrade> _saleQueue; // holds items that are not yet on sale
 
+    private int _currentSelectionSlot;
+    private bool _justBoughtShootingUpgrade;
+    private bool currentlyMovingFrame;
     private UI _ui;
-
     private Player _player;
-    
+
+
     private void OnDisable()
     {
         if (_ui) _ui.KeepOpen = false;
     }
-    
+
     // Use this for initialization
     protected void Awake()
     {
-        
+        _player = FindObjectOfType<Player>();
         _ui = FindObjectOfType<UI>();
-
         _saleQueue = new Queue<Upgrade>();
         Slots = GetComponentsInChildren<Slot>(true).ToList();
 
-        _player = FindObjectOfType<Player>();
-        
+
         if (PlayerPrefs.GetInt("loadgame") == 0)
         {
             InitShopInventory();
@@ -52,7 +43,7 @@ public class Shop : Interactable
     }
     
     /// <summary>
-    /// A method to fill shop inventory with items when starting a new game.
+    /// Fills shop inventory with items when starting a new game.
     /// Should not be called when loading game from an existing savegame.
     /// </summary>
     private void InitShopInventory()
@@ -150,16 +141,16 @@ public class Shop : Interactable
     {
         base.Update();
 
-        if (Math.Abs(Time.timeScale) < 0.01f && _panel.activeInHierarchy) // paused
+        if (ApplicationSettings.IsPaused() && _panel.activeInHierarchy) // paused
         {
-            CheckFrameMovement();
-            CheckBuying();
+            HandleSelectorMovement();
+            HandleBuying();
         }
     }
    
-    private void CheckBuying()
+    private void HandleBuying()
     {
-        if (!Input.GetButtonDown("Fire3") || Slots[_currentSelectionSlot].IsEmpty()) return;
+        if (!WantsToBuyItem() || Slots[_currentSelectionSlot].IsEmpty()) return;
         
         var slot = Slots[_currentSelectionSlot];
 
@@ -169,34 +160,33 @@ public class Shop : Interactable
         
         if (slot.Upgrade is ShootingUpgrade) _justBoughtShootingUpgrade = true; // TODO doesn't work when I will add more upgrades
 
-        AudioManager.Instance.Play("Buy", 5f);
-
-        slot
-            .Upgrade
-            .GetComponent<Upgrade>()
-            .Apply(_player);
-
-        _player.Currency -= upgradePrice;
-        slot.Upgrade = null;
-        _descriptionText.text = "";
+        BuyItem(slot, upgradePrice);
 
         FillSlotWithNewItem(slot);
     }
 
-    private void CheckFrameMovement()
+    private void BuyItem(Slot slot, int upgradePrice)
+    {
+        AudioManager.Instance.Play("Buy", 5f);
+        slot.Upgrade.Apply(_player);
+        _player.Currency -= upgradePrice;
+        slot.Upgrade = null;
+        _descriptionText.text = "";
+    }
+
+    private static bool WantsToBuyItem()
+    {
+        return Input.GetButtonDown("Fire3");
+    }
+
+    private void HandleSelectorMovement()
     {
         var input = Input.GetAxisRaw("Horizontal");
 
-        if (input > 0.1 && !_moveAxisInUse)
-        {
-            _moveAxisInUse = true;
-            StartCoroutine(MoveFrame(false));
-        }
-        else if (input < -0.1 && !_moveAxisInUse)
-        {
-            _moveAxisInUse = true;
-            StartCoroutine(MoveFrame(true));
-        }
+        if (Math.Abs(input) < float.Epsilon || currentlyMovingFrame) return;
+        
+        StartCoroutine(MoveFrame(input < 0f));
+        currentlyMovingFrame = true;
     }
 
     private IEnumerator MoveFrame(bool moveLeft)
@@ -213,7 +203,7 @@ public class Shop : Interactable
 
         while ((elapsedTime += Time.unscaledDeltaTime) < FrameMoveTime)
         {
-            _moveAxisInUse = true;
+            currentlyMovingFrame = true;
             
             _selectionFrame.transform.position = Vector3.Lerp(startPos, endPos, elapsedTime / FrameMoveTime);
 
@@ -226,23 +216,11 @@ public class Shop : Interactable
 
         _descriptionText.text = selectedUpgrade.Upgrade ? Slots[_currentSelectionSlot].Upgrade.Description : "";
 
-        _moveAxisInUse = false;
+        currentlyMovingFrame = false;
     }
 
     private void FillSlotWithNewItem(Slot slot)
     {
-        
-        if (_saleQueue.Count != 0)
-        {
-            var upgrade = _saleQueue.Dequeue();
-            
-            _descriptionText.text = upgrade.Description;
-            slot.Upgrade = upgrade;
-        }
-        else
-        {
-            slot.Upgrade = null;
-            _descriptionText.text = "";
-        }
+        slot.Upgrade = _saleQueue.Count != 0 ? _saleQueue.Dequeue() : null;
     }
 }

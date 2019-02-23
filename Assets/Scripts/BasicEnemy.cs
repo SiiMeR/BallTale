@@ -28,6 +28,8 @@ public class BasicEnemy : MonoBehaviour
     [SerializeField] private bool _useGravity = true;
     [SerializeField] private bool _useWaypointMovement = true;
 
+    private SpriteRenderer _spriteRenderer;
+
     public int Damage { get; set; }
 
 
@@ -80,6 +82,7 @@ public class BasicEnemy : MonoBehaviour
     // Use this for initialization
     private void Start()
     {
+        _spriteRenderer = GetComponent<SpriteRenderer>();
         PathMiddlePos = transform.position;
         _movetarget = PathFirstPos;
         _lastmovetarget = PathMiddlePos;
@@ -131,7 +134,8 @@ public class BasicEnemy : MonoBehaviour
 
     private void UpdateMovementDumb()
     {
-        GetComponent<SpriteRenderer>().flipX = Mathf.Sign(_velocity.x) < float.Epsilon; // moving right
+        
+        _spriteRenderer.flipX = Mathf.Sign(_velocity.x) < float.Epsilon; // moving right
 
         if (_useGravity)
         {
@@ -152,7 +156,7 @@ public class BasicEnemy : MonoBehaviour
         var direction = _movetarget - transform.position;
 
 
-        GetComponent<SpriteRenderer>().flipX = Mathf.Abs(Mathf.Sign(direction.x) - 1) < float.Epsilon; // moving right
+        _spriteRenderer.flipX = Mathf.Abs(Mathf.Sign(direction.x) - 1) < float.Epsilon; // moving right
 
         if (_useGravity)
         {

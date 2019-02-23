@@ -4,11 +4,10 @@ using UnityEngine;
 public class Sign : Interactable
 {
     [SerializeField] private TMP_Text _paragraphText;
-    
+    [SerializeField] private TMP_Text _titleText;
+
     [SerializeField] [TextArea] private string _text;
     [SerializeField] [TextArea] private string _title;
-
-    [SerializeField] private TMP_Text _titleText;
 
 
     // Use this for initialization
