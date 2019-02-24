@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Extensions;
 using TMPro;
 using UnityEngine;
 
@@ -94,46 +95,13 @@ public class Shop : Interactable
 
     private IEnumerator ShowShootingHelpText()
     {
-        var timer = 0f;    
-        const float totalTime = 4f;
 
-        while ((timer += Time.deltaTime) < 0.75f)
-        {
-            var c = _shootingText.color;
+        yield return StartCoroutine(_shootingText.TransitionColorTo(0.75f, _shootingText.color.ToOpaque()));
 
-            c.a = Mathf.Lerp(0, 1, timer / 0.75f);
+        yield return new WaitForSeconds(4f);
+        
+        yield return StartCoroutine(_shootingText.TransitionColorTo(0.75f, _shootingText.color.ToClearAlpha()));
 
-            _shootingText.color = c;
-
-            yield return null;
-        }
-
-        var c2 = _shootingText.color;
-
-        c2.a = 1;
-
-        _shootingText.color = c2;
-
-        yield return new WaitForSeconds(totalTime);
-
-        timer = 0;
-
-        while ((timer += Time.deltaTime) < 0.75f)
-        {
-            var c = _shootingText.color;
-
-            c.a = Mathf.Lerp(1, 0, timer / 0.75f);
-
-            _shootingText.color = c;
-
-            yield return null;
-        }
-
-        var c3 = _shootingText.color;
-
-        c3.a = 0;
-
-        _shootingText.color = c3;
     }
 
     // Update is called once per frame	
