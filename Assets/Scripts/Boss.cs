@@ -309,8 +309,10 @@ public class Boss : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D other)
     {
-        if (other.gameObject.CompareTag("Player") && CurrentState != BossState.VORTEX)
-            other.gameObject.GetComponent<Player>().DamagePlayer(Damage);
+        if (CurrentState != BossState.VORTEX)
+        {
+            other.GetComponent<IDamageable>()?.Damage(Damage);
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D other)

@@ -7,7 +7,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(CircleController2D))]
-public class Player : MonoBehaviour
+public class Player : MonoBehaviour, IDamageable
 {
     private const float BOOST_MARGIN = 0.07f;
     
@@ -158,22 +158,6 @@ public class Player : MonoBehaviour
         return Mathf.Abs(Velocity.x) > float.Epsilon;
     }
 
-
-    public void DamagePlayer(int damageToTake)
-    {
-        if (!_animator.GetBool("Damaged"))
-        {
-            _damageText.text = damageToTake.ToString();
-
-            StartCoroutine(FloatingDamage());
-
-            StartCoroutine(Invulnerability());
-
-
-            CurrentHealth -= damageToTake;
-            Debug.Log($"Took a hit, {_currentHealth} health left. ");
-        }
-    }
 
     public IEnumerator FloatingDamage()
     {
@@ -378,6 +362,21 @@ public class Player : MonoBehaviour
                 Velocity.y = 0;
                 Velocity.y += _killBounceEnergy;
             }
+        }
+    }
+
+    public void Damage(int damageAmount)
+    {
+        if (!_animator.GetBool("Damaged"))
+        {
+            _damageText.text = damageAmount.ToString();
+
+            StartCoroutine(FloatingDamage());
+
+            StartCoroutine(Invulnerability());
+
+            CurrentHealth -= damageAmount;
+            Debug.Log($"Took a hit, {_currentHealth} health left. ");
         }
     }
 }

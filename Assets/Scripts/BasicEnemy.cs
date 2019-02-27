@@ -183,12 +183,7 @@ public class BasicEnemy : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D other)
     {
-        if (other.gameObject.CompareTag("Player"))
-        {
-            var player = other.gameObject.GetComponent<Player>();
-
-            player.DamagePlayer(Damage);
-        }
+        other.GetComponent<IDamageable>()?.Damage(damage);
     }
 
     private void CheckDirection()

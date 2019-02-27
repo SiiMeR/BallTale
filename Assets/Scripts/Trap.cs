@@ -6,11 +6,6 @@ public class Trap : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D other)
     {
-        var player = other.gameObject.GetComponent<Player>();
-        
-        if (player)
-        {
-            player.DamagePlayer(_damage);
-        }
+        other.GetComponent<IDamageable>()?.Damage(_damage);
     }
 }
