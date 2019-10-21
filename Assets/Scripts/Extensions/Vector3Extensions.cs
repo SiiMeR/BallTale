@@ -1,9 +1,12 @@
 ﻿using UnityEngine;
 
-public static class Vector3Extensions
+namespace Extensions
 {
-    public static Vector2 ToVector2(this Vector3 vector)
+    public static class Vector3Extensions
     {
-        return new Vector2(vector.x, vector.y);
+        public static Vector2 ToVector2(this Vector3 vector)
+        {
+            return new Vector2(vector.x, vector.y);
+        }
     }
 }

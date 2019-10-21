@@ -27,7 +27,8 @@ public class AudioManager : Singleton<AudioManager>
 
     private void CreateAudioMap()
     {
-        var audioClips = GetAssetsFromResources("Sounds").Concat(GetAssetsFromResources("Music"));
+        var audioClips = GetAssetsFromResources("Sounds")
+            .Concat(GetAssetsFromResources("Music"));
 
         AudioMap = new Dictionary<string, AudioClip>();
 
@@ -51,15 +52,14 @@ public class AudioManager : Singleton<AudioManager>
         SetSoundVolume(PlayerPrefs.GetInt("SoundVolume") / 10f);
     }
 
-    public AudioClip[] GetAssetsFromResources(string path) => Resources.LoadAll<AudioClip>(path);
+    public static IEnumerable<AudioClip> GetAssetsFromResources(string path) => Resources.LoadAll<AudioClip>(path);
 
     public void SetMusicVolume(float volume)
     {
         musicVolume = volume;
-        if (sourcePool != null)
-            foreach (var source in sourcePool)
-                if (source.isPlaying && source.loop)
-                    source.volume = volume;
+        if (sourcePool == null) return;
+        foreach (var source in sourcePool.Where(source => source.isPlaying && source.loop))
+            source.volume = volume;
     }
 
     public void SetSoundVolume(float volume)
@@ -69,10 +69,10 @@ public class AudioManager : Singleton<AudioManager>
 
     public void StopAllMusic()
     {
-        if (sourcePool != null)
-            foreach (var source in sourcePool)
-                if (source.isPlaying && source.loop)
-                    source.Stop();
+        if (sourcePool == null) return;
+        
+        foreach (var source in sourcePool.Where(source => source.isPlaying && source.loop))
+            source.Stop();
     }
 
     public void PlayRandom(string[] audioName, float vol = 1f, bool isLooping = false, Vector3? position = null)
@@ -87,12 +87,11 @@ public class AudioManager : Singleton<AudioManager>
         var succ = AudioMap.TryGetValue(audioName, out var clip);
         if (succ)
         {
-            foreach (var source in sourcePool)
-                if (source.clip == clip)
-                {
-                    source.Stop();
-                    return;
-                }
+            foreach (var source in sourcePool.Where(source => source.clip == clip))
+            {
+                source.Stop();
+                return;
+            }
         }
         else
         {
@@ -138,33 +137,7 @@ public class AudioManager : Singleton<AudioManager>
         var succ = AudioMap.TryGetValue(audioName, out var clip);
         if (succ)
         {
-            foreach (var source in sourcePool)
-                if (!source.isPlaying)
-                {
-                    source.clip = clip;
-                    source.volume = vol * (isLooping ? musicVolume : soundVolume);
-                    source.loop = isLooping;
-                    source.Play();
-
-                    if (position != null)
-                        source.transform.position = (Vector3) position;
-                    else
-                        source.transform.localPosition = Vector3.zero;
-
-                    break;
-                }
-        }
-
-        else
-        {
-            Debug.LogWarning("Could not find audio: " + audioName);
-        }
-    }
-
-    public void Play(AudioClip clip, float vol = 1f, bool isLooping = false, Vector3? position = null)
-    {
-        foreach (var source in sourcePool)
-            if (!source.isPlaying)
+            foreach (var source in sourcePool.Where(source => !source.isPlaying))
             {
                 source.clip = clip;
                 source.volume = vol * (isLooping ? musicVolume : soundVolume);
@@ -178,5 +151,29 @@ public class AudioManager : Singleton<AudioManager>
 
                 break;
             }
+        }
+
+        else
+        {
+            Debug.LogWarning("Could not find audio: " + audioName);
+        }
+    }
+
+    public void Play(AudioClip clip, float vol = 1f, bool isLooping = false, Vector3? position = null)
+    {
+        foreach (var source in sourcePool.Where(source => !source.isPlaying))
+        {
+            source.clip = clip;
+            source.volume = vol * (isLooping ? musicVolume : soundVolume);
+            source.loop = isLooping;
+            source.Play();
+
+            if (position != null)
+                source.transform.position = (Vector3) position;
+            else
+                source.transform.localPosition = Vector3.zero;
+
+            break;
+        }
     }
 }

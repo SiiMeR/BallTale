@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Extensions;
 using RaycastEngine2D;
 using TMPro;
 using UnityEngine;
@@ -212,7 +213,7 @@ public class Player : MonoBehaviour, IDamageable
         _animator.SetBool("Damaged", false);
     }
 
-    private Quaternion CalculateSpriteAngle(Vector2 direction)
+    private static Quaternion CalculateSpriteAngle(Vector2 direction)
     {
         var angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
         return Quaternion.AngleAxis(angle, Vector3.forward);
@@ -268,8 +269,6 @@ public class Player : MonoBehaviour, IDamageable
         _boostTimerFill.fillAmount = _currentBoostTime / _maxBoostTime + BOOST_MARGIN;
     }
 
-
-
     private void RotateBoostArrow()
     {
         var angle = CalculateSpriteAngle(_lastInput);
@@ -292,7 +291,7 @@ public class Player : MonoBehaviour, IDamageable
 
     private bool CanBoost() => !IsOverMaxBoostTime() && !_controller.IsSomethingBelow() && _canBoost;
 
-    private bool WantsToBoost() => Input.GetButton("Fire1");
+    private static bool WantsToBoost() => Input.GetButton("Fire1");
 
     private void HandleMovement()
     {
@@ -300,17 +299,18 @@ public class Player : MonoBehaviour, IDamageable
 
         if (input != Vector2.zero) _lastInput = input;
 
-        if (_isCurrentlyBoosting) return;
+        if (_isCurrentlyBoosting) 
+            return;
 
         if (_controller.Collisions.Above || _controller.Collisions.Below)
         {
-            if (!IgnoreGround)
-                Velocity.y = 0;
+            if (IgnoreGround)
+                _controller.Collisions.Below = false; // allows to move the player in y direction on ground. for boss vortex.
             else
-                _controller.Collisions.Below = false; // allows to move the player in y direction on ground
+                Velocity.y = 0;
         }
 
-        Debug.DrawRay(transform.position, input, Color.yellow); // TODO> this debug could also be separated from the main logic
+//        Debug.DrawRay(transform.position, input, Color.yellow); // TODO> this debug could also be separated from the main logic
 
         if (Input.GetButtonDown("Jump") && _controller.IsSomethingBelow())
         {
@@ -351,8 +351,7 @@ public class Player : MonoBehaviour, IDamageable
         }
 
 
-        if (other.gameObject.CompareTag("HitCollider") && !_animator.GetBool("Damaged")
-        ) // TODO it seems like it doesn't belong here
+        if (other.gameObject.CompareTag("HitCollider") && !_animator.GetBool("Damaged")) // TODO it seems like it doesn't belong here
         {
             var boss = other.gameObject.GetComponentInParent<Boss>();
 

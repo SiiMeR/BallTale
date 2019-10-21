@@ -5,7 +5,6 @@ Shader "Custom/Blur" {
         _Color ("Main Color", Color) = (1,1,1,1)
         _BumpAmt  ("Distortion", Range (0,256)) = 10
         _MainTex ("Tint Color (RGB)", 2D) = "white" {}
-        _BumpMap ("Normalmap", 2D) = "bump" {}
         _Size ("Size", Range(0, 20)) = 1
     }
  
@@ -182,7 +181,7 @@ Shader "Custom/Blur" {
                 sampler2D _BumpMap;
                 sampler2D _MainTex;
              
-                half4 frag( v2f i ) : COLOR {
+                half4 frag( v2f i ) : SV_Target {
               
                     half2 bump = UnpackNormal(tex2D( _BumpMap, i.uvbump )).rg;
                     float2 offset = bump * _BumpAmt * _GrabTexture_TexelSize.xy;
