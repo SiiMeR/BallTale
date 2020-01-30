@@ -25,7 +25,7 @@ namespace RaycastEngine2D
             if (Mathf.Abs(velocity.y) > float.Epsilon) CheckVerticalCollisions(ref velocity);
             
 //            if (Math.Abs(velocity.x) > float.Epsilon && Math.Abs(velocity.y) > .007f) 
-            CheckDiagonalCollisions(ref velocity);
+            // CheckDiagonalCollisions(ref velocity);
 
             if (float.IsNaN(velocity.x) || float.IsNaN(velocity.y) || float.IsNaN(velocity.z))
             {
@@ -127,7 +127,6 @@ namespace RaycastEngine2D
 //                print(distX + " " + distY);
             }
 //            Debug.DrawRay(origin, direction.ToVector2(), Color.magenta, .3f);
-
         }
         internal override void CheckVerticalCollisions(ref Vector3 velocity)
         {
