@@ -1,57 +1,153 @@
 fileFormatVersion: 2
 guid: e3a7023e75f09e24e907fbbae6c296dd
 TextureImporter:
-  fileIDToRecycleName:
-    21300000: Xbox360PixelPad_0
-    21300002: Xbox360PixelPad_1
-    21300004: Xbox360PixelPad_2
-    21300006: Xbox360PixelPad_3
-    21300008: Xbox360PixelPad_4
-    21300010: Xbox360PixelPad_5
-    21300012: Xbox360PixelPad_6
-    21300014: Xbox360PixelPad_7
-    21300016: Xbox360PixelPad_8
-    21300018: Xbox360PixelPad_9
-    21300020: Xbox360PixelPad_10
-    21300022: Xbox360PixelPad_11
-    21300024: Xbox360PixelPad_12
-    21300026: Xbox360PixelPad_13
-    21300028: Xbox360PixelPad_14
-    21300030: Xbox360PixelPad_15
-    21300032: Xbox360PixelPad_16
-    21300034: Xbox360PixelPad_17
-    21300036: Xbox360PixelPad_18
-    21300038: Xbox360PixelPad_19
-    21300040: Xbox360PixelPad_20
-    21300042: Xbox360PixelPad_21
-    21300044: Xbox360PixelPad_22
-    21300046: Xbox360PixelPad_23
-    21300048: Xbox360PixelPad_24
-    21300050: Xbox360PixelPad_25
-    21300052: Xbox360PixelPad_26
-    21300054: Xbox360PixelPad_27
-    21300056: Xbox360PixelPad_28
-    21300058: Xbox360PixelPad_29
-    21300060: Xbox360PixelPad_30
-    21300062: Xbox360PixelPad_31
-    21300064: Xbox360PixelPad_32
-    21300066: Xbox360PixelPad_33
-    21300068: Xbox360PixelPad_34
-    21300070: Xbox360PixelPad_35
-    21300072: Xbox360PixelPad_36
-    21300074: Xbox360PixelPad_37
-    21300076: Xbox360PixelPad_38
-    21300078: Xbox360PixelPad_39
-    21300080: Xbox360PixelPad_40
-    21300082: Xbox360PixelPad_41
-    21300084: Xbox360PixelPad_42
-    21300086: Xbox360PixelPad_43
-    21300088: Xbox360PixelPad_44
-    21300090: Xbox360PixelPad_45
-    21300092: Xbox360PixelPad_46
-    21300094: Xbox360PixelPad_47
+  internalIDToNameTable:
+  - first:
+      213: 21300000
+    second: Xbox360PixelPad_0
+  - first:
+      213: 21300002
+    second: Xbox360PixelPad_1
+  - first:
+      213: 21300004
+    second: Xbox360PixelPad_2
+  - first:
+      213: 21300006
+    second: Xbox360PixelPad_3
+  - first:
+      213: 21300008
+    second: Xbox360PixelPad_4
+  - first:
+      213: 21300010
+    second: Xbox360PixelPad_5
+  - first:
+      213: 21300012
+    second: Xbox360PixelPad_6
+  - first:
+      213: 21300014
+    second: Xbox360PixelPad_7
+  - first:
+      213: 21300016
+    second: Xbox360PixelPad_8
+  - first:
+      213: 21300018
+    second: Xbox360PixelPad_9
+  - first:
+      213: 21300020
+    second: Xbox360PixelPad_10
+  - first:
+      213: 21300022
+    second: Xbox360PixelPad_11
+  - first:
+      213: 21300024
+    second: Xbox360PixelPad_12
+  - first:
+      213: 21300026
+    second: Xbox360PixelPad_13
+  - first:
+      213: 21300028
+    second: Xbox360PixelPad_14
+  - first:
+      213: 21300030
+    second: Xbox360PixelPad_15
+  - first:
+      213: 21300032
+    second: Xbox360PixelPad_16
+  - first:
+      213: 21300034
+    second: Xbox360PixelPad_17
+  - first:
+      213: 21300036
+    second: Xbox360PixelPad_18
+  - first:
+      213: 21300038
+    second: Xbox360PixelPad_19
+  - first:
+      213: 21300040
+    second: Xbox360PixelPad_20
+  - first:
+      213: 21300042
+    second: Xbox360PixelPad_21
+  - first:
+      213: 21300044
+    second: Xbox360PixelPad_22
+  - first:
+      213: 21300046
+    second: Xbox360PixelPad_23
+  - first:
+      213: 21300048
+    second: Xbox360PixelPad_24
+  - first:
+      213: 21300050
+    second: Xbox360PixelPad_25
+  - first:
+      213: 21300052
+    second: Xbox360PixelPad_26
+  - first:
+      213: 21300054
+    second: Xbox360PixelPad_27
+  - first:
+      213: 21300056
+    second: Xbox360PixelPad_28
+  - first:
+      213: 21300058
+    second: Xbox360PixelPad_29
+  - first:
+      213: 21300060
+    second: Xbox360PixelPad_30
+  - first:
+      213: 21300062
+    second: Xbox360PixelPad_31
+  - first:
+      213: 21300064
+    second: Xbox360PixelPad_32
+  - first:
+      213: 21300066
+    second: Xbox360PixelPad_33
+  - first:
+      213: 21300068
+    second: Xbox360PixelPad_34
+  - first:
+      213: 21300070
+    second: Xbox360PixelPad_35
+  - first:
+      213: 21300072
+    second: Xbox360PixelPad_36
+  - first:
+      213: 21300074
+    second: Xbox360PixelPad_37
+  - first:
+      213: 21300076
+    second: Xbox360PixelPad_38
+  - first:
+      213: 21300078
+    second: Xbox360PixelPad_39
+  - first:
+      213: 21300080
+    second: Xbox360PixelPad_40
+  - first:
+      213: 21300082
+    second: Xbox360PixelPad_41
+  - first:
+      213: 21300084
+    second: Xbox360PixelPad_42
+  - first:
+      213: 21300086
+    second: Xbox360PixelPad_43
+  - first:
+      213: 21300088
+    second: Xbox360PixelPad_44
+  - first:
+      213: 21300090
+    second: Xbox360PixelPad_45
+  - first:
+      213: 21300092
+    second: Xbox360PixelPad_46
+  - first:
+      213: 21300094
+    second: Xbox360PixelPad_47
   externalObjects: {}
-  serializedVersion: 7
+  serializedVersion: 10
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -106,7 +202,7 @@ TextureImporter:
   compressionQualitySet: 0
   textureFormatSet: 0
   platformSettings:
-  - serializedVersion: 2
+  - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
     maxTextureSize: 2048
     resizeAlgorithm: 0
@@ -117,7 +213,8 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
     androidETC2FallbackOverride: 0
-  - serializedVersion: 2
+    forceMaximumCompressionQuality_BC6H_BC7: 1
+  - serializedVersion: 3
     buildTarget: Standalone
     maxTextureSize: 2048
     resizeAlgorithm: 0
@@ -128,6 +225,7 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
     androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 1
   spriteSheet:
     serializedVersion: 2
     sprites:
@@ -147,6 +245,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: cb508f3711c104949bde2fd3c904a6ca
+      internalID: 21300000
       vertices: []
       indices: 
       edges: []
@@ -167,6 +266,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: ba06584318818694dbf8fb45b92bf4c1
+      internalID: 21300002
       vertices: []
       indices: 
       edges: []
@@ -187,6 +287,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 541783ebc21b74846a5850393dda1e0f
+      internalID: 21300004
       vertices: []
       indices: 
       edges: []
@@ -207,6 +308,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 2165d0583027c4645888bc899eb01d68
+      internalID: 21300006
       vertices: []
       indices: 
       edges: []
@@ -227,6 +329,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 30e4336b82282df4bbe481c290e62e23
+      internalID: 21300008
       vertices: []
       indices: 
       edges: []
@@ -247,6 +350,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 3cf2e207f21ef2d4b8cf7318b55f0f17
+      internalID: 21300010
       vertices: []
       indices: 
       edges: []
@@ -267,6 +371,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 810609e53cd5e5f44b2ea00ce16b0d0e
+      internalID: 21300012
       vertices: []
       indices: 
       edges: []
@@ -287,6 +392,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 96879684e16132845b132ce087a380be
+      internalID: 21300014
       vertices: []
       indices: 
       edges: []
@@ -307,6 +413,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 53fdaf92237ce6b41bd5c0a08030abe4
+      internalID: 21300016
       vertices: []
       indices: 
       edges: []
@@ -327,6 +434,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 833d54180aec99545bfa8cc9a5f4522c
+      internalID: 21300018
       vertices: []
       indices: 
       edges: []
@@ -347,6 +455,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: f10b71a322c1232449c19d70e23acacb
+      internalID: 21300020
       vertices: []
       indices: 
       edges: []
@@ -367,6 +476,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: d4206db7eb1982c43adc56907c228bc2
+      internalID: 21300022
       vertices: []
       indices: 
       edges: []
@@ -387,6 +497,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 829f298af70c86f4eb7d0549dcf2eaed
+      internalID: 21300024
       vertices: []
       indices: 
       edges: []
@@ -407,6 +518,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: e47255478e967984985b0af20122f703
+      internalID: 21300026
       vertices: []
       indices: 
       edges: []
@@ -427,6 +539,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 6ad30775fba28c54cb152ecb26d32a34
+      internalID: 21300028
       vertices: []
       indices: 
       edges: []
@@ -447,6 +560,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: a6e11ea9a0c0adc46b9bec5db929c1f4
+      internalID: 21300030
       vertices: []
       indices: 
       edges: []
@@ -467,6 +581,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 0eacc96be58233b48901b9c68991f2e6
+      internalID: 21300032
       vertices: []
       indices: 
       edges: []
@@ -487,6 +602,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: fb7640a8fd2e3cd43ba6bbbf17df446a
+      internalID: 21300034
       vertices: []
       indices: 
       edges: []
@@ -507,6 +623,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: b4f63e39cd98816458b2c76203c66094
+      internalID: 21300036
       vertices: []
       indices: 
       edges: []
@@ -527,6 +644,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 364f9b4956bc6514d811e5c0f40be4fe
+      internalID: 21300038
       vertices: []
       indices: 
       edges: []
@@ -547,6 +665,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: ecbaa72e7d4afa0418c2d5d657c8d0b8
+      internalID: 21300040
       vertices: []
       indices: 
       edges: []
@@ -567,6 +686,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: f77d5c0fd3529134ea7f96da312781bc
+      internalID: 21300042
       vertices: []
       indices: 
       edges: []
@@ -587,6 +707,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 587fc2c9436142a45a99a45d935f05ba
+      internalID: 21300044
       vertices: []
       indices: 
       edges: []
@@ -607,6 +728,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 8f15efc84836f0c4cad2f7843999f4cd
+      internalID: 21300046
       vertices: []
       indices: 
       edges: []
@@ -627,6 +749,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 5ffb6a9ab8979af4d968b263fe35fd05
+      internalID: 21300048
       vertices: []
       indices: 
       edges: []
@@ -647,6 +770,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 2d0e0a7d12ae6f846857afa466481438
+      internalID: 21300050
       vertices: []
       indices: 
       edges: []
@@ -667,6 +791,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: f97332d898203254080157308531bbbe
+      internalID: 21300052
       vertices: []
       indices: 
       edges: []
@@ -675,10 +800,12 @@ TextureImporter:
     physicsShape: []
     bones: []
     spriteID: 1cdff060ab6030145aa4cd821c0543d5
+    internalID: 0
     vertices: []
     indices: 
     edges: []
     weights: []
+    secondaryTextures: []
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

@@ -1,24 +1,13 @@
 fileFormatVersion: 2
 guid: d01a9a07c0964a94d8f243a75fab8df3
 ScriptedImporter:
-  fileIDToRecycleName:
-    100000: bridge_GO/bridge_GO
-    100002: bridge_GO/bridge_GO/Bridge
-    100004: bridge_GO/bridge_GO/FG
-    400000: bridge_GO/bridge_GO/Transform
-    400002: bridge_GO/bridge_GO/Bridge/Transform
-    400004: bridge_GO/bridge_GO/FG/Transform
-    2800000: bridge
-    21200000: bridge_GO/bridge_GO/Bridge/SpriteRenderer
-    21200002: bridge_GO/bridge_GO/FG/SpriteRenderer
-    21300000: FG
-    21300002: Bridge
-    100100000: bridge_GO
+  internalIDToNameTable: []
   externalObjects: {}
+  serializedVersion: 2
   userData: 
   assetBundleName: 
   assetBundleVariant: 
-  script: {fileID: 11500000, guid: b2a9591990af98743ba3ff7cf1000886, type: 3}
+  script: {instanceID: 0}
   textureImporterSettings:
     alphaSource: 1
     mipMapMode: 0
@@ -42,7 +31,7 @@ ScriptedImporter:
     spriteMeshType: 1
     alignment: 0
     spritePivot: {x: 0.5, y: 0.5}
-    spritePixelsToUnits: 32
+    spritePixelsToUnits: 100
     spriteBorder: {x: 0, y: 0, z: 0, w: 0}
     spriteGenerateFallbackPhysicsShape: 0
     generateCubemap: 6
@@ -53,7 +42,7 @@ ScriptedImporter:
     textureType: 8
     textureShape: 1
     singleChannelComponent: 0
-    filterMode: 0
+    filterMode: 1
     aniso: 1
     mipBias: 0
     wrapU: 0
@@ -85,6 +74,7 @@ ScriptedImporter:
       width: 0
       height: 0
     spriteID: 
+    internalID: 0
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -107,7 +97,8 @@ ScriptedImporter:
       y: 4
       width: 981
       height: 72
-    spriteID: de498c313e45daa499333008678fe9a9
+    spriteID: d5d39157635f67846b5370f629b72acf
+    internalID: 0
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -128,7 +119,8 @@ ScriptedImporter:
       y: 84
       width: 983
       height: 41
-    spriteID: 842988bcb92e81342b57f324c38dbae6
+    spriteID: 5f4ea57b82d831d4193a62058f8a1caa
+    internalID: 0
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -138,17 +130,7 @@ ScriptedImporter:
     tessellationDetail: 0
     parentGroupIndex: -1
     uvTransform: {x: -13, y: 77}
-  platformSettings:
-  - name: Default
-    overridden: 1
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 0
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    androidETC2FallbackOverride: 0
+  platformSettings: []
   mosaicLayers: 1
   documentPivot: {x: 0, y: 0}
   documentAlignment: 7
@@ -156,6 +138,10 @@ ScriptedImporter:
   importedTextureWidth: 1024
   importedTextureHeight: 256
   documentSize: {x: 1024, y: 96}
+  paperDollMode: 0
+  keepDupilcateSpriteName: 0
+  spriteCategoryList:
+    categories: []
   textureActualWidth: 1024
   textureActualHeight: 256
   spritePackingTag: 
@@ -167,20 +153,23 @@ ScriptedImporter:
     spriteName: FG
     isGroup: 0
     parentIndex: -1
-    spriteID: de498c313e45daa499333008678fe9a9
+    spriteID: d5d39157635f67846b5370f629b72acf
     layerID: 428224013
     mosaicPosition: {x: 4, y: 4}
   - name: Bridge
     spriteName: Bridge
     isGroup: 0
     parentIndex: -1
-    spriteID: 842988bcb92e81342b57f324c38dbae6
+    spriteID: 5f4ea57b82d831d4193a62058f8a1caa
     layerID: 0
     mosaicPosition: {x: 4, y: 84}
   characterData:
     bones: []
     parts: []
     dimension: {x: 0, y: 0}
+    characterGroups: []
   boneGOs: []
-  firstCreate: 0
   generateGOHierarchy: 0
+  textureAssetName: bridge Texture
+  prefabAssetName: bridge Prefab
+  spriteLibAssetName: bridge Sprite Lib
