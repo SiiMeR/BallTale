@@ -7,7 +7,7 @@ ScriptedImporter:
   userData: 
   assetBundleName: 
   assetBundleVariant: 
-  script: {instanceID: 0}
+  script: {fileID: 11500000, guid: b2a9591990af98743ba3ff7cf1000886, type: 3}
   textureImporterSettings:
     alphaSource: 1
     mipMapMode: 0
@@ -97,7 +97,7 @@ ScriptedImporter:
       y: 4
       width: 981
       height: 72
-    spriteID: d5d39157635f67846b5370f629b72acf
+    spriteID: 8dd7f988f50be544caf16a1021f2e3a6
     internalID: 0
     spriteBone: []
     spriteOutline: []
@@ -119,7 +119,7 @@ ScriptedImporter:
       y: 84
       width: 983
       height: 41
-    spriteID: 5f4ea57b82d831d4193a62058f8a1caa
+    spriteID: f3a6614c67aebc4409954fdda5ccafef
     internalID: 0
     spriteBone: []
     spriteOutline: []
@@ -153,14 +153,14 @@ ScriptedImporter:
     spriteName: FG
     isGroup: 0
     parentIndex: -1
-    spriteID: d5d39157635f67846b5370f629b72acf
+    spriteID: 8dd7f988f50be544caf16a1021f2e3a6
     layerID: 428224013
     mosaicPosition: {x: 4, y: 4}
   - name: Bridge
     spriteName: Bridge
     isGroup: 0
     parentIndex: -1
-    spriteID: 5f4ea57b82d831d4193a62058f8a1caa
+    spriteID: f3a6614c67aebc4409954fdda5ccafef
     layerID: 0
     mosaicPosition: {x: 4, y: 84}
   characterData:
@@ -168,8 +168,8 @@ ScriptedImporter:
     parts: []
     dimension: {x: 0, y: 0}
     characterGroups: []
-  boneGOs: []
   generateGOHierarchy: 0
   textureAssetName: bridge Texture
   prefabAssetName: bridge Prefab
   spriteLibAssetName: bridge Sprite Lib
+  secondarySpriteTextures: []

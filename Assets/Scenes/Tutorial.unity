@@ -2367,11 +2367,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 10000000
+  m_text: 1000000
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 380a4b658610e41489f7b5394d047920, type: 2}
-  m_sharedMaterial: {fileID: 21805847044707156, guid: 380a4b658610e41489f7b5394d047920,
-    type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -2437,7 +2436,7 @@ MonoBehaviour:
   m_margin: {x: 107.72128, y: 0, z: 0, w: 0}
   m_textInfo:
     textComponent: {fileID: 348875653}
-    characterCount: 8
+    characterCount: 7
     spriteCount: 0
     spaceCount: 0
     wordCount: 1
@@ -2525,9 +2524,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: To be continued...
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 380a4b658610e41489f7b5394d047920, type: 2}
-  m_sharedMaterial: {fileID: 21805847044707156, guid: 380a4b658610e41489f7b5394d047920,
-    type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -2598,7 +2596,7 @@ MonoBehaviour:
     spaceCount: 2
     wordCount: 3
     linkCount: 0
-    lineCount: 1
+    lineCount: 2
     pageCount: 1
     materialCount: 1
   m_isUsingLegacyAnimationComponent: 0
